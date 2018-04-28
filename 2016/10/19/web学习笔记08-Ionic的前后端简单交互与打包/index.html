@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;前言：这篇文章同样是新手专用，对于一个像我一样的前端渣新来说，看看还可以，大神的话就算啦。里面涉及的点都不算太难，虽然我也有一堆东西没懂，但是跟着先敲起来，慢慢地就会理解了。这个之后还做了一个angular的前后端简单交互，道理都一样，只是pc端会出现跨域问题，需要配置一下nginx的反向代理之类的。本篇就不说这些了，因为做这个的时候没遇到这些问题，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web学习笔记08-Ionic的前后端简单交互与打包">
+<meta property="og:url" content="http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;前言：这篇文章同样是新手专用，对于一个像我一样的前端渣新来说，看看还可以，大神的话就算啦。里面涉及的点都不算太难，虽然我也有一堆东西没懂，但是跟着先敲起来，慢慢地就会理解了。这个之后还做了一个angular的前后端简单交互，道理都一样，只是pc端会出现跨域问题，需要配置一下nginx的反向代理之类的。本篇就不说这些了，因为做这个的时候没遇到这些问题，">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-45789336c4fa5850.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/320">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-7d5465c4daf93bc8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/320">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-65a16e056de9897b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/320">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-4404f91686327ac2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-c83b1061b1a7f183.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-4e2106f6e0b4fb74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-cb9146782617957e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-761d1a86c456a197.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-10-19T13:09:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web学习笔记08-Ionic的前后端简单交互与打包">
+<meta name="twitter:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;前言：这篇文章同样是新手专用，对于一个像我一样的前端渣新来说，看看还可以，大神的话就算啦。里面涉及的点都不算太难，虽然我也有一堆东西没懂，但是跟着先敲起来，慢慢地就会理解了。这个之后还做了一个angular的前后端简单交互，道理都一样，只是pc端会出现跨域问题，需要配置一下nginx的反向代理之类的。本篇就不说这些了，因为做这个的时候没遇到这些问题，">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1062695-45789336c4fa5850.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/320">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>web学习笔记08-Ionic的前后端简单交互与打包</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/11/02/web学习笔记09-ionic开发app的几个小坑/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/09/28/web学习笔记07-stylelint构造及规则了解/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&text=web学习笔记08-Ionic的前后端简单交互与打包"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&title=web学习笔记08-Ionic的前后端简单交互与打包"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&is_video=false&description=web学习笔记08-Ionic的前后端简单交互与打包"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记08-Ionic的前后端简单交互与打包&body=Check out this article: http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&title=web学习笔记08-Ionic的前后端简单交互与打包"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&title=web学习笔记08-Ionic的前后端简单交互与打包"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&title=web学习笔记08-Ionic的前后端简单交互与打包"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&title=web学习笔记08-Ionic的前后端简单交互与打包"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&name=web学习笔记08-Ionic的前后端简单交互与打包&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-实现目标"><span class="toc-number">1.</span> <span class="toc-text">1.实现目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-页面搭建"><span class="toc-number">2.</span> <span class="toc-text">2.页面搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#前提：已安装node-js，ionic，cordova。"><span class="toc-number">2.1.</span> <span class="toc-text">前提：已安装node.js，ionic，cordova。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-创建ionic空模板项目"><span class="toc-number">2.2.</span> <span class="toc-text">2.1 创建ionic空模板项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-编写代码"><span class="toc-number">2.3.</span> <span class="toc-text">2.2 编写代码</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-编写页面html代码"><span class="toc-number">2.3.1.</span> <span class="toc-text">1 编写页面html代码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-编写css样式"><span class="toc-number">2.3.2.</span> <span class="toc-text">2 编写css样式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-添加form标签"><span class="toc-number">2.3.3.</span> <span class="toc-text">3 添加form标签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-添加逻辑代码，如果输入框为空，就弹出提示框。"><span class="toc-number">2.3.4.</span> <span class="toc-text">4 添加逻辑代码，如果输入框为空，就弹出提示框。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-服务搭建"><span class="toc-number">3.</span> <span class="toc-text">3.服务搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-创建server文件"><span class="toc-number">3.0.1.</span> <span class="toc-text">1 创建server文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-安装express组件"><span class="toc-number">3.0.2.</span> <span class="toc-text">2 安装express组件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-编写代码（按照官网的教程写）"><span class="toc-number">3.0.3.</span> <span class="toc-text">3 编写代码（按照官网的教程写）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-运行"><span class="toc-number">4.</span> <span class="toc-text">4.运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-打包"><span class="toc-number">5.</span> <span class="toc-text">5.打包</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-添加设备"><span class="toc-number">5.0.1.</span> <span class="toc-text">1. 添加设备</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-iOS"><span class="toc-number">5.0.2.</span> <span class="toc-text">2 iOS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-Android"><span class="toc-number">5.0.3.</span> <span class="toc-text">3 Android</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        web学习笔记08-Ionic的前后端简单交互与打包
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-10-19T13:08:51.000Z" itemprop="datePublished">2016-10-19</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>&#160;&#160;&#160;&#160;<strong>前言：这篇文章同样是新手专用，对于一个像我一样的前端渣新来说，看看还可以，大神的话就算啦。里面涉及的点都不算太难，虽然我也有一堆东西没懂，但是跟着先敲起来，慢慢地就会理解了。这个之后还做了一个angular的前后端简单交互，道理都一样，只是pc端会出现跨域问题，需要配置一下nginx的反向代理之类的。本篇就不说这些了，因为做这个的时候没遇到这些问题，遇到的是一些网络权限的问题，在下面也都提了。</strong></p>
+<h3 id="1-实现目标"><a href="#1-实现目标" class="headerlink" title="1.实现目标"></a>1.实现目标</h3><p>&#160;&#160;&#160;&#160;目标是搭建一个简单的前后端交互，应用ionic实现一个简单的表单，点击提交按钮，会发送一个请求，并且能在搭建的后端处查看到提交表单上的值。如图：<br><img src="http://upload-images.jianshu.io/upload_images/1062695-45789336c4fa5850.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/320" alt="示例图"></p>
+<h3 id="2-页面搭建"><a href="#2-页面搭建" class="headerlink" title="2.页面搭建"></a>2.页面搭建</h3><h4 id="前提：已安装node-js，ionic，cordova。"><a href="#前提：已安装node-js，ionic，cordova。" class="headerlink" title="前提：已安装node.js，ionic，cordova。"></a>前提：已安装node.js，ionic，cordova。</h4><p>&#160;&#160;&#160;&#160;安装node.js可以去官网下载，下载完node.js之后可以使用集成包管理工具npm安装剩下的两样（全局安装）。</p>
+<pre><code>$ npm install -g cordova ionic
+</code></pre><h4 id="2-1-创建ionic空模板项目"><a href="#2-1-创建ionic空模板项目" class="headerlink" title="2.1 创建ionic空模板项目"></a>2.1 创建ionic空模板项目</h4><p>&#160;&#160;&#160;&#160;在终端，进入搭建工程的目录</p>
+<pre><code>$ cd /Users/apple/Desktop/
+</code></pre><p>&#160;&#160;&#160;&#160;下载ionic空模板</p>
+<pre><code>$ ionic start ionicTest blank
+</code></pre><p>&#160;&#160;&#160;&#160;下载成功之后，进入工程。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-7d5465c4daf93bc8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/320" alt="工程目录"></p>
+<p>&#160;&#160;&#160;&#160;其中www是我们主要编写代码的文件夹。这时候我们在终端运行</p>
+<pre><code>$ cd /Users/apple/Desktop/ionicTest/
+$ ionic serve
+</code></pre><p>&#160;&#160;&#160;&#160;会编译生成页面，在浏览器中显示如下图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-65a16e056de9897b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/320" alt="2.png"></p>
+<p>这就是ionic的空模板，所以展示出来的是空页面。</p>
+<h4 id="2-2-编写代码"><a href="#2-2-编写代码" class="headerlink" title="2.2 编写代码"></a>2.2 编写代码</h4><h5 id="1-编写页面html代码"><a href="#1-编写页面html代码" class="headerlink" title="1 编写页面html代码"></a>1 编写页面html代码</h5><p>&#160;&#160;&#160;&#160;进入/www/index.html。在body中的标签 <ion-content></ion-content>之间，写下如下页面代码。</p>
+<pre><code>&lt;div&gt;
+
+    &lt;div class=&quot;row1&quot;&gt;
+    &lt;div class=&quot;inner_box&quot;&gt;
+        &lt;div class=&quot;title_msg&quot;&gt;版本号 :&lt;/div&gt;
+        &lt;input class=&quot;input_text&quot; type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot; placeholder=&quot;请输入姓名&quot;&gt;
+    &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;row1&quot;&gt;
+    &lt;div class=&quot;inner_box&quot;&gt;
+      &lt;div class=&quot;title_msg&quot;&gt;编码方式 :&lt;/div&gt;
+      &lt;input class=&quot;input_text&quot; type=&quot;text&quot; name=&quot;age&quot; id=&quot;age&quot; placeholder=&quot;请输入年龄&quot;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+
+    &lt;div class=&quot;row1&quot;&gt;
+    &lt;div class=&quot;button_box&quot;&gt;
+      &lt;input type=&quot;submit&quot; value=&quot;提交&quot; class=&quot;submit_btn&quot;&gt;
+    &lt;/div&gt;
+ &lt;/div&gt; 
+</code></pre><p>  </p>
+<p>结果如图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-4404f91686327ac2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3.png"></p>
+<h5 id="2-编写css样式"><a href="#2-编写css样式" class="headerlink" title="2 编写css样式"></a>2 编写css样式</h5><pre><code>&lt;style type=&quot;text/css&quot;&gt;
+    .inner_box{
+    width: 310px;
+    height: 40px;
+    margin: 0 auto;
+    background-color: lightblue;
+    border-radius: 5px;
+}
+.row1{
+    width: 98%;
+    height: 40px;
+    margin:0 auto;
+    margin-top: 5px;
+    padding: 0;
+  }
+  .title_msg{
+    float: left;
+    width: 100px;
+    margin-left: 5px;
+    height: 40px;
+    text-align: left;
+    font-size: 14px;
+    line-height: 40px;
+    color: #333;
+  }
+  .input_text{
+    padding: 0px !important;
+    float: left;
+    width: 200px;
+    height: 26px!important;
+    margin-top: 7px;
+    border: 1px solid #dddddd !important;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 26px;
+  }
+  .button_box{
+    width: 200px;
+    height: 40px;
+    margin: 0 auto;
+  }
+  .submit_btn{
+    padding: 0px !important;
+    width: 150px;
+    height: 30px;
+    margin-top: 5px;
+    margin-left: 25px;
+    border: 1px solid lightblue !important;
+    border-radius: 5px;
+    background-color: lightblue;
+    color: #333333;
+  }
+&lt;/style&gt;
+</code></pre><p>&#160;&#160;&#160;&#160;<strong>这里提一嘴：</strong>css中用了不少<code>!important</code>的原因是因为ionic里面很多东西的样式都有初始设定，所以很多时候需要强制设定下。我写css也没几天，不知道这种方式算不算对，要是大家有好的解决办法，一定要告诉我。</p>
+<p>结果如图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-c83b1061b1a7f183.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="4.png"></p>
+<h5 id="3-添加form标签"><a href="#3-添加form标签" class="headerlink" title="3 添加form标签"></a>3 添加form标签</h5><pre><code>&lt;form action=&quot;http://192.168.1.100:3000/Info&quot; method=&quot;post&quot; onsubmit=&quot;return submitForm();&quot;&gt;
+
+&lt;/form&gt;
+</code></pre><p>&#160;&#160;&#160;&#160;其中submitForm()方法是点击提交按钮的时候先触发的方法。在这个方法中进行一些验证或者判断是否为空值。action之后接的是需要将表单上的内容发送到的地址。这里就用本机ip地址来吧。</p>
+<h5 id="4-添加逻辑代码，如果输入框为空，就弹出提示框。"><a href="#4-添加逻辑代码，如果输入框为空，就弹出提示框。" class="headerlink" title="4 添加逻辑代码，如果输入框为空，就弹出提示框。"></a>4 添加逻辑代码，如果输入框为空，就弹出提示框。</h5><pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+    function submitForm(){
+        var name = document.getElementById(&quot;name&quot;);
+        var age = document.getElementById(&quot;age&quot;);
+
+        if(name.value == null || name.value == &quot;&quot;){
+              alert(&quot;请输入姓名&quot;);
+              return false;
+        }
+        if(age.value == null || age.value == &quot;&quot;){
+              alert(&quot;请输入年龄&quot;);
+              return false;
+        }
+      }
+&lt;/script&gt;
+</code></pre><p>&#160;&#160;&#160;&#160;以上基本上就搭建好了界面，现在需要的是搭建一个后台服务，来接受发送的请求。</p>
+<h3 id="3-服务搭建"><a href="#3-服务搭建" class="headerlink" title="3.服务搭建"></a>3.服务搭建</h3><p>&#160;&#160;&#160;&#160;在这里为了简便，我们所使用的是express来搭建，express是基于node.js平台，快速，开放，极简的web开发框架。</p>
+<h5 id="1-创建server文件"><a href="#1-创建server文件" class="headerlink" title="1 创建server文件"></a>1 创建server文件</h5><p>&#160;&#160;&#160;&#160;进入工程目录的www文件夹下，创建server.js文件</p>
+<h5 id="2-安装express组件"><a href="#2-安装express组件" class="headerlink" title="2 安装express组件"></a>2 安装express组件</h5><pre><code>$ npm install express --save
+</code></pre><p>&#160;&#160;&#160;&#160;此外还需要安装express的中间件bodyParser。因为不知名的原因，express里没有包括bodyParser。bodyParser用来解析表单提交的数据。</p>
+<pre><code>$ npm install body-parser --save
+</code></pre><h5 id="3-编写代码（按照官网的教程写）"><a href="#3-编写代码（按照官网的教程写）" class="headerlink" title="3 编写代码（按照官网的教程写）"></a>3 编写代码（按照官网的教程写）</h5><pre><code>var express = require(&apos;express&apos;);
+var bodyParser = require(&apos;body-parser&apos;);//引入
+var app = express();//创建实例
+var router = express.Router();
+
+app.use(bodyParser.json());
+app.use(require(&apos;body-parser&apos;).urlencoded({extended: true}));
+
+//请求时开始使用的方法
+router.use(function(req, res, next) {
+      next();
+});
+
+//请求返回的方法
+router.post(&apos;/Info&apos;, function (req, res) {
+      res.send(&apos;Got a POST request&apos;);
+      console.log(req.body);
+});
+
+app.use(router);
+app.listen(3000); //指定端口并启动express web服务
+</code></pre><h3 id="4-运行"><a href="#4-运行" class="headerlink" title="4.运行"></a>4.运行</h3><p>&#160;&#160;&#160;&#160;编译前端：</p>
+<pre><code>$ ionic serve
+</code></pre><p>&#160;&#160;&#160;&#160;启动后台服务：</p>
+<pre><code>$ node server.js
+</code></pre><p>&#160;&#160;&#160;&#160;在页面输入姓名，年龄。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-4e2106f6e0b4fb74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="5.png"></p>
+<p>&#160;&#160;&#160;&#160;点击提交</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-cb9146782617957e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="6.png"></p>
+<p>&#160;&#160;&#160;&#160;成功的话会出现后台我写的返回报文。这个时候在终端上看，后台打印的内容，会发现如下图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-761d1a86c456a197.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="7.png"></p>
+<p>&#160;&#160;&#160;&#160;表单提交的内容都已经在后台显示出来。这样就完成了自建前后端简单的交互。</p>
+<h3 id="5-打包"><a href="#5-打包" class="headerlink" title="5.打包"></a>5.打包</h3><h5 id="1-添加设备"><a href="#1-添加设备" class="headerlink" title="1. 添加设备"></a>1. 添加设备</h5><pre><code>$ ionic platform add ios
+$ ionic platform add android
+</code></pre><p>&#160;&#160;&#160;&#160;一般项目都需要两个平台同时部署，所以我们就添加两个，执行完毕之后执行命令查看你已经添加的平台列表：</p>
+<pre><code>$ ionic platform list
+</code></pre><p>结果：</p>
+<pre><code>Installed platforms:ios 4.1.1，android ~5.2.0
+Available platforms: amazon-fireos ~3.6.3 (deprecated)，blackberry10 ~3.8.0，browser ~4.1.0，firefoxos ~3.6.3，osx ~4.0.1，webos ~3.7.0
+</code></pre><h5 id="2-iOS"><a href="#2-iOS" class="headerlink" title="2 iOS"></a>2 iOS</h5><p><strong>2.1 编译</strong></p>
+<p>&#160;&#160;&#160;&#160;在终端进入工程目录下，进行编译</p>
+<pre><code>$ ionic build ios
+</code></pre><p>&#160;&#160;&#160;&#160;开始编译项目，编译完成之后代开Xcode，打开platform-&gt;ios-&gt;myIonic.xcodeproj的项目文件，Xcode中选择要运行的模拟器版本并执行快捷键cmd+R运行模拟器，模拟器打开后会自动运行你应用。</p>
+<p>&#160;&#160;&#160;&#160;输入姓名年龄，点击提交，这个时候会报错：</p>
+<pre><code>ERROR Internal navigation rejected - &lt;allow-navigation&gt; not set for url=&apos;http://192.168.14.102:3000/Info&apos;
+</code></pre><p>&#160;&#160;&#160;&#160;出现这个错误的原因是因为没有设置白名单，iOS9+会拒绝请求。<br>&#160;&#160;&#160;&#160;所以解决方案也很简单。只需要在ios -&gt; ionicTest -&gt; config.xml中配置</p>
+<pre><code>&lt;allow-navigation href=&quot;*&quot; /&gt; //即允许跳转到任意http协议的页面  
+</code></pre><p>这样就成功解决这个问题，接下来重新运行，就通畅了。</p>
+<p><strong>2.2 打包ipa包</strong></p>
+<p>&#160;&#160;&#160;&#160;在Xcode中，模拟器选择Generic iOS Device</p>
+<p>&#160;&#160;&#160;&#160;在顶部导航栏上的product中选择Archive进行打包，接下来的选择根据不同的需要选择不同的选项，我这里选择的是测试包。 </p>
+<pre><code>Export -&gt; Save for Ad Hoc Deployment -&gt; select a Development Team -&gt; Export one app for all compatible devices -&gt; next -&gt; Export到指定文件夹下。
+</code></pre><p>&#160;&#160;&#160;&#160;以上就是打包iOS包的方法和遇到的一些小问题。</p>
+<h5 id="3-Android"><a href="#3-Android" class="headerlink" title="3 Android"></a>3 Android</h5><p><strong>安卓模块不是我负责的，我也就没有花太多精力去详细研究，一些配置什么的也就大概说下，具体的配置项需要自己根据自己所处的环境进行配置。我就不赘述了。</strong><br><strong>3.1 配置环境</strong></p>
+<p>&#160;&#160;&#160;&#160;1.安装Java的JDK，并配置好环境变量。</p>
+<p>&#160;&#160;&#160;&#160;2.安装工程需要版本的AndroidSDK，并配置好环境变量；这里JDK和andriodSDK的安装和配置都很重要，必须安装好JDK和AndroidSDK，才可以进行下面的打包，否则是打不了包的。</p>
+<p><strong>3.2 打包</strong><br>&#160;&#160;&#160;&#160;在终端进入工程目录下，进行编译</p>
+<pre><code>$ ionic build android
+</code></pre><p>&#160;&#160;&#160;&#160;<strong>注意：这里会提示你安装部分版本的Android SDK，按照上面的步骤跟着安装就可以，之后重新编译一下。</strong></p>
+<p>&#160;&#160;&#160;&#160;编译之后可以选择在模拟器上运行或者是在真机上运行。（需要先新建虚拟机/连接手机，新建方法：打开Android SDK安装目录下的AVD Manager.exe选择新建）</p>
+<pre><code>$ ionic run android
+</code></pre><p>&#160;&#160;&#160;&#160;同样，iOS中出现的问题，Android也出现了。</p>
+<p>&#160;&#160;&#160;&#160;只需要在platform -&gt; Android-&gt; AndroidManifest.xml中，添加上以下一些权限设置的代码即可：</p>
+<pre><code>&lt;uses-permission android:name=&quot;android.permission.READ_PHONE_STATE&quot; /&gt;
+&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;
+&lt;uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot; /&gt;
+&lt;uses-permission android:name=&quot;android.permission.ACCESS_WIFI_STATE&quot; /&gt;
+&lt;uses-permission android:name=&quot;android.permission.READ_LOGS&quot; /&gt;
+</code></pre><p>&#160;&#160;&#160;&#160;<strong>以上就是整个Ionic的前后端简单交互与打包了。项目要是有需求的话可以评论留言跟我要。不过这个项目比较简单，跟着一步一步走很快就可以搞定的。要是大家在这里发现什么问题，请私信或者评论告诉我，让我也学习学习。</strong></p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-实现目标"><span class="toc-number">1.</span> <span class="toc-text">1.实现目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-页面搭建"><span class="toc-number">2.</span> <span class="toc-text">2.页面搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#前提：已安装node-js，ionic，cordova。"><span class="toc-number">2.1.</span> <span class="toc-text">前提：已安装node.js，ionic，cordova。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-创建ionic空模板项目"><span class="toc-number">2.2.</span> <span class="toc-text">2.1 创建ionic空模板项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-编写代码"><span class="toc-number">2.3.</span> <span class="toc-text">2.2 编写代码</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-编写页面html代码"><span class="toc-number">2.3.1.</span> <span class="toc-text">1 编写页面html代码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-编写css样式"><span class="toc-number">2.3.2.</span> <span class="toc-text">2 编写css样式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-添加form标签"><span class="toc-number">2.3.3.</span> <span class="toc-text">3 添加form标签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-添加逻辑代码，如果输入框为空，就弹出提示框。"><span class="toc-number">2.3.4.</span> <span class="toc-text">4 添加逻辑代码，如果输入框为空，就弹出提示框。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-服务搭建"><span class="toc-number">3.</span> <span class="toc-text">3.服务搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-创建server文件"><span class="toc-number">3.0.1.</span> <span class="toc-text">1 创建server文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-安装express组件"><span class="toc-number">3.0.2.</span> <span class="toc-text">2 安装express组件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-编写代码（按照官网的教程写）"><span class="toc-number">3.0.3.</span> <span class="toc-text">3 编写代码（按照官网的教程写）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-运行"><span class="toc-number">4.</span> <span class="toc-text">4.运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-打包"><span class="toc-number">5.</span> <span class="toc-text">5.打包</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-添加设备"><span class="toc-number">5.0.1.</span> <span class="toc-text">1. 添加设备</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-iOS"><span class="toc-number">5.0.2.</span> <span class="toc-text">2 iOS</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-Android"><span class="toc-number">5.0.3.</span> <span class="toc-text">3 Android</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&text=web学习笔记08-Ionic的前后端简单交互与打包"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&title=web学习笔记08-Ionic的前后端简单交互与打包"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&is_video=false&description=web学习笔记08-Ionic的前后端简单交互与打包"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记08-Ionic的前后端简单交互与打包&body=Check out this article: http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&title=web学习笔记08-Ionic的前后端简单交互与打包"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&title=web学习笔记08-Ionic的前后端简单交互与打包"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&title=web学习笔记08-Ionic的前后端简单交互与打包"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&title=web学习笔记08-Ionic的前后端简单交互与打包"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/&name=web学习笔记08-Ionic的前后端简单交互与打包&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+

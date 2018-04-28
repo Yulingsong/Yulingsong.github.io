@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;这两天因为公司要求，就对ESLint进行了初步的了解，网上的内容基本上都差不多，但是内容有些乱，我这呢，就跟着大部分的文章，以及官方文档整理出了一篇入门学习的文字，技术点不算特别全，但是对于新手的我来说是够的，文章的篇幅很长，内容可能有些累赘，但是按着步骤一步一步来，基本上看完也就可以对ESLint有个初步的了解了，此外一些相关文档网上还是有很多的，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web学习笔记04-EsLint入门学习">
+<meta property="og:url" content="http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;这两天因为公司要求，就对ESLint进行了初步的了解，网上的内容基本上都差不多，但是内容有些乱，我这呢，就跟着大部分的文章，以及官方文档整理出了一篇入门学习的文字，技术点不算特别全，但是对于新手的我来说是够的，文章的篇幅很长，内容可能有些累赘，但是按着步骤一步一步来，基本上看完也就可以对ESLint有个初步的了解了，此外一些相关文档网上还是有很多的，">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-c187438b213fec23.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-2400e7ee232eff77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-6fa26dffea88fa40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-35360d2dd0822ea2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-826297c1dbc87c93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-7abd726abecfca07.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-f9dc5ca53e9a1498.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-499a2c6182d6692d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-a61613cb99752918.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-09-21T06:11:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web学习笔记04-EsLint入门学习">
+<meta name="twitter:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;这两天因为公司要求，就对ESLint进行了初步的了解，网上的内容基本上都差不多，但是内容有些乱，我这呢，就跟着大部分的文章，以及官方文档整理出了一篇入门学习的文字，技术点不算特别全，但是对于新手的我来说是够的，文章的篇幅很长，内容可能有些累赘，但是按着步骤一步一步来，基本上看完也就可以对ESLint有个初步的了解了，此外一些相关文档网上还是有很多的，">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1062695-c187438b213fec23.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>web学习笔记04-EsLint入门学习</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/09/19/iOS学习笔记02-指纹验证TouchID简单应用1/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&text=web学习笔记04-EsLint入门学习"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&title=web学习笔记04-EsLint入门学习"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&is_video=false&description=web学习笔记04-EsLint入门学习"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记04-EsLint入门学习&body=Check out this article: http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&title=web学习笔记04-EsLint入门学习"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&title=web学习笔记04-EsLint入门学习"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&title=web学习笔记04-EsLint入门学习"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&title=web学习笔记04-EsLint入门学习"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&name=web学习笔记04-EsLint入门学习&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#160-160-160-160-这两天因为公司要求，就对ESLint进行了初步的了解，网上的内容基本上都差不多，但是内容有些乱，我这呢，就跟着大部分的文章，以及官方文档整理出了一篇入门学习的文字，技术点不算特别全，但是对于新手的我来说是够的，文章的篇幅很长，内容可能有些累赘，但是按着步骤一步一步来，基本上看完也就可以对ESLint有个初步的了解了，此外一些相关文档网上还是有很多的，一些单个比较重要的技术点，网上也都会有相关的文章做了详细的描述，我这篇文章针对的就是对eslint完全不了解的小伙伴们。比较我就是比较新手的，最近算是转型吧，写了一段时间的移动端，技术没咋练好，就被要求做前端的东西，脑子里也是一团浆糊，公司又要求研究些东西，刚接触的时候完全懵逼，现在慢慢地有点喜欢上前端了，最近也在开始补习web基础，发现需要学习的东西好多啊。希望大家要是有兴趣的话可以跟我做个朋友，以前讨论讨论技术的事情，互相学习一下下。"><span class="toc-number">1.</span> <span class="toc-text">    这两天因为公司要求，就对ESLint进行了初步的了解，网上的内容基本上都差不多，但是内容有些乱，我这呢，就跟着大部分的文章，以及官方文档整理出了一篇入门学习的文字，技术点不算特别全，但是对于新手的我来说是够的，文章的篇幅很长，内容可能有些累赘，但是按着步骤一步一步来，基本上看完也就可以对ESLint有个初步的了解了，此外一些相关文档网上还是有很多的，一些单个比较重要的技术点，网上也都会有相关的文章做了详细的描述，我这篇文章针对的就是对eslint完全不了解的小伙伴们。比较我就是比较新手的，最近算是转型吧，写了一段时间的移动端，技术没咋练好，就被要求做前端的东西，脑子里也是一团浆糊，公司又要求研究些东西，刚接触的时候完全懵逼，现在慢慢地有点喜欢上前端了，最近也在开始补习web基础，发现需要学习的东西好多啊。希望大家要是有兴趣的话可以跟我做个朋友，以前讨论讨论技术的事情，互相学习一下下。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-number"></span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number"></span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-本地安装"><span class="toc-number">1.</span> <span class="toc-text">1.本地安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-全局安装"><span class="toc-number">2.</span> <span class="toc-text">2.全局安装</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#PS：eslint-–init是用于每一个项目设置和配置eslint-并将执行本地安装的ESLint及其插件的目录。如果你喜欢使用全局安装的ESLint，在你配置中使用的任何插件都必须是全局安装的。"><span class="toc-number">2.1.</span> <span class="toc-text">PS：eslint –init是用于每一个项目设置和配置eslint,并将执行本地安装的ESLint及其插件的目录。如果你喜欢使用全局安装的ESLint，在你配置中使用的任何插件都必须是全局安装的。</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-使用"><span class="toc-number">3.</span> <span class="toc-text">3.使用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number"></span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#规则"><span class="toc-number"></span> <span class="toc-text">规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用共享的配置文件"><span class="toc-number"></span> <span class="toc-text">使用共享的配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布自己的配置"><span class="toc-number"></span> <span class="toc-text">发布自己的配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义规则"><span class="toc-number"></span> <span class="toc-text">自定义规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工作流集成"><span class="toc-number"></span> <span class="toc-text">工作流集成</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#编辑器集成"><span class="toc-number">0.1.</span> <span class="toc-text">编辑器集成</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#构建系统集成"><span class="toc-number">0.2.</span> <span class="toc-text">构建系统集成</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number"></span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#160-160-160-160-以上呢，就是我花了两天整理的一些资料，不能算很全，但是对于像我这样的新手进行的初步了解应该是够了，之后可能有时间的话会陆续的整理一些相关的资料发布出来。"><span class="toc-number">0.1.</span> <span class="toc-text">    以上呢，就是我花了两天整理的一些资料，不能算很全，但是对于像我这样的新手进行的初步了解应该是够了，之后可能有时间的话会陆续的整理一些相关的资料发布出来。</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考："><span class="toc-number"></span> <span class="toc-text">参考：</span></a>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        web学习笔记04-EsLint入门学习
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-09-20T09:54:25.000Z" itemprop="datePublished">2016-09-20</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="160-160-160-160-这两天因为公司要求，就对ESLint进行了初步的了解，网上的内容基本上都差不多，但是内容有些乱，我这呢，就跟着大部分的文章，以及官方文档整理出了一篇入门学习的文字，技术点不算特别全，但是对于新手的我来说是够的，文章的篇幅很长，内容可能有些累赘，但是按着步骤一步一步来，基本上看完也就可以对ESLint有个初步的了解了，此外一些相关文档网上还是有很多的，一些单个比较重要的技术点，网上也都会有相关的文章做了详细的描述，我这篇文章针对的就是对eslint完全不了解的小伙伴们。比较我就是比较新手的，最近算是转型吧，写了一段时间的移动端，技术没咋练好，就被要求做前端的东西，脑子里也是一团浆糊，公司又要求研究些东西，刚接触的时候完全懵逼，现在慢慢地有点喜欢上前端了，最近也在开始补习web基础，发现需要学习的东西好多啊。希望大家要是有兴趣的话可以跟我做个朋友，以前讨论讨论技术的事情，互相学习一下下。"><a href="#160-160-160-160-这两天因为公司要求，就对ESLint进行了初步的了解，网上的内容基本上都差不多，但是内容有些乱，我这呢，就跟着大部分的文章，以及官方文档整理出了一篇入门学习的文字，技术点不算特别全，但是对于新手的我来说是够的，文章的篇幅很长，内容可能有些累赘，但是按着步骤一步一步来，基本上看完也就可以对ESLint有个初步的了解了，此外一些相关文档网上还是有很多的，一些单个比较重要的技术点，网上也都会有相关的文章做了详细的描述，我这篇文章针对的就是对eslint完全不了解的小伙伴们。比较我就是比较新手的，最近算是转型吧，写了一段时间的移动端，技术没咋练好，就被要求做前端的东西，脑子里也是一团浆糊，公司又要求研究些东西，刚接触的时候完全懵逼，现在慢慢地有点喜欢上前端了，最近也在开始补习web基础，发现需要学习的东西好多啊。希望大家要是有兴趣的话可以跟我做个朋友，以前讨论讨论技术的事情，互相学习一下下。" class="headerlink" title="&#160;&#160;&#160;&#160;这两天因为公司要求，就对ESLint进行了初步的了解，网上的内容基本上都差不多，但是内容有些乱，我这呢，就跟着大部分的文章，以及官方文档整理出了一篇入门学习的文字，技术点不算特别全，但是对于新手的我来说是够的，文章的篇幅很长，内容可能有些累赘，但是按着步骤一步一步来，基本上看完也就可以对ESLint有个初步的了解了，此外一些相关文档网上还是有很多的，一些单个比较重要的技术点，网上也都会有相关的文章做了详细的描述，我这篇文章针对的就是对eslint完全不了解的小伙伴们。比较我就是比较新手的，最近算是转型吧，写了一段时间的移动端，技术没咋练好，就被要求做前端的东西，脑子里也是一团浆糊，公司又要求研究些东西，刚接触的时候完全懵逼，现在慢慢地有点喜欢上前端了，最近也在开始补习web基础，发现需要学习的东西好多啊。希望大家要是有兴趣的话可以跟我做个朋友，以前讨论讨论技术的事情，互相学习一下下。"></a>&#160;&#160;&#160;&#160;这两天因为公司要求，就对ESLint进行了初步的了解，网上的内容基本上都差不多，但是内容有些乱，我这呢，就跟着大部分的文章，以及官方文档整理出了一篇入门学习的文字，技术点不算特别全，但是对于新手的我来说是够的，文章的篇幅很长，内容可能有些累赘，但是按着步骤一步一步来，基本上看完也就可以对ESLint有个初步的了解了，此外一些相关文档网上还是有很多的，一些单个比较重要的技术点，网上也都会有相关的文章做了详细的描述，我这篇文章针对的就是对eslint完全不了解的小伙伴们。比较我就是比较新手的，最近算是转型吧，写了一段时间的移动端，技术没咋练好，就被要求做前端的东西，脑子里也是一团浆糊，公司又要求研究些东西，刚接触的时候完全懵逼，现在慢慢地有点喜欢上前端了，最近也在开始补习web基础，发现需要学习的东西好多啊。希望大家要是有兴趣的话可以跟我做个朋友，以前讨论讨论技术的事情，互相学习一下下。</h4><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>&#160;&#160;&#160;&#160;<strong>ESLint</strong> 是由 <strong>Nicholas C. Zakas</strong> 编写的一个可扩展、每条规则独立、不内置编码风格为理念的 <strong>Lint</strong> 工具。 </p>
+<p>&#160;&#160;&#160;&#160;在团队协作中，为避免低级 Bug、产出风格统一的代码，会预先制定编码规范。使用 Lint 工具和代码风格检测工具，则可以辅助编码规范执行，有效控制代码质量。EsLint帮助我们检查<strong>Javascript</strong>编程时的语法错误。比如：在<strong>Javascript</strong>应用中，你很难找到你漏泄的变量或者方法。<strong>EsLint</strong>能够帮助我们分析JS代码，找到bug并确保一定程度的JS语法书写的正确性。</p>
+<p>&#160;&#160;&#160;&#160;<strong>EsLint</strong>是建立在<strong>Esprima</strong>(<strong>ECMAScript</strong>解析架构)的基础上的。<strong>Esprima</strong>支持ES5.1,本身也是用<strong>ECMAScript</strong>编写的，用于多用途分析。<strong>EsLint</strong>不但提供一些默认的规则（可扩展），也提供用户自定义规则来约束我们写的<strong>Javascript</strong>代码。</p>
+<p>&#160;&#160;&#160;&#160;ESLint是确定和报告模式的工具中发现<strong>ECMAScript</strong> / <strong>JavaScript</strong>代码,使代码更一致的目标和避免错误。在许多方面,它类似于<strong>JSLint</strong>和<strong>JSHint</strong>，但是也有部分不同。</p>
+<p>特定：</p>
+<ul>
+<li>ESLint使用Espree JavaScript解析。</li>
+<li>ESLint使用AST评估模式的代码。</li>
+<li>ESLint完全可插入式的,每一个规则是一个插件,支持插件扩展、自定义规则。</li>
+<li>默认规则包含所有 JSLint、JSHint 中存在的规则，易迁移；</li>
+<li>规则可配置性高：可设置「警告」、「错误」两个 error 等级，或者直接禁用；</li>
+<li>包含代码风格检测的规则（可以丢掉 JSCS 了）；</li>
+</ul>
+<p>EsLint提供以下支持：</p>
+<ul>
+<li>ES6</li>
+<li>AngularJS</li>
+<li>JSX</li>
+<li>Style检查</li>
+<li>自定义错误和提示</li>
+</ul>
+<p>EsLint提供以下几种校验：</p>
+<ul>
+<li>语法错误校验</li>
+<li>不重要或丢失的标点符号，如分号</li>
+<li>没法运行到的代码块（使用过WebStorm的童鞋应该了解）</li>
+<li>未被使用的参数提醒</li>
+<li>漏掉的结束符，如}</li>
+<li>确保样式的统一规则，如sass或者less</li>
+<li>检查变量的命名</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>&#160;&#160;&#160;&#160;有两种方法来安装<strong>ESLint</strong>:全局安装和本地安装。</p>
+<h4 id="1-本地安装"><a href="#1-本地安装" class="headerlink" title="1.本地安装"></a>1.本地安装</h4><p>如果你想包括ESLint作为你的项目构建系统的一部分,我们建议在本地安装。你可以使用npm:</p>
+<pre><code>$ npm install eslint --save-dev
+</code></pre><p>你应该设置一个配置文件:</p>
+<pre><code>$ ./node_modules/.bin/eslint --init
+</code></pre><p>之后,您可以运行ESLint在任何文件或目录如下:</p>
+<pre><code>$ ./node_modules/.bin/eslint yourfile.js
+</code></pre><p>yourfile.js是你需要测试的js文件。你使用的任何插件或共享配置必须安装在本地来与安装在本地的ESLint一起工作。</p>
+<h4 id="2-全局安装"><a href="#2-全局安装" class="headerlink" title="2.全局安装"></a>2.全局安装</h4><p>如果你想让ESLint可用到所有的项目,我们建议安装ESLint全局安装。你可以使用npm:</p>
+<pre><code>npm install -g eslint
+</code></pre><p>你应该设置一个配置文件:</p>
+<pre><code>eslint --init
+</code></pre><p>之后,您可以在任何文件或目录运行ESLint:</p>
+<pre><code>eslint yourfile.js
+</code></pre><h5 id="PS：eslint-–init是用于每一个项目设置和配置eslint-并将执行本地安装的ESLint及其插件的目录。如果你喜欢使用全局安装的ESLint，在你配置中使用的任何插件都必须是全局安装的。"><a href="#PS：eslint-–init是用于每一个项目设置和配置eslint-并将执行本地安装的ESLint及其插件的目录。如果你喜欢使用全局安装的ESLint，在你配置中使用的任何插件都必须是全局安装的。" class="headerlink" title="PS：eslint –init是用于每一个项目设置和配置eslint,并将执行本地安装的ESLint及其插件的目录。如果你喜欢使用全局安装的ESLint，在你配置中使用的任何插件都必须是全局安装的。"></a>PS：eslint –init是用于每一个项目设置和配置eslint,并将执行本地安装的ESLint及其插件的目录。如果你喜欢使用全局安装的ESLint，在你配置中使用的任何插件都必须是全局安装的。</h5><h4 id="3-使用"><a href="#3-使用" class="headerlink" title="3.使用"></a>3.使用</h4><ul>
+<li><p>新建一个项目：<br>  <img src="http://upload-images.jianshu.io/upload_images/1062695-c187438b213fec23.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建项目"></p>
+</li>
+<li><p>创建package.json文件</p>
+<pre><code>npm init
+</code></pre><p>  <img src="http://upload-images.jianshu.io/upload_images/1062695-2400e7ee232eff77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="npm init"></p>
+</li>
+</ul>
+<ul>
+<li><p>安装ESLint</p>
+<pre><code>npm install -g eslint
+</code></pre><p>  <img src="http://upload-images.jianshu.io/upload_images/1062695-6fa26dffea88fa40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="npm install -g eslint"></p>
+</li>
+<li><p>创建和编写简单的js文件<br>&#160;&#160;&#160;&#160;创建index.js文件，里面写一个函数，就直接用别人写的一个简单的函数用用吧。</p>
+<pre><code>function merge () {
+  var ret = {};
+  for (var i in arguments) {
+    var m = arguments[i];
+    for (var j in m) ret[j] = m[j];
+  }
+  return ret;
+}
+
+console.log(merge({a: 123}, {b: 456}));
+</code></pre></li>
+<li><p>执行<code>node index.js</code>，输出结果为{ a: 123, b: 456 }</p>
+<pre><code> appledeMacBook-Pro:testEslint apple$ node index.js
+{ a: 123, b: 456 }
+</code></pre></li>
+</ul>
+<ul>
+<li><p>使用eslint检查</p>
+<pre><code>eslint index.js
+</code></pre><p>  <img src="http://upload-images.jianshu.io/upload_images/1062695-35360d2dd0822ea2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="eslint index.js"></p>
+</li>
+</ul>
+<p>&#160;&#160;&#160;&#160;执行结果是失败，因为没有找到相应的配置文件，个人认为这个eslint最重要的就是配置问题。</p>
+<ul>
+<li><p>新建配置文件</p>
+<pre><code>eslint --init
+</code></pre><p>  &#160;&#160;&#160;&#160;不过这个生成的额文件里面已经有一些配置了，把里面的内容大部分删除。留下个extends，剩下的自己填就可以了</p>
+<pre><code>module.exports = {
+    &quot;extends&quot;: &quot;eslint:recommended&quot;
+};
+</code></pre><p>  &#160;&#160;&#160;&#160;eslint:recommended配置，它包含了一系列核心规则，能报告一些常见的问题。</p>
+</li>
+<li><p>重新执行eslint index.js</p>
+<p>  <img src="http://upload-images.jianshu.io/upload_images/1062695-826297c1dbc87c93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="eslint index.js"><br>  &#160;&#160;&#160;&#160;<strong>Unexpected console statement no-console - 不能使用console</strong><br>  &#160;&#160;&#160;&#160;<strong>‘console’ is not defined     no-undef - console变量未定义，不能使用未定义的变量</strong><br>  &#160;&#160;&#160;&#160;一条一条解决，不能使用console的提示，那我们就禁用no-console就好了，在配置文件中添加rules</p>
+<pre><code>module.exports = {
+      extends: &apos;eslint:recommended&apos;,
+      rules: {
+        &apos;no-console&apos;: &apos;off&apos;,
+      },
+};
+</code></pre><p>  &#160;&#160;&#160;&#160;配置规则写在rules对象里面，key表示规则名称，value表示规则的配置。<br>  &#160;&#160;&#160;&#160;然后就是解决<strong>no-undef</strong>:出错的原因是因为JavaScript有很多种运行环境，比如常见的有浏览器和Node.js，另外还有很多软件系统使用JavaScript作为其脚本引擎，比如PostgreSQL就支持使用JavaScript来编写存储引擎，而这些运行环境可能并不存在console这个对象。另外在浏览器环境下会有window对象，而Node.js下没有；在Node.js下会有process对象，而浏览器环境下没有。<br>  所以在配置文件中我们还需要指定程序的目标环境：</p>
+<pre><code>module.exports = {
+      extends: &apos;eslint:recommended&apos;,
+      env: {
+        node: true,
+      },
+      rules: {
+        &apos;no-console&apos;: &apos;off&apos;,
+      }
+};
+</code></pre><p>  &#160;&#160;&#160;&#160;再重新执行检查时，就没有任何提示输出了，说明index.js已经完全通过了检查。</p>
+</li>
+</ul>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>&#160;&#160;&#160;&#160;ESLint设计出来就是可以配置的，挺自由的，你可以关闭任何一条规则，只运行基本语法验证。有两种主要的方式来配置：</p>
+<ul>
+<li><strong>Configuration Comments</strong> - 使用 JavaScript 注释把配置信息直接嵌入到一个文件。</li>
+<li><strong>Configuration Files</strong> - 使用 JavaScript、JSON 或者 YAML 文件为整个目录和它的子目录指定配置信息。可以用 .eslintrc.* 文件或者在 package.json 文件里的 eslintConfig 字段这两种方式进行配置，ESLint 会查找和自动读取它们，再者，你可以在命令行指定一个配置文件。</li>
+</ul>
+<p>&#160;&#160;&#160;&#160;有很多信息可以配置：</p>
+<ul>
+<li><strong>Environments</strong> - 指定脚本的运行环境。每种环境都有一组特定的预定义全局变量。</li>
+<li><strong>Globals</strong> - 脚本在执行期间访问的额外的全局变量</li>
+<li><strong>Rules</strong> - 启用的规则及各自的错误级别</li>
+</ul>
+<p>&#160;&#160;&#160;&#160;在配置文件。<strong>eslintrc.js</strong>中写配置内容，可以将<strong>module.exports</strong>内的内容直接写到<strong>package.json</strong>里用字段<strong>eslintConfig</strong>括起来就可以了。也可以在执行<strong>eslint</strong>命令是通过命令行参数来指定。</p>
+<p>&#160;&#160;&#160;&#160;配置的详细说明文档可以参考这里：<a href="http://eslint.cn/docs/user-guide/configuring" target="_blank" rel="noopener">Configuring ESLint</a></p>
+<h2 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h2><p>&#160;&#160;&#160;&#160;我们<strong>eslintrc.js</strong>中的ruls中不仅仅是只有诸如<strong>‘no-console’: ‘off’</strong>的规则，更多的是像下面这样的规则。</p>
+<pre><code>{
+    &quot;rules&quot;: {
+           &quot;semi&quot;: [&quot;error&quot;, &quot;always&quot;],
+        &quot;quotes&quot;: [&quot;error&quot;, &quot;double&quot;]
+    }
+}
+</code></pre><p>&#160;&#160;&#160;&#160;这里的<strong>“semi”</strong> 和<strong> “quotes” </strong>是 ESLint 中 规则 的名称。中括号中第一个是错误级别。每条规则又三个取值：</p>
+<ul>
+<li>“off” or 0 - 关闭(禁用)规则</li>
+<li>“warn” or 1 - 将规则视为一个警告（并不会导致检查不通过）</li>
+<li>“error” or 2 - 将规则视为一个错误 (退出码为1，检查不通过)</li>
+</ul>
+<p>&#160;&#160;&#160;&#160;有些规则还带有可选的参数，比如comma-dangle可以写成[ “error”, “always-multiline” ]；no-multi-spaces可以写成[ “error”, { exceptions: { “ImportDeclaration”: true }}]。</p>
+<p>&#160;&#160;&#160;&#160;配置和规则的内容有不少，将会另出一篇文介绍。</p>
+<p>&#160;&#160;&#160;&#160;规则的详细说明文档可以参考这里：<a href="http://eslint.cn/docs/rules/" target="_blank" rel="noopener">Rules</a></p>
+<h2 id="使用共享的配置文件"><a href="#使用共享的配置文件" class="headerlink" title="使用共享的配置文件"></a>使用共享的配置文件</h2><p>&#160;&#160;&#160;&#160;我们使用配置js文件是以<strong>extends: ‘eslint:recommended’</strong>为基础配置，但是大多数时候我们需要制定很多规则，在一个文件中写入会变得很臃肿，管理起来会很麻烦。</p>
+<p>&#160;&#160;&#160;&#160;我们可以将定义好规则的<strong>.eslintrc.js</strong>文件存储到一个公共的位置。改个名字比如<strong>public-eslintrc.js</strong>。在文件内容添加一两个规则。</p>
+<pre><code>module.exports = {
+  extends: &apos;eslint:recommended&apos;,
+  env: {
+    node: true,
+  },
+  rules: {
+    &apos;no-console&apos;: &apos;off&apos;,
+    &apos;indent&apos;: [ &apos;error&apos;, 4 ],
+    &apos;quotes&apos;: [ &apos;error&apos;, &apos;single&apos; ],
+      },
+};
+</code></pre><p>&#160;&#160;&#160;&#160;然后原来的<strong>.eslintrc.js</strong>文件内容稍微变化下，删掉规则啥的，留下一个<strong>extends</strong>。</p>
+<pre><code>module.exports = {
+      extends: &apos;./public-eslintrc.js&apos;,
+};
+</code></pre><p>&#160;&#160;&#160;&#160;这个要测试的是啥呢，就是看看限定缩进是4个空格和使用单引号的字符串等，然后测试下，运行<strong>eslint index.js</strong>，得到的结果是没有问题的，但是如果在<code>index.js</code>中的<code>var ret = {};</code>前面加个空格啥的，结果就立马不一样了。<br><img src="http://upload-images.jianshu.io/upload_images/1062695-7abd726abecfca07.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="eslint index.js"></p>
+<p>&#160;&#160;&#160;&#160;这时候提示第7行的是缩进应该是8个空格，而文件的第7行却发现了9个空格，说明公共配置文件public-eslintrc.js已经生效了。</p>
+<p>&#160;&#160;&#160;&#160;除了这些基本的配置以外，在npm上有很多已经发布的ESLint配置，也可以通过安装使用。配置名字一般都是<strong>eslint-config-</strong>为前缀，一般我们用的eslint是全局安装的，那用的<strong>eslint-config-</strong>模块也必须是全局安装，不然没法载入。</p>
+<p>&#160;&#160;&#160;&#160;下面是官网的一些资料：<br>&#160;&#160;&#160;&#160;<a href="http://eslint.cn/docs/user-guide/configuring#using-a-shareable-configuration-package" target="_blank" rel="noopener">使用共享的模块</a><br>&#160;&#160;&#160;&#160;<a href="http://eslint.cn/docs/user-guide/configuring#using-the-configuration-from-a-plugin" target="_blank" rel="noopener">使用插件</a><br>&#160;&#160;&#160;&#160;<a href="http://eslint.cn/docs/user-guide/configuring#using-a-configuration-file" target="_blank" rel="noopener">使用配置文件</a>  </p>
+<p>&#160;&#160;&#160;&#160;在这提一下，<a href="http://eslint.cn/docs/rules/" target="_blank" rel="noopener">Rules</a>页面的很多规则后面都有一个橙色的小扳手标识，这个标识在执行</p>
+<pre><code>eslint index.js --fix
+</code></pre><p>的时候，–fix参数可以自动修复该问题。<br>&#160;&#160;&#160;&#160;比如我们在规则中添加一条no-extra-semi: 禁止不必要的分号。</p>
+<pre><code>&apos;no-extra-semi&apos;:&apos;error&apos;
+</code></pre><p>&#160;&#160;&#160;&#160;然后，我们在index.js最后多添加一个分号</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-f9dc5ca53e9a1498.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="不必要的分号"></p>
+<p>&#160;&#160;&#160;&#160;执行eslint index.js，得到结果如下：<br><img src="http://upload-images.jianshu.io/upload_images/1062695-499a2c6182d6692d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="不必要的分号"></p>
+<p>&#160;&#160;&#160;&#160;我们再执行</p>
+<pre><code>eslint index.js --fix
+</code></pre><p>就会自动修复，index.js那个多余的分号也就被修复消失不见了。</p>
+<h2 id="发布自己的配置"><a href="#发布自己的配置" class="headerlink" title="发布自己的配置"></a>发布自己的配置</h2><p>&#160;&#160;&#160;&#160;共享的配置文件那一节里面已经说了，因为项目中需要配置的内容太多，所以可以在extends中指定一个文件名，或者一个eslint-config-开头的模块名。为了便于共享，一般推荐将其发布成一个NPM模块。</p>
+<p>&#160;&#160;&#160;&#160;其原理就是在载入模块时输出原来.eslintrc.js的数据。比如我们可以创建一个模块 <code>eslint-config-my</code> 用于测试。 </p>
+<p>&#160;&#160;&#160;&#160;创建文件夹和文件：<br><img src="http://upload-images.jianshu.io/upload_images/1062695-a61613cb99752918.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建文件"></p>
+<p>&#160;&#160;&#160;&#160;my-config.js:</p>
+<pre><code>module.exports = {
+    extends: &apos;eslint:recommended&apos;,
+    env: {
+            node: true,
+           es6: true
+       },
+    rules: {
+        &apos;no-console&apos;: &apos;off&apos;,
+        &apos;indent&apos;: [ &apos;error&apos;, 4 ],
+        &apos;quotes&apos;: [ &apos;error&apos;, &apos;single&apos; ]
+    }
+};
+</code></pre><p>&#160;&#160;&#160;&#160;package.json:</p>
+<pre><code>{
+      &quot;name&quot;: &quot;application-name1&quot;,
+      &quot;version&quot;: &quot;0.0.1&quot;,
+      &quot;main&quot;:&quot;my-config.js&quot;
+}
+</code></pre><p>&#160;&#160;&#160;&#160;为了能让 eslint 正确载入这个模块，我们需要执行 npm link 将这个模块链接到本地全局位置：</p>
+<pre><code>npm link eslint-config-my
+</code></pre><p>&#160;&#160;&#160;&#160;然后将文件 .eslintrc.js 改成：</p>
+<pre><code>module.exports = {
+      extends: &apos;my&apos;,
+}; 
+</code></pre><p>&#160;&#160;&#160;&#160;提醒：在 extends 中， eslint-config-my 可简写为 <strong>my</strong> 。</p>
+<p>&#160;&#160;&#160;&#160;在执行 <code>eslint merge.js</code> 检查，可看到没有任何错误提示信息，说明 eslint 已经成功载入了 <code>eslint-config-my</code> 的配置。如果我们使用 <code>npm publish</code> 将其发布到 NPM 上，那么其他人通过 <code>npm install eslint-config-my</code> 即可使用我们共享的这个配置。</p>
+<p>&#160;&#160;&#160;&#160;在<code>eslint --init</code>初始化文件的时候，有一些默认的数据项，我就简单的说一下。</p>
+<pre><code>module.exports = {
+&quot;env&quot;: {},
+&quot;extends&quot;: &quot;&quot;,
+&quot;rules&quot;: {}
+};
+</code></pre><ul>
+<li><p>parserOptions  </p>
+<p>  &#160;&#160;&#160;&#160;EsLint通过parserOptions，允许指定校验的ecma的版本，及ecma的一些特性</p>
+<pre><code>{
+    &quot;parserOptions&quot;: {
+        &quot;ecmaVersion&quot;: 6, //指定ECMAScript支持的版本，6为ES6
+        &quot;sourceType&quot;: &quot;module&quot;, //指定来源的类型，有两种”script”或”module”
+        &quot;ecmaFeatures&quot;: {
+            &quot;jsx&quot;: true//启动JSX
+        },
+    }
+}
+</code></pre></li>
+<li><p>Parser  </p>
+<p>  &#160;&#160;&#160;&#160;EsLint默认使用esprima做脚本解析，当然你也切换他，比如切换成        babel-eslint解析</p>
+<pre><code>{
+    &quot;parser&quot;: &quot;esprima&quot; //默认，可以设置成babel-eslint，支持jsx
+}
+</code></pre></li>
+<li><p>Environments  </p>
+<p>  &#160;&#160;&#160;&#160;Environment可以预设好的其他环境的全局变量，如brower、node环境变量、es6环境变量、mocha环境变量等</p>
+<pre><code>{
+    &quot;env&quot;: {
+        &quot;browser&quot;: true,
+        &quot;node&quot;: true
+    }
+}
+</code></pre><p>  &#160;&#160;&#160;&#160;如果你想使用插件中的环境变量，你可以使用plugins指定，如下</p>
+<pre><code>{
+    &quot;plugins&quot;: [&quot;example&quot;],
+    &quot;env&quot;: {
+        &quot;example/custom&quot;: true
+    }
+}
+</code></pre></li>
+<li><p>Globals</p>
+<p>  &#160;&#160;&#160;&#160;指定你所要使用的全局变量，true代表允许重写、false代表不允许重写</p>
+<pre><code>{
+    &quot;globals&quot;: {
+           &quot;var1&quot;: true,
+        &quot;var2&quot;: false
+    }
+}
+</code></pre></li>
+</ul>
+<ul>
+<li><p>Plugins</p>
+<p>  &#160;&#160;&#160;&#160;EsLint允许使用第三方插件</p>
+<pre><code>{
+    &quot;plugins&quot;: [
+        &quot;react&quot;    
+     ]
+}
+</code></pre></li>
+<li><p>Rules</p>
+<p>  &#160;&#160;&#160;&#160;这个就是上面说的规则。</p>
+</li>
+</ul>
+<h2 id="自定义规则"><a href="#自定义规则" class="headerlink" title="自定义规则"></a>自定义规则</h2><p>&#160;&#160;&#160;&#160;ESLint自带的规则一般都不会很全面，在实际的项目中，我们要根据自己的需求来创建自己的规则。这也算的上是ESLint最有特色的地方了。</p>
+<p>&#160;&#160;&#160;&#160;在我看来，发布自己的配置，其实就是要先自定义规则，自己的配置中加上自定义的规则，应该会比较适合实际项目中的使用。</p>
+<p>&#160;&#160;&#160;&#160;以 eslint-plugin-react 为例，安装以后，需要在 ESLint 配置中开启插件，其中 eslint-plugin- 前缀可以省略：</p>
+<pre><code>{
+      &quot;plugins&quot;: [
+          &quot;react&quot;
+      ]
+}
+</code></pre><p>接下来开启 ESLint JSX 支持（ESLint 内置选项）：</p>
+<pre><code>{
+      &quot;ecmaFeatures&quot;: {
+        &quot;jsx&quot;: true
+      }
+}
+</code></pre><p>然后就可以配置插件提供的规则了：</p>
+<pre><code>{
+      &quot;rules&quot;: {
+           &quot;react/display-name&quot;: 1,
+        &quot;react/jsx-boolean-value&quot;: 1
+      }
+}
+</code></pre><p>自定义规则都是以插件名称为命名空间的。</p>
+<h2 id="工作流集成"><a href="#工作流集成" class="headerlink" title="工作流集成"></a>工作流集成</h2><p>&#160;&#160;&#160;&#160;ESLint 可以集成到主流的编辑器和构建工具中，以便我们在编写的代码的同时进行 lint。</p>
+<h5 id="编辑器集成"><a href="#编辑器集成" class="headerlink" title="编辑器集成"></a>编辑器集成</h5><p>&#160;&#160;&#160;&#160;以 WebStorm 为例，只要全局安装 ESLint 或者在项目中依赖中添加 ESLint ，然后在设置里开启 ESLint 即可。其他编辑可以从官方文档中获得获得具体信息。</p>
+<h5 id="构建系统集成"><a href="#构建系统集成" class="headerlink" title="构建系统集成"></a>构建系统集成</h5><p>&#160;&#160;&#160;&#160;在 Gulp 中使用：</p>
+<pre><code>var gulp = require(&apos;gulp&apos;);  
+var eslint = require(&apos;gulp-eslint&apos;);
+
+gulp.task(&apos;lint&apos;, function() {  
+      return gulp.src(&apos;client/app/**/*.js&apos;)
+    .pipe(eslint())
+    .pipe(eslint.format());
+});
+</code></pre><p>其他构建工具参考官方文档。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h5 id="160-160-160-160-以上呢，就是我花了两天整理的一些资料，不能算很全，但是对于像我这样的新手进行的初步了解应该是够了，之后可能有时间的话会陆续的整理一些相关的资料发布出来。"><a href="#160-160-160-160-以上呢，就是我花了两天整理的一些资料，不能算很全，但是对于像我这样的新手进行的初步了解应该是够了，之后可能有时间的话会陆续的整理一些相关的资料发布出来。" class="headerlink" title="&#160;&#160;&#160;&#160;以上呢，就是我花了两天整理的一些资料，不能算很全，但是对于像我这样的新手进行的初步了解应该是够了，之后可能有时间的话会陆续的整理一些相关的资料发布出来。"></a>&#160;&#160;&#160;&#160;以上呢，就是我花了两天整理的一些资料，不能算很全，但是对于像我这样的新手进行的初步了解应该是够了，之后可能有时间的话会陆续的整理一些相关的资料发布出来。</h5><h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>&#160;&#160;&#160;&#160;<a href="http://eslint.org/" target="_blank" rel="noopener">ESLint-官方文档</a>  </p>
+<p>&#160;&#160;&#160;&#160;<a href="http://cnodejs.org/topic/57c68052b4a3bca66bbddbdd" target="_blank" rel="noopener">利用ESLint检查代码质量 </a>  </p>
+<p>&#160;&#160;&#160;&#160;<a href="http://blog.csdn.net/helpzp2008/article/details/51507428" target="_blank" rel="noopener">Eslint 规则说明</a> </p>
+<p>&#160;&#160;&#160;&#160;<a href="https://csspod.com/getting-started-with-eslint/" target="_blank" rel="noopener">ESLint 使用入门</a></p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#160-160-160-160-这两天因为公司要求，就对ESLint进行了初步的了解，网上的内容基本上都差不多，但是内容有些乱，我这呢，就跟着大部分的文章，以及官方文档整理出了一篇入门学习的文字，技术点不算特别全，但是对于新手的我来说是够的，文章的篇幅很长，内容可能有些累赘，但是按着步骤一步一步来，基本上看完也就可以对ESLint有个初步的了解了，此外一些相关文档网上还是有很多的，一些单个比较重要的技术点，网上也都会有相关的文章做了详细的描述，我这篇文章针对的就是对eslint完全不了解的小伙伴们。比较我就是比较新手的，最近算是转型吧，写了一段时间的移动端，技术没咋练好，就被要求做前端的东西，脑子里也是一团浆糊，公司又要求研究些东西，刚接触的时候完全懵逼，现在慢慢地有点喜欢上前端了，最近也在开始补习web基础，发现需要学习的东西好多啊。希望大家要是有兴趣的话可以跟我做个朋友，以前讨论讨论技术的事情，互相学习一下下。"><span class="toc-number">1.</span> <span class="toc-text">    这两天因为公司要求，就对ESLint进行了初步的了解，网上的内容基本上都差不多，但是内容有些乱，我这呢，就跟着大部分的文章，以及官方文档整理出了一篇入门学习的文字，技术点不算特别全，但是对于新手的我来说是够的，文章的篇幅很长，内容可能有些累赘，但是按着步骤一步一步来，基本上看完也就可以对ESLint有个初步的了解了，此外一些相关文档网上还是有很多的，一些单个比较重要的技术点，网上也都会有相关的文章做了详细的描述，我这篇文章针对的就是对eslint完全不了解的小伙伴们。比较我就是比较新手的，最近算是转型吧，写了一段时间的移动端，技术没咋练好，就被要求做前端的东西，脑子里也是一团浆糊，公司又要求研究些东西，刚接触的时候完全懵逼，现在慢慢地有点喜欢上前端了，最近也在开始补习web基础，发现需要学习的东西好多啊。希望大家要是有兴趣的话可以跟我做个朋友，以前讨论讨论技术的事情，互相学习一下下。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-number"></span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number"></span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-本地安装"><span class="toc-number">1.</span> <span class="toc-text">1.本地安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-全局安装"><span class="toc-number">2.</span> <span class="toc-text">2.全局安装</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#PS：eslint-–init是用于每一个项目设置和配置eslint-并将执行本地安装的ESLint及其插件的目录。如果你喜欢使用全局安装的ESLint，在你配置中使用的任何插件都必须是全局安装的。"><span class="toc-number">2.1.</span> <span class="toc-text">PS：eslint –init是用于每一个项目设置和配置eslint,并将执行本地安装的ESLint及其插件的目录。如果你喜欢使用全局安装的ESLint，在你配置中使用的任何插件都必须是全局安装的。</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-使用"><span class="toc-number">3.</span> <span class="toc-text">3.使用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number"></span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#规则"><span class="toc-number"></span> <span class="toc-text">规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用共享的配置文件"><span class="toc-number"></span> <span class="toc-text">使用共享的配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布自己的配置"><span class="toc-number"></span> <span class="toc-text">发布自己的配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义规则"><span class="toc-number"></span> <span class="toc-text">自定义规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工作流集成"><span class="toc-number"></span> <span class="toc-text">工作流集成</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#编辑器集成"><span class="toc-number">0.1.</span> <span class="toc-text">编辑器集成</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#构建系统集成"><span class="toc-number">0.2.</span> <span class="toc-text">构建系统集成</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number"></span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#160-160-160-160-以上呢，就是我花了两天整理的一些资料，不能算很全，但是对于像我这样的新手进行的初步了解应该是够了，之后可能有时间的话会陆续的整理一些相关的资料发布出来。"><span class="toc-number">0.1.</span> <span class="toc-text">    以上呢，就是我花了两天整理的一些资料，不能算很全，但是对于像我这样的新手进行的初步了解应该是够了，之后可能有时间的话会陆续的整理一些相关的资料发布出来。</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考："><span class="toc-number"></span> <span class="toc-text">参考：</span></a>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&text=web学习笔记04-EsLint入门学习"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&title=web学习笔记04-EsLint入门学习"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&is_video=false&description=web学习笔记04-EsLint入门学习"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记04-EsLint入门学习&body=Check out this article: http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&title=web学习笔记04-EsLint入门学习"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&title=web学习笔记04-EsLint入门学习"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&title=web学习笔记04-EsLint入门学习"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&title=web学习笔记04-EsLint入门学习"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/&name=web学习笔记04-EsLint入门学习&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="转自csdn上以为作者，链接（http://blog.csdn.net/tobetheender/article/details/52485948） Sessionsession 从字面上讲，就是会话。这个就类似于你和一个人交谈，你怎么知道当前和你交谈的是张三而不是李四呢？对方肯定有某种特征（长相等）表明他就是张三。 session 也是类似的道理，服务器要知道当前发请求给自己的是谁。为了做这种区">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Token，Cookie，Session区别(转)">
+<meta property="og:url" content="http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="转自csdn上以为作者，链接（http://blog.csdn.net/tobetheender/article/details/52485948） Sessionsession 从字面上讲，就是会话。这个就类似于你和一个人交谈，你怎么知道当前和你交谈的是张三而不是李四呢？对方肯定有某种特征（长相等）表明他就是张三。 session 也是类似的道理，服务器要知道当前发请求给自己的是谁。为了做这种区">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-04-26T01:36:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Token，Cookie，Session区别(转)">
+<meta name="twitter:description" content="转自csdn上以为作者，链接（http://blog.csdn.net/tobetheender/article/details/52485948） Sessionsession 从字面上讲，就是会话。这个就类似于你和一个人交谈，你怎么知道当前和你交谈的是张三而不是李四呢？对方肯定有某种特征（长相等）表明他就是张三。 session 也是类似的道理，服务器要知道当前发请求给自己的是谁。为了做这种区">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Token，Cookie，Session区别(转)</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/05/03/Ionic-app打包ios全流程/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/04/08/修真院-练习答案集锦/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&text=Token，Cookie，Session区别(转)"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&title=Token，Cookie，Session区别(转)"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&is_video=false&description=Token，Cookie，Session区别(转)"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Token，Cookie，Session区别(转)&body=Check out this article: http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&title=Token，Cookie，Session区别(转)"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&title=Token，Cookie，Session区别(转)"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&title=Token，Cookie，Session区别(转)"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&title=Token，Cookie，Session区别(转)"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&name=Token，Cookie，Session区别(转)&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Session"><span class="toc-number">1.</span> <span class="toc-text">Session</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Token"><span class="toc-number">2.</span> <span class="toc-text">Token</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#传统身份验证"><span class="toc-number">2.1.</span> <span class="toc-text">传统身份验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基于-Token-的身份验证"><span class="toc-number">2.2.</span> <span class="toc-text">基于 Token 的身份验证</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Token，Cookie，Session区别(转)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-04-26T01:32:10.000Z" itemprop="datePublished">2017-04-26</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>转自csdn上以为作者，链接（<a href="http://blog.csdn.net/tobetheender/article/details/52485948）" target="_blank" rel="noopener">http://blog.csdn.net/tobetheender/article/details/52485948）</a></p>
+<h3 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><p>session 从字面上讲，就是会话。这个就类似于你和一个人交谈，你怎么知道当前和你交谈的是张三而不是李四呢？对方肯定有某种特征（长相等）表明他就是张三。</p>
+<p>session 也是类似的道理，服务器要知道当前发请求给自己的是谁。为了做这种区分，服务器就要给每个客户端分配不同的“身份标识”，然后客户端每次向服务器发请求的时候，都带上这个“身份标识”，服务器就知道这个请求来自于谁了。至于客户端怎么保存这个“身份标识”，可以有很多种方式，对于浏览器客户端，大家都默认采用 cookie 的方式。</p>
+<p>服务器使用session把用户的信息临时保存在了服务器上，用户离开网站后session会被销毁。这种用户信息存储方式相对cookie来说更安全，可是session有一个缺陷：如果web服务器做了负载均衡，那么下一个操作请求到了另一台服务器的时候session会丢失。</p>
+<h3 id="Token"><a href="#Token" class="headerlink" title="Token"></a>Token</h3><p>Token的意思是“令牌”，是用户身份的验证方式，最简单的token组成:uid(用户唯一的身份标识)、time(当前时间的时间戳)、sign(签名，由token的前几位+盐以哈希<a href="http://lib.csdn.net/base/datastructure" target="_blank" rel="noopener">算法</a>压缩成一定长的十六进制字符串，可以防止恶意第三方拼接token请求服务器)。还可以把不变的参数也放进token，避免多次查库</p>
+<h4 id="传统身份验证"><a href="#传统身份验证" class="headerlink" title="传统身份验证"></a>传统身份验证</h4><p>HTTP 是一种没有状态的协议，也就是它并不知道是谁是访问应用。这里我们把用户看成是客户端，客户端使用用户名还有密码通过了身份验证，不过下回这个客户端再发送请求时候，还得再验证一下。</p>
+<p>解决的方法就是，当用户请求登录的时候，如果没有问题，我们在服务端生成一条记录，这个记录里可以说明一下登录的用户是谁，然后把这条记录的 ID 号发送给客户端，客户端收到以后把这个 ID 号存储在 Cookie 里，下次这个用户再向服务端发送请求的时候，可以带着这个 Cookie ，这样服务端会验证一个这个 Cookie 里的信息，看看能不能在服务端这里找到对应的记录，如果可以，说明用户已经通过了身份验证，就把用户请求的数据返回给客户端。</p>
+<p>上面说的就是 Session，我们需要在服务端存储为登录的用户生成的 Session ，这些 Session 可能会存储在内存，磁盘，或者<a href="http://lib.csdn.net/base/mysql" target="_blank" rel="noopener">数据库</a>里。我们可能需要在服务端定期的去清理过期的 Session 。</p>
+<h4 id="基于-Token-的身份验证"><a href="#基于-Token-的身份验证" class="headerlink" title="基于 Token 的身份验证"></a>基于 Token 的身份验证</h4><p>使用基于 Token 的身份验证方法，在服务端不需要存储用户的登录记录。大概的流程是这样的：</p>
+<ul>
+<li>客户端使用用户名跟密码请求登录</li>
+<li>服务端收到请求，去验证用户名与密码</li>
+<li>验证成功后，服务端会签发一个 Token，再把这个 Token 发送给客户端</li>
+<li>客户端收到 Token 以后可以把它存储起来，比如放在 Cookie 里或者 Local Storage 里</li>
+<li>客户端每次向服务端请求资源的时候需要带着服务端签发的 Token</li>
+<li>服务端收到请求，然后去验证客户端请求里面带着的 Token，如果验证成功，就向客户端返回请求的数据</li>
+</ul>
+<p>APP登录的时候发送加密的用户名和密码到服务器，服务器验证用户名和密码，如果成功，以某种方式比如随机生成32位的字符串作为token，存储到服务器中，并返回token到APP，以后APP请求时，凡是需要验证的地方都要带上该token，然后服务器端验证token，成功返回所需要的结果，失败返回错误信息，让他重新登录。其中服务器上token设置一个有效期，每次APP请求的时候都验证token和有效期。</p>
+<p>那么我的问题来了：</p>
+<ul>
+<li>1.服务器上的token存储到数据库中，每次查询会不会很费时。如果不存储到数据库，应该存储到哪里呢。</li>
+<li>2.客户端得到的token肯定要加密存储的，发送token的时候再解密。存储到数据库还是配置文件呢？</li>
+</ul>
+<p>token是个易失数据，丢了无非让用户重新登录一下，新浪微博动不动就让我重新登录，反正这事儿我是无所谓啦。 </p>
+<p>所以如果你觉得普通的数据库表撑不住了，可以放到 MSSQL/<a href="http://lib.csdn.net/base/mysql" target="_blank" rel="noopener">MySQL</a> 的内存表里（不过据说mysql的内存表性能提升有限），可以放到 Memcache里（讲真，这个是挺常见的策略），可以放到<a href="http://lib.csdn.net/base/redis" target="_blank" rel="noopener">Redis</a>里（我做过这样的实现），甚至可以放到 OpenResty 的变量字典里（只要你有信心不爆内存）。</p>
+<p>token是个凭条，不过它比门票温柔多了，门票丢了重新花钱买，token丢了重新操作下认证一个就可以了，因此token丢失的代价是可以忍受的——前提是你别丢太频繁，要是让用户隔三差五就认证一次那就损失用户体验了。</p>
+<p>基于这个出发点，如果你认为用数据库来保持token查询时间太长，会成为你系统的瓶颈或者隐患，可以放在内存当中。 </p>
+<p>比如memcached、redis，KV方式很适合你对token查询的需求。 </p>
+<p>这个不会太占内存，比如你的token是32位字符串，要是你的用户量在百万级或者千万级，那才多少内存。 </p>
+<p>要是数据量真的大到单机内存扛不住，或者觉得一宕机全丢风险大，只要这个token生成是足够均匀的，高低位切一下分到不同机器上就行，内存绝对不会是问题。</p>
+<p>客户端方面这个除非你有一个非常安全的办法，比如<a href="http://lib.csdn.net/base/operatingsystem" target="_blank" rel="noopener">操作系统</a>提供的隐私数据存储，那token肯定会存在泄露的问题。比如我拿到你的手机，把你的token拷出来，在过期之前就都可以以你的身份在别的地方登录。 </p>
+<p>解决这个问题的一个简单办法<br>1、在存储的时候把token进行对称加密存储，用时解开。<br>2、将请求URL、时间戳、token三者进行合并加盐签名，服务端校验有效性。</p>
+<p>这两种办法的出发点都是：窃取你存储的数据较为容易，而反汇编你的程序hack你的加密解密和签名算法是比较难的。然而其实说难也不难，所以终究是防君子不防小人的做法。话说加密存储一个你要是被人扒开客户端看也不会被喷明文存储……<br>方法1它拿到存储的密文解不开、方法2它不知道你的签名算法和盐，两者可以结合食用。 </p>
+<p>但是如果token被人拷走，他自然也能植入到自己的手机里面，那到时候他的手机也可以以你的身份来用着，这你就瞎了。 于是可以提供一个让用户可以主动expire一个过去的token类似的机制，在被盗的时候能远程止损。</p>
+<p>在网络层面上token明文传输的话会非常的危险，所以建议一定要使用HTTPS，并且把token放在post body里。</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Session"><span class="toc-number">1.</span> <span class="toc-text">Session</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Token"><span class="toc-number">2.</span> <span class="toc-text">Token</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#传统身份验证"><span class="toc-number">2.1.</span> <span class="toc-text">传统身份验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基于-Token-的身份验证"><span class="toc-number">2.2.</span> <span class="toc-text">基于 Token 的身份验证</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&text=Token，Cookie，Session区别(转)"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&title=Token，Cookie，Session区别(转)"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&is_video=false&description=Token，Cookie，Session区别(转)"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Token，Cookie，Session区别(转)&body=Check out this article: http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&title=Token，Cookie，Session区别(转)"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&title=Token，Cookie，Session区别(转)"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&title=Token，Cookie，Session区别(转)"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&title=Token，Cookie，Session区别(转)"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/04/26/Token，Cookie，Session区别-转/&name=Token，Cookie，Session区别(转)&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+

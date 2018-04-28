@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;已经有好久没有更新文章了，最近做的东西也不算多，只是没有时间更新文章，今天继续弄个给小白看的文章，一般的移动端搜索结果页或者那种分页加载的页面需要用的，上拉无限加载数据，不知道这个题目对不对，大家看了就知道是不是自己需要的东西了。  &amp;#160;&amp;#160;&amp;#160;&amp;#160;下面直接说完成过程吧，这个可以说是非常简单的一个小功能了，对于小白来说">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web学习笔记14-移动端页面上拉无限加载">
+<meta property="og:url" content="http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;已经有好久没有更新文章了，最近做的东西也不算多，只是没有时间更新文章，今天继续弄个给小白看的文章，一般的移动端搜索结果页或者那种分页加载的页面需要用的，上拉无限加载数据，不知道这个题目对不对，大家看了就知道是不是自己需要的东西了。  &amp;#160;&amp;#160;&amp;#160;&amp;#160;下面直接说完成过程吧，这个可以说是非常简单的一个小功能了，对于小白来说">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1062695-abc8893f93f1e5b4.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1062695-0a043ede02713bd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1062695-8a7c07ef3cb75112.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-04-23T02:51:00.721Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web学习笔记14-移动端页面上拉无限加载">
+<meta name="twitter:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;已经有好久没有更新文章了，最近做的东西也不算多，只是没有时间更新文章，今天继续弄个给小白看的文章，一般的移动端搜索结果页或者那种分页加载的页面需要用的，上拉无限加载数据，不知道这个题目对不对，大家看了就知道是不是自己需要的东西了。  &amp;#160;&amp;#160;&amp;#160;&amp;#160;下面直接说完成过程吧，这个可以说是非常简单的一个小功能了，对于小白来说">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1062695-abc8893f93f1e5b4.gif?imageMogr2/auto-orient/strip">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>web学习笔记14-移动端页面上拉无限加载</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/04/27/angularjs遇到的部分问题/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/09/06/web学习笔记13-移动端搜索框提示功能/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&text=web学习笔记14-移动端页面上拉无限加载"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&title=web学习笔记14-移动端页面上拉无限加载"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&is_video=false&description=web学习笔记14-移动端页面上拉无限加载"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记14-移动端页面上拉无限加载&body=Check out this article: http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&title=web学习笔记14-移动端页面上拉无限加载"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&title=web学习笔记14-移动端页面上拉无限加载"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&title=web学习笔记14-移动端页面上拉无限加载"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&title=web学习笔记14-移动端页面上拉无限加载"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&name=web学习笔记14-移动端页面上拉无限加载&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#第一步：构建页面框架"><span class="toc-number">1.</span> <span class="toc-text">第一步：构建页面框架</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#第二步：编写逻辑部分"><span class="toc-number">2.</span> <span class="toc-text">第二步：编写逻辑部分</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#第三步：添加自动加载的方法"><span class="toc-number">3.</span> <span class="toc-text">第三步：添加自动加载的方法</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        web学习笔记14-移动端页面上拉无限加载
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-04-23T02:47:52.000Z" itemprop="datePublished">2018-04-23</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>&#160;&#160;&#160;&#160;已经有好久没有更新文章了，最近做的东西也不算多，只是没有时间更新文章，今天继续弄个给小白看的文章，一般的移动端搜索结果页或者那种分页加载的页面需要用的，上拉无限加载数据，不知道这个题目对不对，大家看了就知道是不是自己需要的东西了。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1062695-abc8893f93f1e5b4.gif?imageMogr2/auto-orient/strip" alt="Mar-26-2018 14-35-30.gif"></p>
+<p>&#160;&#160;&#160;&#160;下面直接说完成过程吧，这个可以说是非常简单的一个小功能了，对于小白来说也能一眼就能看明白的，当然，要是有更好的方法，希望大家也跟我说下。这个功能虽然，不过也是上传到github上了，觉得看完还没懂得可以去看看，地址是<a href="https://github.com/Yulingsong/InfiniteLoading" target="_blank" rel="noopener">InfiniteLoading</a></p>
+<h5 id="第一步：构建页面框架"><a href="#第一步：构建页面框架" class="headerlink" title="第一步：构建页面框架"></a>第一步：构建页面框架</h5><p>&#160;&#160;&#160;&#160;这一步很简单，一般自己的项目都会有自己的设计，我就直接写一个简单粗糙的列表页。html部分是：</p>
+<pre><code>&lt;div class=&quot;nav&quot;&gt;
+  上拉分页无限加载
+&lt;/div&gt;
+&lt;!--显示的大概样子--&gt;
+&lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;lineItem&quot;&gt;1&lt;/div&gt;
+    &lt;div class=&quot;lineItem&quot;&gt;2&lt;/div&gt;
+    &lt;div class=&quot;lineItem&quot;&gt;3&lt;/div&gt;
+    &lt;div class=&quot;lineItem&quot;&gt;4&lt;/div&gt;
+    &lt;div class=&quot;lineItem&quot;&gt;5&lt;/div&gt;
+    &lt;div class=&quot;lineItem&quot;&gt;6&lt;/div&gt;
+    &lt;div class=&quot;lineItem&quot;&gt;7&lt;/div&gt;
+    &lt;div class=&quot;lineItem&quot;&gt;8&lt;/div&gt;
+    &lt;div class=&quot;lineItem&quot;&gt;9&lt;/div&gt;
+    &lt;div class=&quot;lineItem&quot;&gt;10&lt;/div&gt;
+    &lt;div class=&quot;lineItem&quot;&gt;11&lt;/div&gt;
+    &lt;div class=&quot;lineItem&quot;&gt;12&lt;/div&gt;
+    &lt;div class=&quot;lineItem&quot;&gt;13&lt;/div&gt;
+    &lt;div class=&quot;spinner&quot;&gt;加载中。。。&lt;/div&gt;
+    &lt;div class=&quot;spinner&quot;&gt;- 数据已经加载到底 -&lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>css部分是这样的：</p>
+<pre><code>&lt;style&gt;
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .container{
+        width: 100vw;
+        height: calc(100vh - 44px);
+    }
+    .nav{
+        width: 100vw;
+        height: 44px;
+        line-height: 44px;
+        text-align: center;
+        font-size: 20px;
+    }
+    .lineItem{
+        width: 100%;
+        height: 100px;
+        margin-top: 10px;
+        background-color: lightgray;
+        line-height: 100px;
+        text-align: left;
+        font-size: 12px;
+        overflow: hidden;
+    }
+    .spinner{
+        width: 100%;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+        font-size: 16px;
+        background-color: lightcyan;
+        margin-top: 10px;
+    }
+
+&lt;/style&gt;
+</code></pre><p>写完显示出来的样子是下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1062695-0a043ede02713bd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1062695-8a7c07ef3cb75112.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2"></p>
+<h5 id="第二步：编写逻辑部分"><a href="#第二步：编写逻辑部分" class="headerlink" title="第二步：编写逻辑部分"></a>第二步：编写逻辑部分</h5><p>&#160;&#160;&#160;&#160;我这边引入了jquery，大家用js写的话，部分地方有点差异，不过都没啥区别。大家注意下，这块我用的ajax请求的url是公司的，所以就拿掉了，大家替换上各自项目的url和请求数据就行。</p>
+<pre><code>//声明部分变量
+var pageNum = 1;//页码
+var pageSize = 10;//每页多少条数据
+var infinite = true;//防止不停调接口加载新数据,false的时候就不能请求接口
+var count = 0;//总数,判断是否已经加载到底了
+var dataCache = [];//数据缓存，根据接口不同情况，可以考虑不用这个。
+//请求方法
+function sendRequest(num){
+    var sendData = {
+        //其它请求参数
+        pageNum:num,
+        pageSize:pageSize
+    };
+    if(infinite == true){
+        //只有infinite是true的时候才可以请求接口
+        infinite = false;
+        $.ajax({
+            type: &quot;POST&quot;,
+            url: &quot; 你自己的url &quot;,
+            data:sendData,
+            dataType: &apos;json&apos;,
+            success: function (data) {
+                console.log(data);
+                if(data.code == 200 &amp;&amp; data.data){
+                    count = data.data.count ? data.data.count:0;
+                    if(data.data.products &amp;&amp; data.data.products.length != 0){
+                        setPage(data.data.products);//单独的拼接html,渲染页面的方法。
+                    }else{
+                        //这边处理当数据为空的时候,并且页数为第一页的时候,页面应该有相应的显示
+                        // 比如暂无数据列表之类的文案,背景之类的。
+                        //并且会有种可能就是在加载到部分页数之后,请求回来的数据为空,页面显示也是有相应的变化
+                        if(pageNum == 1){
+
+                        }else{
+
+                        }
+                    }
+                    //在页面渲染之后,此时的数字加1,为了下一次的加载
+                    pageNum = data.data.pageNum + 1;
+                }else{
+                    //接口返回部分code不正确的时候,页面应有相应的显示
+                    console.log(data.content);
+                }
+                //设置可以继续请求接口。
+                infinite = true;
+            },
+            error: function (err) {
+                infinite = true;
+                console.log(&apos;系统异常&apos;);
+            }
+        });
+    }else{
+        infinite = true;
+    }
+}
+sendRequest(pageNum);
+
+//渲染页面方法
+function setPage(data){
+    console.log(data);
+    $(&quot;.spinner&quot;).remove();//移除加载条
+    for(var i = 0;i &lt; data.length;i++){
+        /*这边也可以做一些缓存数据的操作,记住一些数据,然后进行一些别的操作,比如说切换tab的时候,不刷新页面渲染页面
+        也可以根据不同接口返回的数据来做判断是否数据加载到底。我用的接口不支持返回数量,所以就用这种方式来判断*/
+        dataCache.push(data[i]);//将数据添加缓存数组中,适合数据量少的时候,不过数据量大的时候也可以用
+        //拼接html,渲染页面
+        var html = setHtmlModel(data[i]);
+        $(&quot;.container&quot;).append(html);//添加html
+    }
+    //判断是否加载到底,如果还有数据的话,就直接显示加载中,如果没有数据的话,就直接显示加载到底
+    //这部分的样式需要各自项目自己定义,我这边就只做粗糙的显示
+    var loadHtml = &apos;&apos;;
+    if(count &gt; dataCache.length){
+        loadHtml = &apos;&lt;div class=&quot;spinner&quot;&gt;加载中。。。&lt;/div&gt;&apos;;
+
+    }else{
+        loadHtml = &apos;&lt;div class=&quot;spinner&quot;&gt;- 数据已经加载到底 -&lt;/div&gt;&apos;;
+    }
+    $(&quot;.container&quot;).append(loadHtml);
+}
+
+//拼接html方法,这边的html因为太简单,所以这块看起来有点多余,在部分拼接html复杂的情况下,这样写可以看着好看点,修改添加的时候也方便点
+function setHtmlModel(data){
+    var html = &apos;&apos;;
+    html += &apos;&lt;div class=&quot;lineItem&quot;&gt;&apos;+data.name+&apos;&lt;/div&gt;&apos;;
+    return html;
+}
+</code></pre><p>&#160;&#160;&#160;&#160;这部分的东西基本上就是请求数据，渲染页面，添加加载框或者加载到底的显示，不过最重要的部分无限加载这块还没有添加上去，所以此时你翻来覆去只能请求一次。</p>
+<h5 id="第三步：添加自动加载的方法"><a href="#第三步：添加自动加载的方法" class="headerlink" title="第三步：添加自动加载的方法"></a>第三步：添加自动加载的方法</h5><pre><code>//自动加载新数据,当滚轮滚到离页面下面一段距离的时候,就自动更新数据,请求接口
+$(function(){
+    $(window).scroll(function () {
+        //下面三个参数很重要,大家可以自行百度下具体的解释,一般简单的无限滚动加载都会用到这个
+        var scrollTop = $(this).scrollTop();//匹配元素的滚动条的垂直位置
+        var scrollHeight = $(document).height();//匹配元素document的高度
+        var windowHeight = $(this).height();//匹配元素的高度
+        if(scrollHeight - scrollTop - windowHeight &lt; 200 ){
+            //这边多做一个判断,如果还有剩下没有加载的数据就进行加载,如果没有,就不做请求
+            if(count &gt; dataCache.length){
+                sendRequest(0,0,pageNum);
+                infinite = false;
+            }
+        }
+    });
+});
+</code></pre><p>&#160;&#160;&#160;&#160;走完这三步就完成了一个简单的自动加载的列表页了。<br>说实话，写前端也有段时间了，按道理来说应该写一点复杂点的东西，像这样简单的东西随随便便都能找到，可能也是我学艺不精，还在慢慢学习中，希望以后能给大家带来更好的文章。有什么问题大家也可以跟我一起交流交流。</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#第一步：构建页面框架"><span class="toc-number">1.</span> <span class="toc-text">第一步：构建页面框架</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#第二步：编写逻辑部分"><span class="toc-number">2.</span> <span class="toc-text">第二步：编写逻辑部分</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#第三步：添加自动加载的方法"><span class="toc-number">3.</span> <span class="toc-text">第三步：添加自动加载的方法</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&text=web学习笔记14-移动端页面上拉无限加载"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&title=web学习笔记14-移动端页面上拉无限加载"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&is_video=false&description=web学习笔记14-移动端页面上拉无限加载"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记14-移动端页面上拉无限加载&body=Check out this article: http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&title=web学习笔记14-移动端页面上拉无限加载"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&title=web学习笔记14-移动端页面上拉无限加载"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&title=web学习笔记14-移动端页面上拉无限加载"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&title=web学习笔记14-移动端页面上拉无限加载"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2018/04/23/web学习笔记14-移动端页面上拉无限加载/&name=web学习笔记14-移动端页面上拉无限加载&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+

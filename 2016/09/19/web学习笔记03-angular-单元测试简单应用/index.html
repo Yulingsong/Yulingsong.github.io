@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="angular单元测试1.创建项目 2.创建文件夹在项目中创建3个文件夹分别用于存放项目中用到的html、js、test文件。 3.安装框架服务器依赖于nodejs，需要安装nodejs的包，首先在根目录下创建package.json文件。  安装angular等框架    12345npm install bootstrap -savenpm install install angular -s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web学习笔记03-angular 单元测试简单应用">
+<meta property="og:url" content="http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="angular单元测试1.创建项目 2.创建文件夹在项目中创建3个文件夹分别用于存放项目中用到的html、js、test文件。 3.安装框架服务器依赖于nodejs，需要安装nodejs的包，首先在根目录下创建package.json文件。  安装angular等框架    12345npm install bootstrap -savenpm install install angular -s">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-5482a4f8f3b06149.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-8ea19edef0dc2f74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-f16d76958d16c3d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-6eae9385ac77aa2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-0c2224619eec10a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-1defb99c819cffde.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-ba60430131515263.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-d88d80a63e862386.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-ac3c140f157719f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-09-21T06:11:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web学习笔记03-angular 单元测试简单应用">
+<meta name="twitter:description" content="angular单元测试1.创建项目 2.创建文件夹在项目中创建3个文件夹分别用于存放项目中用到的html、js、test文件。 3.安装框架服务器依赖于nodejs，需要安装nodejs的包，首先在根目录下创建package.json文件。  安装angular等框架    12345npm install bootstrap -savenpm install install angular -s">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1062695-5482a4f8f3b06149.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>web学习笔记03-angular 单元测试简单应用</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/09/19/iOS学习笔记02-指纹验证TouchID简单应用1/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/09/12/web学习笔记02-基于Karma和Jasmine的AngularJS单元测试/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&text=web学习笔记03-angular 单元测试简单应用"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&title=web学习笔记03-angular 单元测试简单应用"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&is_video=false&description=web学习笔记03-angular 单元测试简单应用"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记03-angular 单元测试简单应用&body=Check out this article: http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&title=web学习笔记03-angular 单元测试简单应用"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&title=web学习笔记03-angular 单元测试简单应用"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&title=web学习笔记03-angular 单元测试简单应用"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&title=web学习笔记03-angular 单元测试简单应用"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&name=web学习笔记03-angular 单元测试简单应用&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#angular单元测试"><span class="toc-number">1.</span> <span class="toc-text">angular单元测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-创建项目"><span class="toc-number">1.1.</span> <span class="toc-text">1.创建项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-创建文件夹"><span class="toc-number">1.2.</span> <span class="toc-text">2.创建文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-安装框架"><span class="toc-number">1.3.</span> <span class="toc-text">3.安装框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-启动服务器"><span class="toc-number">1.4.</span> <span class="toc-text">4.启动服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-编写功能代码"><span class="toc-number">1.5.</span> <span class="toc-text">5.编写功能代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-编写测试代码"><span class="toc-number">1.6.</span> <span class="toc-text">6.编写测试代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-单元测试配置"><span class="toc-number">1.7.</span> <span class="toc-text">7.单元测试配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-运行单元测试"><span class="toc-number">1.8.</span> <span class="toc-text">8.运行单元测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-添加网络测试"><span class="toc-number">1.9.</span> <span class="toc-text">9.添加网络测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#补充：-httpBackend常用方法"><span class="toc-number">1.10.</span> <span class="toc-text">补充：$httpBackend常用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#when"><span class="toc-number">1.10.1.</span> <span class="toc-text">when</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#expect"><span class="toc-number">1.10.2.</span> <span class="toc-text">expect</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区别："><span class="toc-number">1.10.3.</span> <span class="toc-text">区别：</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        web学习笔记03-angular 单元测试简单应用
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-09-19T07:47:50.000Z" itemprop="datePublished">2016-09-19</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="angular单元测试"><a href="#angular单元测试" class="headerlink" title="angular单元测试"></a>angular单元测试</h2><h3 id="1-创建项目"><a href="#1-创建项目" class="headerlink" title="1.创建项目"></a>1.创建项目</h3><p><img src="http://upload-images.jianshu.io/upload_images/1062695-5482a4f8f3b06149.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建项目"></p>
+<h3 id="2-创建文件夹"><a href="#2-创建文件夹" class="headerlink" title="2.创建文件夹"></a>2.创建文件夹</h3><p>在项目中创建3个文件夹分别用于存放项目中用到的html、js、test文件。</p>
+<h3 id="3-安装框架"><a href="#3-安装框架" class="headerlink" title="3.安装框架"></a>3.安装框架</h3><p>服务器依赖于nodejs，需要安装nodejs的包，首先在根目录下创建package.json文件。</p>
+<ul>
+<li>安装angular等框架  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install bootstrap -save</span><br><span class="line"></span><br><span class="line">npm install install angular -save</span><br><span class="line"></span><br><span class="line">npm install angular-mocks -save</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>安装http-server模块   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install http-server -save</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>安装其他模块   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">npm install jasmine-core -save</span><br><span class="line"></span><br><span class="line">npm install karma -save</span><br><span class="line"></span><br><span class="line">npm install karma-chrome-launcher -save</span><br><span class="line"></span><br><span class="line">npm install karma-jasmine -save</span><br><span class="line"></span><br><span class="line">npm install karma-junit-reporter -save</span><br><span class="line"></span><br><span class="line">npm install protractor -save</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="4-启动服务器"><a href="#4-启动服务器" class="headerlink" title="4.启动服务器"></a>4.启动服务器</h3><p>要启动node服务器需要在package.json中配置script节点,dependencies中定义依赖包，在script配置start节点用于启动服务器，test节点的内容会在后面讲解。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;application-name&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;AngularUnitTest&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;0.0.1&quot;,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;angular&quot;: &quot;^1.5.8&quot;,</span><br><span class="line">    &quot;angular-mocks&quot;: &quot;^1.5.8&quot;,</span><br><span class="line">    &quot;bootstrap&quot;: &quot;^3.3.7&quot;,</span><br><span class="line">    &quot;http-server&quot;: &quot;^0.9.0&quot;,</span><br><span class="line">    &quot;install&quot;: &quot;^0.8.1&quot;,</span><br><span class="line">    &quot;jasmine-core&quot;: &quot;^2.5.2&quot;,</span><br><span class="line">    &quot;karma&quot;: &quot;^1.3.0&quot;,</span><br><span class="line">    &quot;karma-chrome-launcher&quot;: &quot;^2.0.0&quot;,</span><br><span class="line">    &quot;karma-jasmine&quot;: &quot;^1.0.2&quot;,</span><br><span class="line">    &quot;karma-junit-reporter&quot;: &quot;^1.1.0&quot;,</span><br><span class="line">    &quot;protractor&quot;: &quot;^4.0.8&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;prestart&quot;: &quot;npm install&quot;,</span><br><span class="line">    &quot;start&quot;: &quot;http-server -a localhost -p 8000 -c-1&quot;,</span><br><span class="line">    &quot;pretest&quot;: &quot;npm install&quot;,</span><br><span class="line">    &quot;test&quot;: &quot;karma start karma.conf.js&quot;,</span><br><span class="line">    &quot;test-single-run&quot;: &quot;karma start karma.conf.js  --single-run&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置后运行命令,启动服务器，浏览器上输入<a href="http://localhost:8000" target="_blank" rel="noopener">http://localhost:8000</a>  </p>
+<p><code>npm start</code></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-8ea19edef0dc2f74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="npm start">  </p>
+<h3 id="5-编写功能代码"><a href="#5-编写功能代码" class="headerlink" title="5.编写功能代码"></a>5.编写功能代码</h3><p>在文件js中新建js文件index.js。在index.js中定义congroller,实现简单累加方法add,代码如下:</p>
+<pre><code>var appControllers = angular.module(&apos;app&apos;, []);
+appControllers.controller(&apos;indexCtrl&apos;,[&apos;$scope&apos;,function($scope) {
+    $scope.add = function (a, b) {
+        if(a &amp;&amp; b)
+            return Number(a) + Number(b)
+        return 0;
+    }; 
+    $scope.detect = function (a, b) {
+        if(a &amp;&amp; b)
+            return Number(a) - Number(b)
+        return 0;
+    };       
+    $scope.pr = function () {
+        console.log(&apos;Function pr&apos;);
+    };
+}]);
+</code></pre><p>&#160;&#160;&#160;&#160;在文件html中新建html文件index.html，加入两个输入框用户获取输入，当输入后绑定controller中的add方法实现计算器功能，代码如下:</p>
+<pre><code>&lt;p&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;br /&gt; 
+&amp;lt;html lang=&amp;quot;en&amp;quot; ng-app=&amp;quot;app&amp;quot;&amp;gt;&lt;br /&gt; 
+&amp;lt;head&amp;gt;&lt;br /&gt; 
+    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;&lt;br /&gt; 
+    &amp;lt;title&amp;gt;index&amp;lt;/title&amp;gt;&lt;br /&gt; 
+&amp;lt;/head&amp;gt;&lt;br /&gt; 
+&amp;lt;body&amp;gt;&lt;br /&gt; 
+&amp;lt;div ng-controller=&amp;quot;indexCtrl&amp;quot;&amp;gt;&lt;br /&gt; 
+    &amp;lt;input type=&amp;quot;text&amp;quot; ng-model=&amp;quot;a&amp;quot; value=&amp;quot;     0&amp;quot;&amp;gt;&lt;br /&gt; 
+    +&lt;br /&gt; 
+    &amp;lt;input type=&amp;quot;text&amp;quot; ng-model=&amp;quot;b&amp;quot; value=&amp;quot;    0&amp;quot;&amp;gt;&lt;br /&gt; 
+    =&amp;lt;span id=&amp;quot;result&amp;quot;&amp;gt;{{add(a,b)}}&amp;lt;/span&amp;gt;&lt;br /&gt; 
+&amp;lt;/div&amp;gt;&lt;br /&gt; 
+&amp;lt;/body&amp;gt;&lt;br /&gt; 
+&amp;lt;/html&amp;gt;&lt;br /&gt; 
+&amp;lt;script src=&amp;quot;/node&lt;em&gt;modules/angular/angular.min.js&amp;quot;&amp;gt;&amp;lt;/     script&amp;gt;&lt;br /&gt; 
+&amp;lt;script src=&amp;quot;/node&lt;/em&gt;modules/angular-mocks/angular-    mocks.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;br /&gt; 
+&amp;lt;script src=&amp;quot;/js/index.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/p&gt;&lt;br /&gt; 
+</code></pre><p>启动服务器看到下图效果<br><img src="http://upload-images.jianshu.io/upload_images/1062695-f16d76958d16c3d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图"></p>
+<h3 id="6-编写测试代码"><a href="#6-编写测试代码" class="headerlink" title="6.编写测试代码"></a>6.编写测试代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;;</span><br><span class="line">describe(&apos;app&apos;, function () &#123;</span><br><span class="line">    beforeEach(module(&apos;app&apos;));</span><br><span class="line">    describe(&apos;indexCtrl&apos;, function () &#123;</span><br><span class="line">        it(&apos;add 测试&apos;, inject(function ($controller) &#123;</span><br><span class="line">            var $scope = &#123;&#125;;</span><br><span class="line">            //spec body</span><br><span class="line">            var indexCtrl = $controller(&apos;indexCtrl&apos;, &#123;$scope: $scope&#125;);</span><br><span class="line">            expect(indexCtrl).toBeDefined();</span><br><span class="line">            expect($scope.add(2, 3)).toEqual(5);</span><br><span class="line">        &#125;));</span><br><span class="line">        it(&apos;test detect function&apos;, function () &#123;</span><br><span class="line">            expect(scope.detect(4,3)).toEqual(1);</span><br><span class="line">        &#125;);</span><br><span class="line">        it(&apos;test pr function&apos;, function () &#123;</span><br><span class="line">            expect(scope.pr()).toEqual();</span><br><span class="line">        &#125;);</span><br><span class="line">      </span><br><span class="line">   	&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="7-单元测试配置"><a href="#7-单元测试配置" class="headerlink" title="7.单元测试配置"></a>7.单元测试配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">karma init</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-6eae9385ac77aa2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="karma init"></p>
+<p>在karma配置文件代码中每个节点都有默认注释请参</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// Karma configuration</span><br><span class="line">// Generated on Mon Sep 19 2016 10:51:55 GMT+0800 (CST)</span><br><span class="line"></span><br><span class="line">module.exports = function(config) &#123;</span><br><span class="line">  config.set(&#123;</span><br><span class="line"></span><br><span class="line">    // base path that will be used to resolve all patterns (eg. files, exclude)</span><br><span class="line">    basePath: &apos;./&apos;,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    // frameworks to use</span><br><span class="line">    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter</span><br><span class="line">    frameworks: [&apos;jasmine&apos;],</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    // list of files / patterns to load in the browser</span><br><span class="line">    files: [</span><br><span class="line">      &apos;node_modules/angular/angular.min.js&apos;,</span><br><span class="line">      &apos;node_modules/angular-mocks/angular-mocks.js&apos;,</span><br><span class="line">      &apos;js/index.js&apos;,</span><br><span class="line">      &apos;test/index-test.js&apos;</span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    // list of files to exclude</span><br><span class="line">    exclude: [</span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    // preprocess matching files before serving them to the browser</span><br><span class="line">    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor</span><br><span class="line">    preprocessors: &#123;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    // test results reporter to use</span><br><span class="line">    // possible values: &apos;dots&apos;, &apos;progress&apos;</span><br><span class="line">    // available reporters: https://npmjs.org/browse/keyword/karma-reporter</span><br><span class="line">    reporters: [&apos;progress&apos;],</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    // web server port</span><br><span class="line">    port: 9876,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    // enable / disable colors in the output (reporters and logs)</span><br><span class="line">    colors: true,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    // level of logging</span><br><span class="line">    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG</span><br><span class="line">    logLevel: config.LOG_INFO,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    // enable / disable watching file and executing tests whenever any file changes</span><br><span class="line">    autoWatch: true,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    // start these browsers</span><br><span class="line">    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher</span><br><span class="line">    browsers: [&apos;Chrome&apos;],</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    // Continuous Integration mode</span><br><span class="line">    // if true, Karma captures browsers, runs the tests and exits</span><br><span class="line">    singleRun: false,</span><br><span class="line"></span><br><span class="line">    // Concurrency level</span><br><span class="line">    // how many browser should be started simultaneous</span><br><span class="line">    concurrency: Infinity,</span><br><span class="line">    plugins: [</span><br><span class="line">      &apos;karma-chrome-launcher&apos;,</span><br><span class="line">      &apos;karma-jasmine&apos;,</span><br><span class="line">      &apos;karma-junit-reporter&apos;</span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    junitReporter: &#123;</span><br><span class="line">      outputFile: &apos;/test_out/unit.xml&apos;,</span><br><span class="line">      suite: &apos;unit&apos;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在package.json scripts 配置测试信息,指定karma文件地址</p>
+<pre><code>&quot;test&quot;: &quot;karma start karma.conf.js&quot;,
+</code></pre><h3 id="8-运行单元测试"><a href="#8-运行单元测试" class="headerlink" title="8.运行单元测试"></a>8.运行单元测试</h3><pre><code>npm test
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/1062695-0c2224619eec10a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="npm run"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-1defb99c819cffde.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="test page1"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-ba60430131515263.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="test page2"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-d88d80a63e862386.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="test result"></p>
+<h3 id="9-添加网络测试"><a href="#9-添加网络测试" class="headerlink" title="9.添加网络测试"></a>9.添加网络测试</h3><ul>
+<li>$http service示例</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var app = angular.module(&apos;Application&apos;, []</span><br><span class="line">)</span><br><span class="line">app.controller(&apos;MainCtrl&apos;, function($scope, $http) &#123;</span><br><span class="line">  	$http.get(&apos;Users/users.json&apos;).success(function(data)&#123;</span><br><span class="line">     	 $scope.users = data;</span><br><span class="line"> 	 &#125;);</span><br><span class="line">  	$scope.text = &apos;Hello World!&apos;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用$httpBackend设置伪后台</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">describe(&apos;MainCtrl&apos;, function() &#123;</span><br><span class="line">    //我们会在测试中使用这个scope</span><br><span class="line">    var scope, $httpBackend;</span><br><span class="line"></span><br><span class="line">    //模拟我们的Application模块并注入我们自己的依赖</span><br><span class="line">    beforeEach(angular.mock.module(&apos;Application&apos;));</span><br><span class="line"></span><br><span class="line">    //模拟Controller，并且包含 $rootScope 和 $controller</span><br><span class="line">    beforeEach(angular.mock.inject(function($rootScope, $controller, _$httpBackend_) &#123;</span><br><span class="line">        //设置$httpBackend冲刷$http请求</span><br><span class="line">        $httpBackend = _$httpBackend_;</span><br><span class="line">        $httpBackend.when(&apos;GET&apos;, &apos;Users/users.json&apos;).respond([&#123;</span><br><span class="line">            id: 1,</span><br><span class="line">            name: &apos;Bob&apos;</span><br><span class="line">        &#125;, &#123;</span><br><span class="line">            id: 2,</span><br><span class="line">            name: &apos;Jane&apos;</span><br><span class="line">        &#125;]);</span><br><span class="line">        //创建一个空的 scope</span><br><span class="line">        scope = $rootScope.$new();</span><br><span class="line"></span><br><span class="line">        //声明 Controller并且注入已创建的空的 scope</span><br><span class="line">        $controller(&apos;MainCtrl&apos;, &#123;</span><br><span class="line">            $scope: scope</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;));</span><br><span class="line"></span><br><span class="line">    // 测试从这里开始</span><br><span class="line">    it(&apos;should have variable text = &quot;Hello World!&quot;&apos;, function() &#123;</span><br><span class="line">        expect(scope.text).toBe(&apos;Hello World!&apos;);</span><br><span class="line">    &#125;);</span><br><span class="line">    it(&apos;should fetch list of users&apos;, function() &#123;</span><br><span class="line">        $httpBackend.flush();</span><br><span class="line">        expect(scope.users.length).toBe(2);</span><br><span class="line">        expect(scope.users[0].name).toBe(&apos;Bob&apos;);</span><br><span class="line">        //输出结果以方便查看</span><br><span class="line">        for(var i=0;i&lt;scope.users.length;i++)&#123;</span><br><span class="line">            console.log(scope.users[i].name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>以上示例中，可以使用$httpBackend.when和$httpBackend.expect提前设置请求的伪数据。最后在请求后执行$httpBackend.flush就会立即执行完成http请求。</p>
+<p>在demo中具体情况是这样的，添加常规常量和变量测试，以及两个网络测试，具体代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//常规变量</span><br><span class="line">    $scope.aaa = 1;</span><br><span class="line">    $scope.testText = &apos;Hello Jsamine And Karma&apos;;</span><br><span class="line"></span><br><span class="line">    //</span><br><span class="line">    $http.get(&apos;users.json&apos;).success(function(data)&#123;</span><br><span class="line">        $scope.users = data;</span><br><span class="line">    &#125;).error(function (error) &#123;</span><br><span class="line">        $scope.users = error;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    //获取网络数据,制造伪后台</span><br><span class="line">    $http.post(&apos;api/000&apos;).success(function(data)&#123;</span><br><span class="line">        $scope.userInfo = data;</span><br><span class="line">    &#125;).error(function (error) &#123;</span><br><span class="line">        $scope.userInfo = error;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>在测试文件中这么写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by apple on 16/9/19.</span><br><span class="line"> */</span><br><span class="line">&apos;use strict&apos;;</span><br><span class="line">describe(&apos;app&apos;, function () &#123;</span><br><span class="line">    beforeEach(module(&apos;app&apos;));</span><br><span class="line"></span><br><span class="line">    var scope,ctrl,$httpBackend;</span><br><span class="line"></span><br><span class="line">    beforeEach(inject(function ($controller, $rootScope,_$httpBackend_) &#123;</span><br><span class="line"></span><br><span class="line">        $httpBackend = _$httpBackend_;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        $httpBackend.when(&apos;GET&apos;, &apos;users.json&apos;).respond([</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;id&quot;: 1,</span><br><span class="line">                &quot;name&quot;: &quot;Bob&quot;,</span><br><span class="line">                &quot;age&quot;:20</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;id&quot;: 2,</span><br><span class="line">                &quot;name&quot;: &quot;Jane&quot;,</span><br><span class="line">                &quot;age&quot;:21</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;id&quot;: 3,</span><br><span class="line">                &quot;name&quot;: &quot;gary&quot;,</span><br><span class="line">                &quot;age&quot;:22</span><br><span class="line">            &#125;</span><br><span class="line">        ]);</span><br><span class="line"></span><br><span class="line">        $httpBackend.when(&apos;POST&apos;, &apos;api/000&apos;).respond(&#123;</span><br><span class="line">            &quot;dataList&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;moduleId&quot;: &quot;501&quot;,</span><br><span class="line">                    &quot;moduleList&quot;: [</span><br><span class="line">                        &#123;</span><br><span class="line">                            &quot;moduleId&quot;: &quot;501001&quot;,</span><br><span class="line">                            &quot;moduleName&quot;: &quot;融资申请&quot;,</span><br><span class="line">                            &quot;moduleUrl&quot;: &quot;/financing&quot;,</span><br><span class="line">                            &quot;parentModuleId&quot;: &quot;501&quot;</span><br><span class="line">                        &#125;,</span><br><span class="line">                        &#123;</span><br><span class="line">                            &quot;moduleId&quot;: &quot;501002&quot;,</span><br><span class="line">                            &quot;moduleName&quot;: &quot;融资进度查询&quot;,</span><br><span class="line">                            &quot;moduleUrl&quot;: &quot;/myFinancing&quot;,</span><br><span class="line">                            &quot;parentModuleId&quot;: &quot;501&quot;</span><br><span class="line">                        &#125;</span><br><span class="line">                    ],</span><br><span class="line">                    &quot;moduleName&quot;: &quot;票据融资&quot;,</span><br><span class="line">                    &quot;moduleUrl&quot;: &quot;&quot;,</span><br><span class="line">                    &quot;parentModuleId&quot;: &quot;00&quot;</span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">            &quot;imgCaptchaRequired&quot;: &quot;N&quot;,</span><br><span class="line">            &quot;isModifyPwd&quot;: &quot;N&quot;,</span><br><span class="line">            &quot;isSetTradePwd&quot;: &quot;N&quot;,</span><br><span class="line">            &quot;loginId&quot;: &quot;15250964261&quot;,</span><br><span class="line">            &quot;loginType&quot;: &quot;00&quot;,</span><br><span class="line">            &quot;participantName&quot;: &quot;guyu&quot;,</span><br><span class="line">            &quot;phone&quot;: &quot;15250964261&quot;,</span><br><span class="line">            &quot;retCode&quot;: &quot;000000&quot;,</span><br><span class="line">            &quot;retMsg&quot;: &quot;交易成功&quot;,</span><br><span class="line">            &quot;shortName&quot;: &quot;&quot;,</span><br><span class="line">            &quot;totalCount&quot;: 3,</span><br><span class="line">            &quot;userName&quot;: &quot;15250964261&quot;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        //模拟生成scope, $rootScope是angular中的顶级scope，angular中每个controller中的scope都是rootScope new出来的</span><br><span class="line">        scope = $rootScope.$new();</span><br><span class="line"></span><br><span class="line">        //模拟生成controller 并把先前生成的scope传入以方便测试</span><br><span class="line">        ctrl = $controller(&apos;indexCtrl&apos;, &#123;$scope: scope&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    describe(&apos;indexCtrl&apos;, function () &#123;</span><br><span class="line">        it(&apos;test add function&apos;, function () &#123;</span><br><span class="line">            expect(scope.add(2, 3)).toEqual(5);</span><br><span class="line">        &#125;);</span><br><span class="line">        it(&apos;test detect function&apos;, function () &#123;</span><br><span class="line">            expect(scope.detect(4,3)).toEqual(1);</span><br><span class="line">        &#125;);</span><br><span class="line">        it(&apos;test pr function&apos;, function () &#123;</span><br><span class="line">            expect(scope.pr()).toEqual();</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        it(&apos;test normal varibles&apos;, function () &#123;</span><br><span class="line">            expect(scope.testText).toEqual(&apos;Hello Jsamine And Karma&apos;);</span><br><span class="line">            expect(scope.aaa).toBe(1);</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        //测试伪后台的json数据</span><br><span class="line">        it(&apos;test get json&apos;, function () &#123;</span><br><span class="line">            $httpBackend.flush();</span><br><span class="line">            expect(scope.users.length).toBe(3);</span><br><span class="line">            expect(scope.users[0].name).toBe(&apos;Bob&apos;);</span><br><span class="line">            expect(scope.users[1].name).toEqual(&apos;Jane&apos;);</span><br><span class="line">            expect(scope.users[1].id).toBe(2);</span><br><span class="line">            expect(scope.users[2].age).toBe(22);</span><br><span class="line"></span><br><span class="line">            //输出结果以方便查看</span><br><span class="line">            for(var i=0;i&lt;scope.users.length;i++)&#123;</span><br><span class="line">                console.log(scope.users[i].id);</span><br><span class="line">                console.log(scope.users[i].name +&quot;    &quot;+ scope.users[i].age);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        //测试伪后台网络数据</span><br><span class="line">        it(&apos;test get network data&apos;, function () &#123;</span><br><span class="line">            $httpBackend.flush();</span><br><span class="line">            expect(scope.userInfo).toBeDefined();</span><br><span class="line">            expect(scope.userInfo.isModifyPwd).toEqual(&apos;N&apos;);</span><br><span class="line">            expect(scope.userInfo.retCode).toEqual(&apos;000000&apos;);</span><br><span class="line">            expect(scope.userInfo.phone).toEqual(&apos;15250964261&apos;);</span><br><span class="line">            expect(scope.userInfo.dataList.length).toBe(1);</span><br><span class="line">            expect(scope.userInfo.dataList[0].moduleId).toEqual(&quot;501&quot;);</span><br><span class="line">            expect(scope.userInfo.dataList[0].moduleList[0].moduleId).toEqual(&quot;501001&quot;);</span><br><span class="line">            expect(scope.userInfo.dataList[0].moduleList[0].parentModuleId).toEqual(&quot;501&quot;);</span><br><span class="line">            expect(scope.userInfo.dataList[0].moduleList[0].moduleUrl).toEqual(&quot;/financing&quot;);</span><br><span class="line">            expect(scope.userInfo.dataList[0].moduleList[1].moduleId).toEqual(&quot;501002&quot;);</span><br><span class="line">            expect(scope.userInfo.dataList[0].moduleList[1].moduleName).toEqual(&quot;融资进度查询&quot;);</span><br><span class="line">            expect(scope.userInfo.dataList[0].moduleList[1].moduleUrl).toEqual(&quot;/myFinancing&quot;);</span><br><span class="line">            console.log(scope.userInfo);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">   &#125;);</span><br><span class="line">	&#125;);</span><br></pre></td></tr></table></figure>
+<p>测试结果：<br><img src="http://upload-images.jianshu.io/upload_images/1062695-ac3c140f157719f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="测试结果"></p>
+<h3 id="补充：-httpBackend常用方法"><a href="#补充：-httpBackend常用方法" class="headerlink" title="补充：$httpBackend常用方法"></a>补充：$httpBackend常用方法</h3><h4 id="when"><a href="#when" class="headerlink" title="when"></a>when</h4><p>新建一个后端定义（backend definition）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">when(method, url, [data], [headers]);</span><br></pre></td></tr></table></figure>
+<h4 id="expect"><a href="#expect" class="headerlink" title="expect"></a>expect</h4><p>新建一个请求期望（request expectation）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(method, url, [data], [headers]);</span><br></pre></td></tr></table></figure>
+<p>when和expect都需要4个参数method, url, data, headers, 其中后2个参数可选。</p>
+<ul>
+<li><p>method表示http方法注意都需要是大写(GET, PUT…);<br></p>
+</li>
+<li><p>url请求的url可以为正则或者字符串；</p>
+</li>
+<li><p>data请求时带的参数，</p>
+</li>
+<li><p>headers请求时设置的header。</p>
+</li>
+</ul>
+<p>如果这些参数都提供了，那只有当这些参数都匹配的时候才会正确的匹配请求。when和expect都会返回一个带respond方法的对象。respond方法有3个参数status，data，headers通过设置这3个参数就可以伪造返回的响应数据了。</p>
+<h4 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h4><p>$httpBackend.when与$httpBackend.expect的区别在于：$httpBackend.expect的伪后台只能被调用一次(调用一次后会被清除)，第二次调用就会报错，而且$httpBackend.resetExpectations可以移除所有的expect而对when没有影响。</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#angular单元测试"><span class="toc-number">1.</span> <span class="toc-text">angular单元测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-创建项目"><span class="toc-number">1.1.</span> <span class="toc-text">1.创建项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-创建文件夹"><span class="toc-number">1.2.</span> <span class="toc-text">2.创建文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-安装框架"><span class="toc-number">1.3.</span> <span class="toc-text">3.安装框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-启动服务器"><span class="toc-number">1.4.</span> <span class="toc-text">4.启动服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-编写功能代码"><span class="toc-number">1.5.</span> <span class="toc-text">5.编写功能代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-编写测试代码"><span class="toc-number">1.6.</span> <span class="toc-text">6.编写测试代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-单元测试配置"><span class="toc-number">1.7.</span> <span class="toc-text">7.单元测试配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-运行单元测试"><span class="toc-number">1.8.</span> <span class="toc-text">8.运行单元测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-添加网络测试"><span class="toc-number">1.9.</span> <span class="toc-text">9.添加网络测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#补充：-httpBackend常用方法"><span class="toc-number">1.10.</span> <span class="toc-text">补充：$httpBackend常用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#when"><span class="toc-number">1.10.1.</span> <span class="toc-text">when</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#expect"><span class="toc-number">1.10.2.</span> <span class="toc-text">expect</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区别："><span class="toc-number">1.10.3.</span> <span class="toc-text">区别：</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&text=web学习笔记03-angular 单元测试简单应用"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&title=web学习笔记03-angular 单元测试简单应用"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&is_video=false&description=web学习笔记03-angular 单元测试简单应用"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记03-angular 单元测试简单应用&body=Check out this article: http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&title=web学习笔记03-angular 单元测试简单应用"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&title=web学习笔记03-angular 单元测试简单应用"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&title=web学习笔记03-angular 单元测试简单应用"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&title=web学习笔记03-angular 单元测试简单应用"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/09/19/web学习笔记03-angular-单元测试简单应用/&name=web学习笔记03-angular 单元测试简单应用&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+

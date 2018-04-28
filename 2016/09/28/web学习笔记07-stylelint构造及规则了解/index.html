@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;这篇文章主要是对stylelint的构造和规则，根据官网的英文文档， 我花了点时间进行了简单的翻译工作，把主要的意思大概写了一下，算是一篇笔记吧。具体的规则方面有些我就直接用有道翻译的，因为量太大了，我自己主要翻译的就是前半段，加上规则的部分内容，有道翻译的没翻译好的，我顺道给改了改。自己写的demo还没有完善好，等找时间，我完善之后上传下。 &amp;#1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web学习笔记07-stylelint构造及规则了解">
+<meta property="og:url" content="http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;这篇文章主要是对stylelint的构造和规则，根据官网的英文文档， 我花了点时间进行了简单的翻译工作，把主要的意思大概写了一下，算是一篇笔记吧。具体的规则方面有些我就直接用有道翻译的，因为量太大了，我自己主要翻译的就是前半段，加上规则的部分内容，有道翻译的没翻译好的，我顺道给改了改。自己写的demo还没有完善好，等找时间，我完善之后上传下。 &amp;#1">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2016-09-28T09:10:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web学习笔记07-stylelint构造及规则了解">
+<meta name="twitter:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;这篇文章主要是对stylelint的构造和规则，根据官网的英文文档， 我花了点时间进行了简单的翻译工作，把主要的意思大概写了一下，算是一篇笔记吧。具体的规则方面有些我就直接用有道翻译的，因为量太大了，我自己主要翻译的就是前半段，加上规则的部分内容，有道翻译的没翻译好的，我顺道给改了改。自己写的demo还没有完善好，等找时间，我完善之后上传下。 &amp;#1">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>web学习笔记07-stylelint构造及规则了解</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/09/27/web学习笔记06-stylelint初探/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&text=web学习笔记07-stylelint构造及规则了解"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&title=web学习笔记07-stylelint构造及规则了解"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&is_video=false&description=web学习笔记07-stylelint构造及规则了解"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记07-stylelint构造及规则了解&body=Check out this article: http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&title=web学习笔记07-stylelint构造及规则了解"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&title=web学习笔记07-stylelint构造及规则了解"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&title=web学习笔记07-stylelint构造及规则了解"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&title=web学习笔记07-stylelint构造及规则了解"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&name=web学习笔记07-stylelint构造及规则了解&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#stylelint-configuration-构造"><span class="toc-number">1.</span> <span class="toc-text">stylelint configuration(构造)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加载配置对象"><span class="toc-number">1.1.</span> <span class="toc-text">加载配置对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置对象"><span class="toc-number">1.2.</span> <span class="toc-text">配置对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rules"><span class="toc-number">1.2.1.</span> <span class="toc-text">rules</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-基本格式"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">1.基本格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-在css文件中关闭规则"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">2.在css文件中关闭规则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-严重程度：error-amp-warning"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">3.严重程度：error &amp; warning</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-自定义消息"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">4.自定义消息</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#扩展"><span class="toc-number">1.2.2.</span> <span class="toc-text">扩展</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#plugins（插件）"><span class="toc-number">1.2.3.</span> <span class="toc-text">plugins（插件）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Processors（处理器）"><span class="toc-number">1.2.4.</span> <span class="toc-text">Processors（处理器）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ignoreFiles"><span class="toc-number">1.2.5.</span> <span class="toc-text">ignoreFiles</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#defaultSeverity"><span class="toc-number">1.2.6.</span> <span class="toc-text">defaultSeverity</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#stylelintignore"><span class="toc-number">1.2.7.</span> <span class="toc-text">.stylelintignore</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stylelint-rules"><span class="toc-number">2.</span> <span class="toc-text">stylelint rules</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#规则列表"><span class="toc-number">2.1.</span> <span class="toc-text">规则列表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Color"><span class="toc-number">2.1.1.</span> <span class="toc-text">Color</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#font-family"><span class="toc-number">2.1.2.</span> <span class="toc-text">font-family</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#function"><span class="toc-number">2.1.3.</span> <span class="toc-text">function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Number"><span class="toc-number">2.1.4.</span> <span class="toc-text">Number</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#String"><span class="toc-number">2.1.5.</span> <span class="toc-text">String</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Length"><span class="toc-number">2.1.6.</span> <span class="toc-text">Length</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Time"><span class="toc-number">2.1.7.</span> <span class="toc-text">Time</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Unit"><span class="toc-number">2.1.8.</span> <span class="toc-text">Unit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Value"><span class="toc-number">2.1.9.</span> <span class="toc-text">Value</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Value-list"><span class="toc-number">2.1.10.</span> <span class="toc-text">Value list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Custom-property"><span class="toc-number">2.1.11.</span> <span class="toc-text">Custom property</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shorthand-property"><span class="toc-number">2.1.12.</span> <span class="toc-text">Shorthand property</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Property"><span class="toc-number">2.1.13.</span> <span class="toc-text">Property</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Keyframe-declaration"><span class="toc-number">2.1.14.</span> <span class="toc-text">Keyframe declaration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Declaration"><span class="toc-number">2.1.15.</span> <span class="toc-text">Declaration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Declaration-block"><span class="toc-number">2.1.16.</span> <span class="toc-text">Declaration block</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Block"><span class="toc-number">2.1.17.</span> <span class="toc-text">Block</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selector"><span class="toc-number">2.1.18.</span> <span class="toc-text">Selector</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selector-list"><span class="toc-number">2.1.19.</span> <span class="toc-text">Selector list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Root-rule"><span class="toc-number">2.1.20.</span> <span class="toc-text">Root rule</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Rule"><span class="toc-number">2.1.21.</span> <span class="toc-text">Rule</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Media-feature"><span class="toc-number">2.1.22.</span> <span class="toc-text">Media feature</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Custom-media"><span class="toc-number">2.1.23.</span> <span class="toc-text">Custom media</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Media-query-list"><span class="toc-number">2.1.24.</span> <span class="toc-text">Media query list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#At-rule"><span class="toc-number">2.1.25.</span> <span class="toc-text">At-rule</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#stylelint-disable-comment"><span class="toc-number">2.1.26.</span> <span class="toc-text">stylelint-disable comment</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Comment"><span class="toc-number">2.1.27.</span> <span class="toc-text">Comment</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#General-Sheet"><span class="toc-number">2.1.28.</span> <span class="toc-text">General / Sheet</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#官方配置标准文件"><span class="toc-number">3.</span> <span class="toc-text">官方配置标准文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#stylelint-config-standard"><span class="toc-number">3.1.</span> <span class="toc-text">stylelint-config-standard</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        web学习笔记07-stylelint构造及规则了解
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-09-28T09:08:56.000Z" itemprop="datePublished">2016-09-28</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>&#160;&#160;&#160;&#160;<strong>这篇文章主要是对stylelint的构造和规则，根据官网的英文文档， 我花了点时间进行了简单的翻译工作，把主要的意思大概写了一下，算是一篇笔记吧。具体的规则方面有些我就直接用有道翻译的，因为量太大了，我自己主要翻译的就是前半段，加上规则的部分内容，有道翻译的没翻译好的，我顺道给改了改。自己写的demo还没有完善好，等找时间，我完善之后上传下。</strong></p>
+<p>&#160;&#160;&#160;&#160;<strong>其实吧，这个stylelint用起来基本上跟eslint差不多，也可以跟gulp一块用，这个方面我还没有开始研究，可能明天或者后天会进行研究。然后后续也可能再补上一篇文。感觉时间好不够用，这一天研究研究，就过去了。好希望一天是240小时。大家看这篇文章要是有啥不懂的可以去官网查看查看，其实里面有不少内容我自己也没有弄清楚呢，还有待研究，大家要是有兴趣的可以跟我一起讨论讨论。</strong></p>
+<h2 id="stylelint-configuration-构造"><a href="#stylelint-configuration-构造" class="headerlink" title="stylelint configuration(构造)"></a>stylelint configuration(构造)</h2><h3 id="加载配置对象"><a href="#加载配置对象" class="headerlink" title="加载配置对象"></a>加载配置对象</h3><p>&#160;&#160;&#160;&#160;从工程中查找和加载配置项，一般会从当前的工作目录中，以下面的顺序查找可能的来源：</p>
+<ul>
+<li><code>package.json</code>里面的<code>stylelint</code>属性</li>
+<li>一个单独的<code>.stylelintrc</code>文件</li>
+<li>一个<code>stylelint.config.js</code>到处JS对象的文件     </li>
+</ul>
+<p>&#160;&#160;&#160;&#160;<code>.stylelintrc</code>文件格式可以是JSON，可以是YAML格式的，你也可以添加文件扩展名来指定文件内容格式是JSON，YAML，或者是JS格式。<code>.stylelintrc.json</code>, <code>.stylelintrc.yaml</code>, <code>.stylelintrc.js</code>。</p>
+<p>&#160;&#160;&#160;&#160;你可能需要使用扩展，使你的文本编辑器，可以更好地解释文件，并帮助语法检查和高亮。</p>
+<p>&#160;&#160;&#160;&#160;一旦其中之一被发现和解析，搜索将停止，该对象将被使用。</p>
+<h3 id="配置对象"><a href="#配置对象" class="headerlink" title="配置对象"></a>配置对象</h3><p>&#160;&#160;&#160;&#160;配置对象可以有下面这些属性</p>
+<h4 id="rules"><a href="#rules" class="headerlink" title="rules"></a>rules</h4><h5 id="1-基本格式"><a href="#1-基本格式" class="headerlink" title="1.基本格式"></a>1.基本格式</h5><p>&#160;&#160;&#160;&#160;个人认为规则算是检查器里极其重要的配置项了，stylelint有超过一百五十条的规则，这些规则没有是默认打开的，都需要自己根据自己的需要进行设置开启。</p>
+<p>&#160;&#160;&#160;&#160;规则属性是一个对象，它的键是规则的名称，值是规则配置。每个规则配置符合下列格式之一：</p>
+<ul>
+<li>单个值（primary option）</li>
+<li>一个有两个值的数组（[primary option,secondary option]）</li>
+<li>null (关闭规则)</li>
+</ul>
+<p>示例：</p>
+<pre><code>{
+      &quot;rules&quot;: {
+        &quot;block-no-empty&quot;: null,
+        &quot;color-no-invalid-hex&quot;: true,
+        &quot;comment-empty-line-before&quot;: [ &quot;always&quot;, {
+              &quot;ignore&quot;: [&quot;stylelint-commands&quot;, &quot;between-comments&quot;],
+        } ],
+        &quot;declaration-colon-space-after&quot;: &quot;always&quot;,
+        &quot;indentation&quot;: [&quot;tab&quot;, {
+              &quot;except&quot;: [&quot;value&quot;]
+        }],
+        &quot;max-empty-lines&quot;: 2,
+        &quot;rule-nested-empty-line-before&quot;: [ &quot;always&quot;, {
+              &quot;except&quot;: [&quot;first-nested&quot;],
+              &quot;ignore&quot;: [&quot;after-comment&quot;],
+        } ],
+        &quot;unit-whitelist&quot;: [&quot;em&quot;, &quot;rem&quot;, &quot;%&quot;, &quot;s&quot;]
+      }    
+}
+</code></pre><p>指定了一个primary option就是打开了一个规则。</p>
+<h5 id="2-在css文件中关闭规则"><a href="#2-在css文件中关闭规则" class="headerlink" title="2.在css文件中关闭规则"></a>2.在css文件中关闭规则</h5><p>&#160;&#160;&#160;&#160;在css文件中，你可以暂时关闭某条规则，也可以关闭所有规则：</p>
+<pre><code>/* stylelint-disable */
+a {}
+/* stylelint-enable */
+</code></pre><p>&#160;&#160;&#160;&#160;你也可以关闭个别规则：</p>
+<pre><code>/* stylelint-disable selector-no-id, declaration-no-important      */
+#id {
+      color: pink !important;
+}
+/* stylelint-enable */
+</code></pre><p>&#160;&#160;&#160;&#160;在你不需要明确地重新启用的规则处，你也可以通过<code>/* stylelint-disable-line */</code>关闭个别行：</p>
+<pre><code>#id { /* stylelint-disable-line */
+      color: pink !important; /* stylelint-disable-line declaration-no-important */
+}
+</code></pre><p>&#160;&#160;&#160;&#160;当然你也可以通过<code>/* stylelint-disable-next-line */</code>来关闭那些你不需要明确重新启用的下一行规则：</p>
+<pre><code>#id {
+      /* stylelint-disable-next-line declaration-no-important */
+      color: pink !important;
+}
+</code></pre><p>&#160;&#160;&#160;&#160;有些复杂的，重叠的禁用和启用模式同样支持：</p>
+<pre><code>/* stylelint-disable */
+/* stylelint-enable foo */
+/* stylelint-disable foo */
+/* stylelint-enable */
+/* stylelint-disable foo, bar */
+/* stylelint-disable baz */
+/* stylelint-enable baz, bar */
+/* stylelint-enable foo */
+</code></pre><h5 id="3-严重程度：error-amp-warning"><a href="#3-严重程度：error-amp-warning" class="headerlink" title="3.严重程度：error &amp; warning"></a>3.严重程度：error &amp; warning</h5><p>&#160;&#160;&#160;&#160;跟eslint差不多，stylelint也有严重程度的分别，默认情况下，所有的规则都有一个<code>error</code>级别的严重程度，你可以在配置中通过添加<code>defaultSeverity</code>属性来改变默认值 </p>
+<p>&#160;&#160;&#160;&#160;要调整任何具体规则的严重程度，使用辅助选项<code>severity</code>，可获得的值有</p>
+<ul>
+<li>warning</li>
+<li>error</li>
+</ul>
+<p>示例：</p>
+<pre><code>// error-level severity examples
+{ &quot;indentation&quot;: 2 }
+{ &quot;indentation&quot;: [2] }
+
+// warning-level severity examples
+{ &quot;indentation&quot;: [2, { &quot;severity&quot;: &quot;warning&quot; } ] }
+{ &quot;indentation&quot;: [2, {
+        &quot;except&quot;: [&quot;value&quot;],
+        &quot;severity&quot;: &quot;warning&quot;
+      }]
+}
+</code></pre><p>不同的情况会使用不同的严重级别。例如不同的显示，或者不同的退出过程等等。</p>
+<h5 id="4-自定义消息"><a href="#4-自定义消息" class="headerlink" title="4.自定义消息"></a>4.自定义消息</h5><p>&#160;&#160;&#160;&#160;如果您想在一个规则被违反，提供自定义消息，你可以用两种方式做到这一点：提供一个<code>message</code>选项，或者写一个自定义格式。</p>
+<p>&#160;&#160;&#160;&#160;所有的规则都接受一个次要选项<code>message</code>,如果提供了该选项，意味着将会取代任何默认提供的标准信息。举个例子，以下规则配置将替代几个自定义消息：</p>
+<pre><code>{
+      &quot;color-hex-case&quot;: [ &quot;lower&quot;, {
+        &quot;message&quot;: &quot;Lowercase letters are easier to distinguish from numbers&quot;
+      } ],
+      &quot;indentation&quot;: [ 2, {
+         &quot;ignore&quot;: [&quot;block&quot;],
+            &quot;message&quot;: &quot;Please use 2 spaces for indentation. Tabs make The Architect grumpy.&quot;,
+        &quot;severity&quot;: &quot;warning&quot;
+      } ]
+}
+</code></pre><p>如果你想最大程度的进行控制，你应该写自定义格式的规则。(自定义消息部分的思想我大概理解，但是不怎么会翻译。。尴尬。。。)</p>
+<h4 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h4><p>&#160;&#160;&#160;&#160;你的配置可以扩展一个现有的配置，无论这个配置是你自己的还是第三方的。当一个配置扩展了另一个配置，它在被扩展的配置项开始的时候开始，并且添加在其之后或者直接覆盖当前配置。</p>
+<p>&#160;&#160;&#160;&#160;你也可以扩展现有配置的阵列，优先于阵列中的各项（因此第一项压倒一切，第二个项目压倒一切除了第一项，以此类推。个人理解就是你一个草民扩展了，你当皇帝了，那你就是老大，比谁都牛，你要是宰相呢，那你就是除了皇帝以外，比谁都厉害，你要是什么七品芝麻官，除了比你级别高的，你比下面的人都厉害等等。）。</p>
+<p>&#160;&#160;&#160;&#160;举个例子，扩展下<code>stylelint-config-standard</code>改变缩进的标签，并且关闭<code>number-leading-zero</code>规则:</p>
+<pre><code>{
+      &quot;extends&quot;: &quot;stylelint-config-standard&quot;,
+      &quot;rules&quot;: {
+        &quot;indentation&quot;: &quot;tab&quot;,
+        &quot;number-leading-zero&quot;: null
+      }
+}
+</code></pre><p>或者用<code>stylelint-config-standard</code>开始，然后在这顶部把<code>myExtendableConfig</code>分层，然后覆盖缩进规则</p>
+<pre><code>{
+      &quot;extends&quot;: [
+        &quot;stylelint-config-standard&quot;,
+        &quot;./myExtendableConfig&quot;
+      ],
+      &quot;rules&quot;: {
+        &quot;indentation&quot;: &quot;tab&quot;
+      }
+}
+</code></pre><p><code>extends</code>的值是<code>locater</code>,最终是<code>require()</code>，所以它可以适合用<code>node</code>的<code>require.resolve（）</code>算法的任何格式。这就意味着<code>locater</code>可以是：</p>
+<ul>
+<li>在<code>node_modules</code>模块的名称。</li>
+<li>绝对文件路径。</li>
+<li>名为.js或者以.json扩展名的文件的相对路径，相对于参考配置。</li>
+</ul>
+<h4 id="plugins（插件）"><a href="#plugins（插件）" class="headerlink" title="plugins（插件）"></a>plugins（插件）</h4><p>&#160;&#160;&#160;&#160;插件是支持方法，工具集，非标准CSS功能，或者非常具体的用例规则或套由社区建立规则。</p>
+<p>&#160;&#160;&#160;&#160;想要使用插件，就添加<code>plugins</code>阵列配置项到你的配置文件中，值可以是一个npm模块的名字，可以使一个绝对路径，也可以是一个调用配置文件的相对路径。</p>
+<pre><code>{
+      &quot;plugins&quot;: [
+        &quot;../special-rule.js&quot;
+      ],
+      &quot;rules&quot;: {
+        &quot;plugin/special-rule&quot;: &quot;everything&quot;
+      },
+}
+</code></pre><p>&#160;&#160;&#160;&#160;一个插件可以提供一个规则或者一组规则，如果你用的插件提供了一组规则，只需调用模块中的插件配置值，并且使用它在<code>rules</code>中提供的规则。</p>
+<pre><code>{
+      &quot;plugins&quot;: [
+        &quot;../some-rule-set.js&quot;
+      ],
+      &quot;rules&quot;: {
+        &quot;some-rule-set/first-rule&quot;: &quot;everything&quot;,
+        &quot;some-rule-set/second-rule&quot;: &quot;nothing&quot;,
+        &quot;some-rule-set/third-rule&quot;: &quot;everything&quot;
+      },
+}
+</code></pre><h4 id="Processors（处理器）"><a href="#Processors（处理器）" class="headerlink" title="Processors（处理器）"></a>Processors（处理器）</h4><p>&#160;&#160;&#160;&#160;处理器是挂钩到stylelint的管道，修改的道路上的代码到stylelint并就其出路改变结果的功能。</p>
+<p>&#160;&#160;&#160;&#160;处理器只能与CLI和节点的API，而不是与PostCSS插件使用。 （该PostCSS插件会忽略它们。）</p>
+<p>&#160;&#160;&#160;&#160;使用的话，添加<code>processors</code>阵列配置项到配置文件中，用起来跟扩展差不都多。</p>
+<pre><code>{
+      &quot;processors&quot;: [&quot;stylelint-html-processor&quot;],
+      &quot;rules&quot;: {..},
+}
+</code></pre><p>如果你的处理器有选项，其第一个项目是“定位”和第二项是选择对象。</p>
+<pre><code>{
+      &quot;processors&quot;: [
+        &quot;stylelint-html-processor&quot;,
+        [ &quot;some-other-processor&quot;, { &quot;optionOne&quot;: true, &quot;optionTwo&quot;: false } ]
+      ],
+      &quot;rules&quot;: {..}
+}
+</code></pre><h4 id="ignoreFiles"><a href="#ignoreFiles" class="headerlink" title="ignoreFiles"></a>ignoreFiles</h4><p>&#160;&#160;&#160;&#160;提供一个glob或globs数组忽略特定文件。</p>
+<p>&#160;&#160;&#160;&#160;另一种方法是使用一个<code>.stylelintignore</code>文件，描述如下。</p>
+<p>&#160;&#160;&#160;&#160;如果glob是绝对路径，它们就这样用。如果他们是相对的，它们是相对于分析</p>
+<ul>
+<li>configBasedir</li>
+<li>配置文件的路径，如果配置是stylelint发现的一个加载的文件</li>
+<li><code>process.cwd()</code></li>
+</ul>
+<p>这个属性呢，从扩展配置剥离：只有root级别的配置可以忽略文件。</p>
+<h4 id="defaultSeverity"><a href="#defaultSeverity" class="headerlink" title="defaultSeverity"></a>defaultSeverity</h4><p>&#160;&#160;&#160;&#160;默认严重级别</p>
+<ul>
+<li>error</li>
+<li>warning</li>
+</ul>
+<h4 id="stylelintignore"><a href="#stylelintignore" class="headerlink" title=".stylelintignore"></a>.stylelintignore</h4><p>&#160;&#160;&#160;&#160;你可以使用<code>.stylelintignore</code>文件（或者指定另一个忽略模式的文件）来忽略特定文件。（另一种方法是使用一个config.ignoreFiles，如上所述）</p>
+<p>&#160;&#160;&#160;&#160;在你<code>.stylelintignore</code>文件中的模式必须匹配<code>.gitignore</code>语法。（之后，<code>node-ignore</code>会解析你的模式），这其中的一个含义是，在你文件中的模式总是相对于<code>process.cwd（）</code>进行分析</p>
+<p>&#160;&#160;&#160;&#160;stylelint会在<code>process.cwd（）</code>中寻找一个<code>.stylelintignore</code>文件，你还可以指定你的忽略模式的文件路径（绝对或相对于process.cwd（））使用–ignore路径（在CLI）和ignorePath（在JS）选项。</p>
+<h2 id="stylelint-rules"><a href="#stylelint-rules" class="headerlink" title="stylelint rules"></a>stylelint rules</h2><p>&#160;&#160;&#160;&#160;<a href="https://github.com/stylelint/stylelint/blob/master/docs/user-guide/rules.md" target="_blank" rel="noopener">stylelint rules官方地址</a></p>
+<p>&#160;&#160;&#160;&#160;规则专注于规范化css，旨在作用于广大用户。除了规则呢，还有插件，插件是由社区建立，可以支持方法，工具集，非标准CSS功能，或者非常具体的用例规则。</p>
+<p>&#160;&#160;&#160;&#160;每一条规则是独立的，默认情况下关闭。规则也没有默认值。</p>
+<h3 id="规则列表"><a href="#规则列表" class="headerlink" title="规则列表"></a>规则列表</h3><h4 id="Color"><a href="#Color" class="headerlink" title="Color"></a>Color</h4><ul>
+<li><code>color-hex-case</code>: 指定大写或小写十六进制的颜色。</li>
+<li><code>color-hex-length</code>: 指定十六进制颜色长或短的符号。</li>
+<li><code>color-named</code>: 需要（如果可能）或不允许命名的颜色。</li>
+<li><code>color-no-hex</code>: 不允许十六进制的颜色。</li>
+<li><code>color-no-invalid-hex</code>: 禁止无效的十六进制颜色。</li>
+</ul>
+<h4 id="font-family"><a href="#font-family" class="headerlink" title="font-family"></a>font-family</h4><ul>
+<li><code>font-family-name-quotes</code>:指定是否引号应该围绕字体系列名称中使用。</li>
+</ul>
+<h4 id="function"><a href="#function" class="headerlink" title="function"></a>function</h4><ul>
+<li><code>function-blacklist</code>:指定不允许的功能黑名单</li>
+<li><code>function-calc-no-unspaced-operator</code>:计算的函数中禁止的unspaced执行</li>
+<li><code>function-comma-newline-after</code>:要求一个新行或函数的逗号后禁止空白。</li>
+<li><code>function-comma-newline-before</code>: 要求一个新行或函数的逗号之前不允许空白。</li>
+<li><code>function-comma-space-after</code>: 要求一个空格或函数的逗号后禁止空白。</li>
+<li><code>function-comma-space-before</code>:要求一个空格或函数的逗号前禁止空白。</li>
+<li><code>function-linear-gradient-no-nonstandard-direction</code>:禁止在线性梯度方向值（），根据标准语法是无效的呼叫。</li>
+<li><code>function-max-empty-lines</code>: 限制方法中相邻的空行数</li>
+<li><code>function-name-case</code>: 指定大写或小写的函数名。</li>
+<li><code>function-parentheses-newline-inside</code>:要求一个新行或函数的括号内不允许空白。 </li>
+<li><code>function-parentheses-space-inside</code>: 要求一个空格或函数的括号内不允许空白。</li>
+<li><code>function-url-data-uris</code>: 要求或禁止数据的URI的URL</li>
+<li><code>function-url-no-scheme-relative</code>:不允许文档相对的URL。 </li>
+<li><code>function-url-quotes</code>: 要求或禁止对于网址报价</li>
+<li><code>function-url-scheme-whitelist</code>: 指定允许URL方案的白名单。</li>
+<li><code>function-whitelist</code>: 指定允许的功能的白名单。</li>
+<li><code>function-whitespace-after</code>: 要求方法后不允许空白。</li>
+</ul>
+<h4 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h4><ul>
+<li><code>number-leading-zero</code>:要求或分数低于1的数字禁止前导零。</li>
+<li><code>number-max-precision</code>:限制允许的小数位数的数目。</li>
+<li><code>number-no-trailing-zeros</code>: 禁止在数量尾随零。</li>
+</ul>
+<h4 id="String"><a href="#String" class="headerlink" title="String"></a>String</h4><ul>
+<li><code>string-no-newline</code>: 禁止在字符串（转义）换行。</li>
+<li><code>string-quotes</code>: 指定字串，单或双引号。</li>
+</ul>
+<h4 id="Length"><a href="#Length" class="headerlink" title="Length"></a>Length</h4><ul>
+<li><code>length-zero-no-unit</code>: 禁止单位零长度。</li>
+</ul>
+<h4 id="Time"><a href="#Time" class="headerlink" title="Time"></a>Time</h4><ul>
+<li><code>time-no-imperceptible</code>: 禁止动画和过渡小于或等于100毫秒。</li>
+</ul>
+<h4 id="Unit"><a href="#Unit" class="headerlink" title="Unit"></a>Unit</h4><ul>
+<li><code>unit-blacklist</code>: 指定不允许使用单位的黑名单。</li>
+<li><code>unit-case</code>: 指定大写或小写的单位。</li>
+<li><code>unit-no-unknown</code>: 禁止未知的单位。</li>
+<li><code>unit-whitelist</code>: 指定允许单位的白名单&gt;</li>
+</ul>
+<h4 id="Value"><a href="#Value" class="headerlink" title="Value"></a>Value</h4><ul>
+<li><code>value-keyword-case</code>: 指定大写或小写关键字的值。</li>
+<li><code>value-no-vendor-prefix</code>: 不允许供应商前缀值。</li>
+</ul>
+<h4 id="Value-list"><a href="#Value-list" class="headerlink" title="Value list"></a>Value list</h4><ul>
+<li><code>value-list-comma-newline-after</code>: 逗号后需要一个换行符或不允许空白值列表。</li>
+<li><code>value-list-comma-newline-before</code>: 逗号前需要一个换行符或不允许空白值列表。</li>
+<li><code>value-list-comma-space-after</code>: 需要一个空格或者逗号后不允许空白值列表。</li>
+<li><code>value-list-comma-space-before</code>:需要一个空格或者逗号前不允许空白值列表。</li>
+<li><code>value-list-max-empty-lines</code>: 限制相邻的数量值列表内空行。</li>
+</ul>
+<h4 id="Custom-property"><a href="#Custom-property" class="headerlink" title="Custom property"></a>Custom property</h4><ul>
+<li><code>custom-property-empty-line-before</code>: 自定义属性之前equire或不允许空行。</li>
+<li><code>custom-property-no-outside-root</code>: 不允许自定义属性以外的:根规则。</li>
+<li><code>custom-property-pattern</code>: 为自定义属性指定一个模式。</li>
+</ul>
+<h4 id="Shorthand-property"><a href="#Shorthand-property" class="headerlink" title="Shorthand property"></a>Shorthand property</h4><ul>
+<li><code>shorthand-property-no-redundant-values</code>:不允许在简写属性冗余值。</li>
+</ul>
+<h4 id="Property"><a href="#Property" class="headerlink" title="Property"></a>Property</h4><ul>
+<li><code>property-blacklist</code>: 指定一个不允许属性的黑名单。</li>
+<li><code>property-case</code>: 为属性指定小写或大写。</li>
+<li><code>property-no-unknown</code>: 不允许未知属性。</li>
+<li><code>property-no-vendor-prefix</code>: 不允许前缀的属性。</li>
+<li><code>property-whitelist</code>: 指定一个白名单允许属性。</li>
+</ul>
+<h4 id="Keyframe-declaration"><a href="#Keyframe-declaration" class="headerlink" title="Keyframe declaration"></a>Keyframe declaration</h4><ul>
+<li><code>keyframe-declaration-no-important</code>: 不允许!important在关键帧声明。</li>
+</ul>
+<h4 id="Declaration"><a href="#Declaration" class="headerlink" title="Declaration"></a>Declaration</h4><ul>
+<li><code>declaration-bang-space-after</code>: bang声明之后需要一个空格或者不允许空白</li>
+<li><code>declaration-bang-space-before</code>: bang声明之前需要一个空格或者不允许空白</li>
+<li><code>declaration-colon-newline-after</code>: 冒号后的声明需要一个换行符或不允许空白。</li>
+<li><code>declaration-colon-space-after</code>: 冒号后的声明需要一个空格或不允许空白。</li>
+<li><code>declaration-colon-space-before</code>: 冒号之前的声明需要一个空格或不允许空白。</li>
+<li><code>declaration-empty-line-before</code>: 要求声明前不允许空一行。</li>
+<li><code>declaration-no-important</code>: 不允许!important声明。</li>
+<li><code>declaration-property-unit-blacklist</code>: 指定一个黑名单内不允许声明属性。</li>
+<li><code>declaration-property-unit-whitelist</code>: 指定一个白名单内允许声明属性。</li>
+<li><code>declaration-property-value-blacklist</code>: 指定一个黑名单,不允许在声明属性和值对。</li>
+<li><code>declaration-property-value-whitelist</code>: 指定一个允许属性和值对声明的白名单。</li>
+</ul>
+<h4 id="Declaration-block"><a href="#Declaration-block" class="headerlink" title="Declaration block"></a>Declaration block</h4><ul>
+<li><code>declaration-block-no-duplicate-properties</code>: 不允许复制属性块中声明</li>
+<li><code>declaration-block-no-ignored-properties</code>:不允许被忽略是因为另一个属性值的属性值相同的规则。</li>
+<li><code>declaration-block-no-redundant-longhand-properties</code>: 不允许手写属性,可以组合成一个简写属性。</li>
+<li><code>declaration-block-no-shorthand-property-overrides</code>: 不允许简写属性覆盖相关手写属性声明块。</li>
+<li><code>declaration-block-properties-order</code>: 声明块中指定的顺序属性。</li>
+<li><code>declaration-block-semicolon-newline-after</code>: 要求一个换行符或不允许空白块分号后。</li>
+<li><code>declaration-block-semicolon-newline-before</code>: 要求一个换行符或不允许空白块分号之前的声明。</li>
+<li><code>declaration-block-semicolon-space-after</code>: 要求一个空间或不允许空白块分号后的声明。</li>
+<li><code>declaration-block-semicolon-space-before</code>: 要求一个空间或不允许空白块分号之前的声明</li>
+<li><code>declaration-block-single-line-max-declarations</code>: 限制声明在一行声明块的数量</li>
+<li><code>declaration-block-trailing-semicolon</code>: 要求或不允许在声明块后面的分号。</li>
+</ul>
+<h4 id="Block"><a href="#Block" class="headerlink" title="Block"></a>Block</h4><ul>
+<li><code>block-closing-brace-empty-line-before</code>: 要求或不允许关闭括号前空一行。</li>
+<li><code>block-closing-brace-newline-after</code>: 需要一个换行符或不允许关闭括号后的空白。</li>
+<li><code>block-closing-brace-newline-before</code>: 需要一个换行符或不允许空白关闭括号前的块。</li>
+<li><code>block-closing-brace-space-after</code>: 需要一个空间或不允许关闭括号后的空白块。</li>
+<li><code>block-closing-brace-space-before</code>: 在关闭括号前的块需要一个空格或者不允许空白。</li>
+<li><code>block-no-empty</code>: 不允许空块</li>
+<li><code>block-no-single-line</code>: 不允许单行块</li>
+<li><code>block-opening-brace-newline-after</code>: 开括号的块之后需要新的一行。</li>
+<li><code>block-opening-brace-newline-before</code>: 开括号的块之后需要一个换行符或不允许空白</li>
+<li><code>block-opening-brace-space-after</code>: 开括号的块之后需要一个空格或不允许空白。</li>
+<li><code>block-opening-brace-space-before</code>: 开括号的块之前需要一个空格或不允许空白。</li>
+</ul>
+<h4 id="Selector"><a href="#Selector" class="headerlink" title="Selector"></a>Selector</h4><ul>
+<li><code>selector-attribute-brackets-space-inside</code>: 在括号里的属性选择器需要一个空格或者不允许空白。</li>
+<li><code>selector-attribute-operator-blacklist</code>: 指定一个黑名单不允许属性的操作符。</li>
+<li><code>selector-attribute-operator-space-after</code>: 需要一个空间或不允许空格后运营商在属性选择器。</li>
+<li><code>selector-attribute-operator-space-before</code>: 需要一个空间或不允许空格内运营商之前属性选择器。</li>
+<li><code>selector-attribute-operator-whitelist</code>: 指定一个属性允许运营商的白名单。</li>
+<li><code>selector-attribute-quotes</code>: 需要或不允许引用属性值。</li>
+<li><code>selector-class-pattern</code>: 指定一个模式类选择符。</li>
+<li><code>selector-combinator-space-after</code>: 需要一个空间或不允许空格后的组合子选择器。</li>
+<li><code>selector-combinator-space-before</code>: 需要一个空间或不允许空格前的组合子选择器。</li>
+<li><code>selector-descendant-combinator-no-non-space</code>: 不允许的字符的后代组合子选择器进行技术改造。</li>
+<li><code>selector-id-pattern</code>: 指定一个模式,id选择器。</li>
+<li><code>selector-max-compound-selectors</code>: 在一个选择器里面限制复合选择器的数量。</li>
+<li><code>selector-max-specificity</code>: 限制的特异性选择器。</li>
+<li><code>selector-nested-pattern</code>: 指定一个模式选择器的规则嵌套规则。</li>
+<li><code>selector-no-attribute</code>: 不允许属性选择器。</li>
+<li><code>selector-no-combinator</code>: 不允许在选择器组合。</li>
+<li><code>selector-no-id</code>: 不允许id选择器。</li>
+<li><code>selector-no-qualifying-type</code>: 不允许符合条件的选择器的类型。</li>
+<li><code>selector-no-type</code>: 不允许类型选择器。</li>
+<li><code>selector-no-universal</code>: Disallow the universal selector.</li>
+<li><code>selector-no-vendor-prefix</code>: 不允许选择器的前缀。</li>
+<li><code>selector-pseudo-class-blacklist</code>: 指定一个黑名单禁止伪类选择器。</li>
+<li><code>selector-pseudo-class-case</code>: 为伪类选择器指定小写或大写。</li>
+<li><code>selector-pseudo-class-no-unknown</code>: 不允许未知的伪类选择器。</li>
+<li><code>selector-pseudo-class-parentheses-space-inside</code>: 需要一个空格或不允许空格在括号里面的伪类选择器。</li>
+<li><code>selector-pseudo-class-whitelist</code>: 伪类选择器允许指定一个白名单。</li>
+<li><code>selector-pseudo-element-case</code>: 为伪元素选择器指定小写或大写。</li>
+<li><code>selector-pseudo-element-colon-notation</code>: 为适用的伪元素指定单引号或双冒号符号。</li>
+<li><code>selector-pseudo-element-no-unknown</code>: 不允许未知的伪元素选择器。</li>
+<li><code>selector-root-no-composition</code>: 在选择器不允许根的构成。</li>
+<li><code>selector-type-case</code>: 指定小写或大写类型选择器。</li>
+<li><code>selector-type-no-unknown</code>: 不允许未知类型选择器。</li>
+<li><code>selector-max-empty-lines</code>: 限制内相邻的空行选择器的数量。</li>
+</ul>
+<h4 id="Selector-list"><a href="#Selector-list" class="headerlink" title="Selector list"></a>Selector list</h4><ul>
+<li><code>selector-list-comma-newline-after</code>: 需要一个换行符或不允许空白选择逗号后的列表。</li>
+<li><code>selector-list-comma-newline-before</code>: 逗号前需要一个换行符或不允许空白选择器列表。</li>
+<li><code>selector-list-comma-space-after</code>: 需要一个空格或者逗号后不允许空格选择器列表。</li>
+<li><code>selector-list-comma-space-before</code>: 需要一个空格或者逗号前不允许空格选择器列表。</li>
+</ul>
+<h4 id="Root-rule"><a href="#Root-rule" class="headerlink" title="Root rule"></a>Root rule</h4><ul>
+<li><code>root-no-standard-properties</code>: 根规则内不允许标准属性。</li>
+</ul>
+<h4 id="Rule"><a href="#Rule" class="headerlink" title="Rule"></a>Rule</h4><ul>
+<li><code>rule-nested-empty-line-before</code>: 需要或不允许嵌套规则前空一行。</li>
+<li><code>rule-non-nested-empty-line-before</code>: 需要或不允许non-nested规则前空一行。</li>
+</ul>
+<h4 id="Media-feature"><a href="#Media-feature" class="headerlink" title="Media feature"></a>Media feature</h4><ul>
+<li><code>media-feature-colon-space-after</code>: 需要一个空间或不允许空格在冒号之后媒体的特性。</li>
+<li><code>media-feature-colon-space-before</code>: 需要一个空间或不允许空格在冒号之前媒体的特性。</li>
+<li><code>media-feature-name-case</code>: 为媒体特性名称指定小写或大写。</li>
+<li><code>media-feature-name-no-unknown</code>: 不允许未知的媒体功能的名字。</li>
+<li><code>media-feature-name-no-vendor-prefix</code>: 不允许媒体特性名称的前缀。</li>
+<li><code>media-feature-no-missing-punctuation</code>: 不允许标点non-boolean媒体功能</li>
+<li><code>media-feature-parentheses-space-inside</code>: 需要一个空间或不允许空格在括号里面的媒体功能。</li>
+<li><code>media-feature-range-operator-space-after</code>: 需要一个空间或不允许空白范围运算符后媒体的特性。</li>
+<li><code>media-feature-range-operator-space-before</code>: 之前需要一个空间或不允许空格符范围在媒体功能。</li>
+</ul>
+<h4 id="Custom-media"><a href="#Custom-media" class="headerlink" title="Custom media"></a>Custom media</h4><ul>
+<li><code>custom-media-pattern</code>: 为定制媒体查询名称指定一个模式。</li>
+</ul>
+<h4 id="Media-query-list"><a href="#Media-query-list" class="headerlink" title="Media query list"></a>Media query list</h4><ul>
+<li><code>media-query-list-comma-newline-after</code>: 需要一个换行符或不允许空格后媒体查询的逗号分隔列表。</li>
+<li><code>media-query-list-comma-newline-before</code>: 需要一个换行符或不允许空格之前媒体查询的逗号分隔列表</li>
+<li><code>media-query-list-comma-space-after</code>: 需要一个空间或不允许空格后媒体查询的逗号分隔列表。</li>
+<li><code>media-query-list-comma-space-before</code>:需要一个空间或不允许空格之前媒体查询的逗号分隔列表。</li>
+</ul>
+<h4 id="At-rule"><a href="#At-rule" class="headerlink" title="At-rule"></a>At-rule</h4><ul>
+<li><code>at-rule-blacklist</code>: 不允许at-rules指定一个黑名单。</li>
+<li><code>at-rule-empty-line-before</code>: 需要或不允许at-rules前空一行。</li>
+<li><code>at-rule-name-case</code>: 指定at-rules小写或大写的名字。</li>
+<li><code>at-rule-name-newline-after</code>: at-rule名称后需要一个换行符。</li>
+<li><code>at-rule-name-space-after</code>: 需要一个空格后at-rule名称。</li>
+<li><code>at-rule-no-unknown</code>: 不允许at-rules不明。</li>
+<li><code>at-rule-no-vendor-prefix</code>: 不允许at-rules前缀。</li>
+<li><code>at-rule-semicolon-newline-after</code>: 需要一个换行符之后at-rules的分号。</li>
+<li><code>at-rule-whitelist</code>: 指定允许at-rules的白名单。</li>
+</ul>
+<h4 id="stylelint-disable-comment"><a href="#stylelint-disable-comment" class="headerlink" title="stylelint-disable comment"></a>stylelint-disable comment</h4><ul>
+<li><code>stylelint-disable-reason</code>: 需要一个理由stylelint-disable之前或之后的评论发表评论。</li>
+</ul>
+<h4 id="Comment"><a href="#Comment" class="headerlink" title="Comment"></a>Comment</h4><ul>
+<li><code>comment-empty-line-before</code>: 需要或不允许评论之前一个空行。</li>
+<li><code>comment-no-empty</code>: 不允许空的评论。</li>
+<li><code>comment-whitespace-inside</code>:需要或不允许空格里面的注释标记。</li>
+<li><code>comment-word-blacklist</code>: 指定一个黑名单内不允许的话评论。</li>
+</ul>
+<h4 id="General-Sheet"><a href="#General-Sheet" class="headerlink" title="General / Sheet"></a>General / Sheet</h4><ul>
+<li><code>indentation</code>: 指定缩进。</li>
+<li><code>max-empty-lines</code>: 限制数量的相邻的空行。</li>
+<li><code>max-line-length</code>: 限制线的长度。</li>
+<li><code>max-nesting-depth</code>: 限制的深度嵌套。</li>
+<li><code>no-browser-hacks</code>: 不允许浏览器黑客,无关你目标的浏览器。</li>
+<li><code>no-descending-specificity</code>: 不允许选择器之后覆盖选择器的低特异性更高的特异性。</li>
+<li><code>no-duplicate-selectors</code>: 不允许重复的选择器。</li>
+<li><code>no-empty-source</code>: 不允许空的来源。</li>
+<li><code>no-eol-whitespace</code>: 不允许行尾空白。</li>
+<li><code>no-extra-semicolons</code>: 不允许额外的分号。</li>
+<li><code>no-indistinguishable-colors</code>: 不允许产品极其接近的颜色相同。</li>
+<li><code>no-invalid-double-slash-comments</code>: 不允许双斜杠注释(/ /…)不支持CSS。</li>
+<li><code>no-missing-end-of-source-newline</code>: 不允许丢失end-of-source换行。</li>
+<li><code>no-unknown-animations</code>: 不允许动画名称不对应@keyframes声明。</li>
+<li><code>no-unsupported-browser-features</code>: 不允许功能的浏览器不支持的目标。</li>
+</ul>
+<h2 id="官方配置标准文件"><a href="#官方配置标准文件" class="headerlink" title="官方配置标准文件"></a>官方配置标准文件</h2><h3 id="stylelint-config-standard"><a href="#stylelint-config-standard" class="headerlink" title="stylelint-config-standard"></a>stylelint-config-standard</h3><pre><code>module.exports = {
+      &quot;rules&quot;: {
+        &quot;at-rule-empty-line-before&quot;: [ &quot;always&quot;, {
+          except: [
+            &quot;blockless-after-same-name-blockless&quot;,
+            &quot;first-nested&quot;,
+              ],
+              ignore: [&quot;after-comment&quot;],
+        } ],
+        &quot;at-rule-name-case&quot;: &quot;lower&quot;,
+        &quot;at-rule-name-space-after&quot;: &quot;always-single-line&quot;,
+        &quot;at-rule-semicolon-newline-after&quot;: &quot;always&quot;,
+        &quot;block-closing-brace-empty-line-before&quot;: &quot;never&quot;,
+        &quot;block-closing-brace-newline-after&quot;: &quot;always&quot;,
+        &quot;block-closing-brace-newline-before&quot;: &quot;always-multi-line&quot;,
+        &quot;block-closing-brace-space-before&quot;: &quot;always-single-line&quot;,
+           &quot;block-no-empty&quot;: true,
+        &quot;block-opening-brace-newline-after&quot;: &quot;always-multi-line&quot;,
+        &quot;block-opening-brace-space-after&quot;: &quot;always-single-line&quot;,
+        &quot;block-opening-brace-space-before&quot;: &quot;always&quot;,
+        &quot;color-hex-case&quot;: &quot;lower&quot;,
+        &quot;color-hex-length&quot;: &quot;short&quot;,
+        &quot;color-no-invalid-hex&quot;: true,
+        &quot;comment-empty-line-before&quot;: [ &quot;always&quot;, {
+              except: [&quot;first-nested&quot;],
+              ignore: [&quot;stylelint-commands&quot;],
+        } ],
+        &quot;comment-no-empty&quot;: true,
+        &quot;comment-whitespace-inside&quot;: &quot;always&quot;,
+        &quot;custom-property-empty-line-before&quot;: [ &quot;always&quot;, {
+              except: [
+                &quot;after-custom-property&quot;,
+                &quot;first-nested&quot;,
+              ],
+              ignore: [
+                &quot;after-comment&quot;,
+                &quot;inside-single-line-block&quot;,
+              ],
+        } ],
+        &quot;declaration-bang-space-after&quot;: &quot;never&quot;,
+        &quot;declaration-bang-space-before&quot;: &quot;always&quot;,
+        &quot;declaration-block-no-duplicate-properties&quot;: [ true, {
+              ignore: [&quot;consecutive-duplicates-with-different-values&quot;],
+        } ],
+        &quot;declaration-block-no-ignored-properties&quot;: true,
+        &quot;declaration-block-no-redundant-longhand-properties&quot;: true,
+        &quot;declaration-block-no-shorthand-property-overrides&quot;: true,
+        &quot;declaration-block-semicolon-newline-after&quot;: &quot;always-multi-line&quot;,
+        &quot;declaration-block-semicolon-space-after&quot;: &quot;always-single-line&quot;,
+        &quot;declaration-block-semicolon-space-before&quot;: &quot;never&quot;,
+        &quot;declaration-block-single-line-max-declarations&quot;: 1,
+        &quot;declaration-block-trailing-semicolon&quot;: &quot;always&quot;,
+        &quot;declaration-colon-newline-after&quot;: &quot;always-multi-line&quot;,
+        &quot;declaration-colon-space-after&quot;: &quot;always-single-line&quot;,
+        &quot;declaration-colon-space-before&quot;: &quot;never&quot;,
+        &quot;declaration-empty-line-before&quot;: [ &quot;always&quot;, {
+              except: [
+                &quot;after-declaration&quot;,
+                &quot;first-nested&quot;,
+              ],
+              ignore: [
+                &quot;after-comment&quot;,
+                &quot;inside-single-line-block&quot;,
+              ],
+        } ],
+        &quot;function-calc-no-unspaced-operator&quot;: true,
+        &quot;function-comma-newline-after&quot;: &quot;always-multi-line&quot;,
+        &quot;function-comma-space-after&quot;: &quot;always-single-line&quot;,
+        &quot;function-comma-space-before&quot;: &quot;never&quot;,
+        &quot;function-linear-gradient-no-nonstandard-direction&quot;: true,
+        &quot;function-max-empty-lines&quot;: 0,
+        &quot;function-name-case&quot;: &quot;lower&quot;,
+        &quot;function-parentheses-newline-inside&quot;: &quot;always-multi-line&quot;,
+        &quot;function-parentheses-space-inside&quot;: &quot;never-single-line&quot;,
+        &quot;function-whitespace-after&quot;: &quot;always&quot;,
+        &quot;indentation&quot;: 2,
+        &quot;keyframe-declaration-no-important&quot;: true,
+        &quot;length-zero-no-unit&quot;: true,
+        &quot;max-empty-lines&quot;: 1,
+        &quot;media-feature-colon-space-after&quot;: &quot;always&quot;,
+        &quot;media-feature-colon-space-before&quot;: &quot;never&quot;,
+        &quot;media-feature-name-case&quot;: &quot;lower&quot;,
+        &quot;media-feature-name-no-unknown&quot;: true,
+        &quot;media-feature-no-missing-punctuation&quot;: true,
+        &quot;media-feature-parentheses-space-inside&quot;: &quot;never&quot;,
+        &quot;media-feature-range-operator-space-after&quot;: &quot;always&quot;,
+        &quot;media-feature-range-operator-space-before&quot;: &quot;always&quot;,
+        &quot;media-query-list-comma-newline-after&quot;: &quot;always-multi-line&quot;,
+        &quot;media-query-list-comma-space-after&quot;: &quot;always-single-line&quot;,
+        &quot;media-query-list-comma-space-before&quot;: &quot;never&quot;,
+        &quot;no-empty-source&quot;: true,
+        &quot;no-eol-whitespace&quot;: true,
+        &quot;no-extra-semicolons&quot;: true,
+        &quot;no-invalid-double-slash-comments&quot;: true,
+        &quot;no-missing-end-of-source-newline&quot;: true,
+        &quot;number-leading-zero&quot;: &quot;always&quot;,
+        &quot;number-no-trailing-zeros&quot;: true,
+        &quot;property-case&quot;: &quot;lower&quot;,
+        &quot;property-no-unknown&quot;: true,
+        &quot;rule-nested-empty-line-before&quot;: [ &quot;always-multi-line&quot;, {
+              except: [&quot;first-nested&quot;],
+              ignore: [&quot;after-comment&quot;],
+        } ],
+        &quot;rule-non-nested-empty-line-before&quot;: [ &quot;always-multi-line&quot;, {
+              ignore: [&quot;after-comment&quot;],
+        } ],
+        &quot;selector-attribute-brackets-space-inside&quot;: &quot;never&quot;,
+        &quot;selector-attribute-operator-space-after&quot;: &quot;never&quot;,
+        &quot;selector-attribute-operator-space-before&quot;: &quot;never&quot;,
+        &quot;selector-combinator-space-after&quot;: &quot;always&quot;,
+        &quot;selector-combinator-space-before&quot;: &quot;always&quot;,
+        &quot;selector-descendant-combinator-no-non-space&quot;: true,
+        &quot;selector-list-comma-newline-after&quot;: &quot;always&quot;,
+        &quot;selector-list-comma-space-before&quot;: &quot;never&quot;,
+        &quot;selector-max-empty-lines&quot;: 0,
+        &quot;selector-pseudo-class-case&quot;: &quot;lower&quot;,
+        &quot;selector-pseudo-class-no-unknown&quot;: true,
+           &quot;selector-pseudo-class-parentheses-space-inside&quot;: &quot;never&quot;,
+        &quot;selector-pseudo-element-case&quot;: &quot;lower&quot;,
+        &quot;selector-pseudo-element-colon-notation&quot;: &quot;double&quot;,
+        &quot;selector-pseudo-element-no-unknown&quot;: true,
+        &quot;selector-type-case&quot;: &quot;lower&quot;,
+        &quot;selector-type-no-unknown&quot;: true,
+        &quot;shorthand-property-no-redundant-values&quot;: true,
+        &quot;string-no-newline&quot;: true,
+        &quot;unit-case&quot;: &quot;lower&quot;,
+        &quot;unit-no-unknown&quot;: true,
+        &quot;value-list-comma-newline-after&quot;: &quot;always-multi-line&quot;,
+        &quot;value-list-comma-space-after&quot;: &quot;always-single-line&quot;,
+        &quot;value-list-comma-space-before&quot;: &quot;never&quot;,
+        &quot;value-list-max-empty-lines&quot;: 0,
+      },
+}
+</code></pre>
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#stylelint-configuration-构造"><span class="toc-number">1.</span> <span class="toc-text">stylelint configuration(构造)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加载配置对象"><span class="toc-number">1.1.</span> <span class="toc-text">加载配置对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置对象"><span class="toc-number">1.2.</span> <span class="toc-text">配置对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rules"><span class="toc-number">1.2.1.</span> <span class="toc-text">rules</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-基本格式"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">1.基本格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-在css文件中关闭规则"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">2.在css文件中关闭规则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-严重程度：error-amp-warning"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">3.严重程度：error &amp; warning</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-自定义消息"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">4.自定义消息</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#扩展"><span class="toc-number">1.2.2.</span> <span class="toc-text">扩展</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#plugins（插件）"><span class="toc-number">1.2.3.</span> <span class="toc-text">plugins（插件）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Processors（处理器）"><span class="toc-number">1.2.4.</span> <span class="toc-text">Processors（处理器）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ignoreFiles"><span class="toc-number">1.2.5.</span> <span class="toc-text">ignoreFiles</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#defaultSeverity"><span class="toc-number">1.2.6.</span> <span class="toc-text">defaultSeverity</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#stylelintignore"><span class="toc-number">1.2.7.</span> <span class="toc-text">.stylelintignore</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stylelint-rules"><span class="toc-number">2.</span> <span class="toc-text">stylelint rules</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#规则列表"><span class="toc-number">2.1.</span> <span class="toc-text">规则列表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Color"><span class="toc-number">2.1.1.</span> <span class="toc-text">Color</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#font-family"><span class="toc-number">2.1.2.</span> <span class="toc-text">font-family</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#function"><span class="toc-number">2.1.3.</span> <span class="toc-text">function</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Number"><span class="toc-number">2.1.4.</span> <span class="toc-text">Number</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#String"><span class="toc-number">2.1.5.</span> <span class="toc-text">String</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Length"><span class="toc-number">2.1.6.</span> <span class="toc-text">Length</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Time"><span class="toc-number">2.1.7.</span> <span class="toc-text">Time</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Unit"><span class="toc-number">2.1.8.</span> <span class="toc-text">Unit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Value"><span class="toc-number">2.1.9.</span> <span class="toc-text">Value</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Value-list"><span class="toc-number">2.1.10.</span> <span class="toc-text">Value list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Custom-property"><span class="toc-number">2.1.11.</span> <span class="toc-text">Custom property</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shorthand-property"><span class="toc-number">2.1.12.</span> <span class="toc-text">Shorthand property</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Property"><span class="toc-number">2.1.13.</span> <span class="toc-text">Property</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Keyframe-declaration"><span class="toc-number">2.1.14.</span> <span class="toc-text">Keyframe declaration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Declaration"><span class="toc-number">2.1.15.</span> <span class="toc-text">Declaration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Declaration-block"><span class="toc-number">2.1.16.</span> <span class="toc-text">Declaration block</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Block"><span class="toc-number">2.1.17.</span> <span class="toc-text">Block</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selector"><span class="toc-number">2.1.18.</span> <span class="toc-text">Selector</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selector-list"><span class="toc-number">2.1.19.</span> <span class="toc-text">Selector list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Root-rule"><span class="toc-number">2.1.20.</span> <span class="toc-text">Root rule</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Rule"><span class="toc-number">2.1.21.</span> <span class="toc-text">Rule</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Media-feature"><span class="toc-number">2.1.22.</span> <span class="toc-text">Media feature</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Custom-media"><span class="toc-number">2.1.23.</span> <span class="toc-text">Custom media</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Media-query-list"><span class="toc-number">2.1.24.</span> <span class="toc-text">Media query list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#At-rule"><span class="toc-number">2.1.25.</span> <span class="toc-text">At-rule</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#stylelint-disable-comment"><span class="toc-number">2.1.26.</span> <span class="toc-text">stylelint-disable comment</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Comment"><span class="toc-number">2.1.27.</span> <span class="toc-text">Comment</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#General-Sheet"><span class="toc-number">2.1.28.</span> <span class="toc-text">General / Sheet</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#官方配置标准文件"><span class="toc-number">3.</span> <span class="toc-text">官方配置标准文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#stylelint-config-standard"><span class="toc-number">3.1.</span> <span class="toc-text">stylelint-config-standard</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&text=web学习笔记07-stylelint构造及规则了解"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&title=web学习笔记07-stylelint构造及规则了解"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&is_video=false&description=web学习笔记07-stylelint构造及规则了解"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记07-stylelint构造及规则了解&body=Check out this article: http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&title=web学习笔记07-stylelint构造及规则了解"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&title=web学习笔记07-stylelint构造及规则了解"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&title=web学习笔记07-stylelint构造及规则了解"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&title=web学习笔记07-stylelint构造及规则了解"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/09/28/web学习笔记07-stylelint构造及规则了解/&name=web学习笔记07-stylelint构造及规则了解&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+

@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言：&amp;#160;&amp;#160;&amp;#160;&amp;#160;从移动端刚入门直接转到前端angularJs快一年了，感觉还是在入门阶段，只会使用一些简单的东西，所以平常有时间会按照入门的思路去补习一下angularjs的基础部分，然后整理出来。这一篇的指令基础，也整理了好两天，借鉴了很多网上的文章，自己慢慢地写了一些小demo，基础部分的东西理解是理解了，不过在实际工作中使用的话还是需要再多研究研究。整理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web学习笔记11-angularjs指令基础学习">
+<meta property="og:url" content="http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言：&amp;#160;&amp;#160;&amp;#160;&amp;#160;从移动端刚入门直接转到前端angularJs快一年了，感觉还是在入门阶段，只会使用一些简单的东西，所以平常有时间会按照入门的思路去补习一下angularjs的基础部分，然后整理出来。这一篇的指令基础，也整理了好两天，借鉴了很多网上的文章，自己慢慢地写了一些小demo，基础部分的东西理解是理解了，不过在实际工作中使用的话还是需要再多研究研究。整理">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-c8fb6463c5a52b3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-9b02d03265f4651b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-88f1f584266ccb24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-c38c3e17826a51bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-edff61fb39a5da04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-2afeffcbe811f4ed.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-d8ea800c43a14903.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-7b884fd7deaf0846.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-a3e975228f6c968e.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-b68c952c68ca3938.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-b498287e637a0c6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-03-20T08:26:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web学习笔记11-angularjs指令基础学习">
+<meta name="twitter:description" content="前言：&amp;#160;&amp;#160;&amp;#160;&amp;#160;从移动端刚入门直接转到前端angularJs快一年了，感觉还是在入门阶段，只会使用一些简单的东西，所以平常有时间会按照入门的思路去补习一下angularjs的基础部分，然后整理出来。这一篇的指令基础，也整理了好两天，借鉴了很多网上的文章，自己慢慢地写了一些小demo，基础部分的东西理解是理解了，不过在实际工作中使用的话还是需要再多研究研究。整理">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1062695-c8fb6463c5a52b3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>web学习笔记11-angularjs指令基础学习</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/04/08/修真院-练习答案集锦/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/01/12/web学习笔记10-自定义时间选择器指令编写/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&text=web学习笔记11-angularjs指令基础学习"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&title=web学习笔记11-angularjs指令基础学习"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&is_video=false&description=web学习笔记11-angularjs指令基础学习"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记11-angularjs指令基础学习&body=Check out this article: http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&title=web学习笔记11-angularjs指令基础学习"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&title=web学习笔记11-angularjs指令基础学习"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&title=web学习笔记11-angularjs指令基础学习"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&title=web学习笔记11-angularjs指令基础学习"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&name=web学习笔记11-angularjs指令基础学习&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言："><span class="toc-number">1.</span> <span class="toc-text">前言：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number"></span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义指令"><span class="toc-number"></span> <span class="toc-text">自定义指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指令的属性"><span class="toc-number">1.</span> <span class="toc-text">指令的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指令基础属性"><span class="toc-number">2.</span> <span class="toc-text">指令基础属性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-restrict-string"><span class="toc-number">2.1.</span> <span class="toc-text">1.restrict(string)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-priority-number"><span class="toc-number">2.2.</span> <span class="toc-text">2.priority(number)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-templates-string-or-function-tempateUrl"><span class="toc-number">2.3.</span> <span class="toc-text">3.templates(string or function)/tempateUrl</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Replace-boolean"><span class="toc-number">2.4.</span> <span class="toc-text">4.Replace(boolean)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Transclude-boolean"><span class="toc-number">2.5.</span> <span class="toc-text">5.Transclude(boolean)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指令的编译和链接函数"><span class="toc-number">3.</span> <span class="toc-text">指令的编译和链接函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Scope-boolean-or-object"><span class="toc-number">3.1.</span> <span class="toc-text">1.Scope(boolean or object)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-link-string-or-function-和compile-String-or-Array"><span class="toc-number">3.2.</span> <span class="toc-text">2.link(string or function)和compile(String or Array)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-controller-string-or-function-和require-String-or-Array"><span class="toc-number">3.3.</span> <span class="toc-text">3.controller(string or function)和require(String or Array)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">4.</span> <span class="toc-text">小结</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        web学习笔记11-angularjs指令基础学习
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-03-20T08:04:19.000Z" itemprop="datePublished">2017-03-20</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>&#160;&#160;&#160;&#160;从移动端刚入门直接转到前端angularJs快一年了，感觉还是在入门阶段，只会使用一些简单的东西，所以平常有时间会按照入门的思路去补习一下angularjs的基础部分，然后整理出来。这一篇的指令基础，也整理了好两天，借鉴了很多网上的文章，自己慢慢地写了一些小demo，基础部分的东西理解是理解了，不过在实际工作中使用的话还是需要再多研究研究。整理出来分享给大家，让像我一样入门的新手也可以有个全面的了解。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>&#160;&#160;&#160;&#160;angularJS中呢，有很多印象深刻的且方便的内容，其中呢，数据双向绑定和指令算是比较有特色的两个内容了，我们这呢就讲讲指令的学习。</p>
+<p>&#160;&#160;&#160;&#160;指令，就是用新属性，来扩展HTML，让DOM元素有用特定的行为。就我个人对指令的理解，就是把一些复杂，复用性多的代码或者代码量大的插件之类的封装成一个指令，在前端html页面上使用，这样既简化了页面，优化了代码，也增加了工作效率。</p>
+<p>&#160;&#160;&#160;&#160;angularJS自己有很多内置指令，一般前缀都是ng-，比如说ng-model,ng-app,ng-show,ng-repeat等等。但这些也没什么好说的，因为这些基本上都是angular已经封装好的，直接使用就可以了。AngularJS内置的指令外，我们还可以创建自定义指令。</p>
+<h2 id="自定义指令"><a href="#自定义指令" class="headerlink" title="自定义指令"></a>自定义指令</h2><h3 id="指令的属性"><a href="#指令的属性" class="headerlink" title="指令的属性"></a>指令的属性</h3><p>&#160;&#160;&#160;&#160;首先先简略的看下自定义的一些基本上属性和作用</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>restrict</td>
+<td>申明标识符在模版中作为元素，属性，类，注释或组合，如何使用</td>
+</tr>
+<tr>
+<td>priority</td>
+<td>设置模版中相对于其他标识符的执行顺序</td>
+</tr>
+<tr>
+<td>Template</td>
+<td>指定一个字符串式的内嵌模版，如果你指定了模版是一个URL，那么是不会使用的</td>
+</tr>
+<tr>
+<td>tempateUrl</td>
+<td>指定URL加载的模版，如果你已经指定了内嵌的模版字符串，那么它不会使用的</td>
+</tr>
+<tr>
+<td>Replace</td>
+<td>如果为真，替换当前元素，如果是假或未指定，拼接到当前元素</td>
+</tr>
+<tr>
+<td>Transclude</td>
+<td>移动一个标识符的原始字节带你到一个新模版的位置</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>为这个标识符创建一个新的作用域，而不是继承父作用域</td>
+</tr>
+<tr>
+<td>Controller</td>
+<td>创建一个控制器通过标识符公开通信API</td>
+</tr>
+<tr>
+<td>Require</td>
+<td>当前标识符需要另外一个标识符提供正确的函数功能 </td>
+</tr>
+<tr>
+<td>Link</td>
+<td>通过代码修改目标DOM元素的实例，添加事件监听，建立数据绑定</td>
+</tr>
+<tr>
+<td>Compile</td>
+<td>通过标识符拷贝编程修改DOM模版</td>
+</tr>
+</tbody>
+</table>
+<h3 id="指令基础属性"><a href="#指令基础属性" class="headerlink" title="指令基础属性"></a>指令基础属性</h3><p>&#160;&#160;&#160;&#160;接下来我们简单的说明下各个属性的具体情况。</p>
+<h4 id="1-restrict-string"><a href="#1-restrict-string" class="headerlink" title="1.restrict(string)"></a>1.restrict(string)</h4><p>&#160;&#160;&#160;&#160;简单的一句话来解释这个属性是什么意思，就是决定你所写的自定义指令可以以哪几种方式出现在你的代码中。</p>
+<p>&#160;&#160;&#160;&#160;这个属性的值有四个，也就是代表可以以四种不同的方式来使用。</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>样式</th>
+<th>概述</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E</td>
+<td>Element</td>
+<td>作为一个新的HTML元素来使用。</td>
+<td><code>&lt;hello&gt;&lt;/hello&gt;</code></td>
+</tr>
+<tr>
+<td>A</td>
+<td>Attribute</td>
+<td>作为一个元素的属性来使用</td>
+<td><code>&lt;div hello&gt;&lt;/div&gt;</code></td>
+</tr>
+<tr>
+<td>C</td>
+<td>Class</td>
+<td>作为一个元素的类来使用</td>
+<td><code>&lt;div class=&quot;hello&quot;&gt;&lt;/div&gt;</code></td>
+</tr>
+<tr>
+<td>M</td>
+<td>Comment</td>
+<td>作为注释来使用</td>
+<td><code>&lt;!--directive: hello --&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>&#160;&#160;&#160;&#160;一般情况，我们常用的是EA，在第四个注释中使用的时候，冒号后面得加一个空格，不然没法用，不过这种注释形式我们用的也比较少。一般情况下，我们在写指令的时候可以不写restrict属性，那样就会默认是A。</p>
+<h4 id="2-priority-number"><a href="#2-priority-number" class="headerlink" title="2.priority(number)"></a>2.priority(number)</h4><p>&#160;&#160;&#160;&#160;这个属性是来规定自定义的指令的优先级的，意思就是一个DOM元素上有多个指令的时候，有限处理哪个就看这个值的设置。优先级高的就先执行。默认是0.一般情况都不需要去设置。</p>
+<h4 id="3-templates-string-or-function-tempateUrl"><a href="#3-templates-string-or-function-tempateUrl" class="headerlink" title="3.templates(string or function)/tempateUrl"></a>3.templates(string or function)/tempateUrl</h4><p>&#160;&#160;&#160;&#160;规定了指令被Angular编译和链接（link）后生成的HTML标记,可以很简单，也可以很复杂，当值是一个方法的时候，方法返回的就是代表模板的字符串，同事也可以在里面使用&#123;&#123;&#125;&#125;表达式。</p>
+<pre><code>template: function () {
+     return &apos;&lt;div&gt;你好&lt;/div&gt;&apos;;
+ }
+</code></pre><p>&#160;&#160;&#160;&#160;不过，通常情况下呢，template这个属性都会被templateUrl取代掉，用它来指向一个外部的文件地址，所以我们通常把模板放在外部的一个HTML文件中，然后使用templateUrl来指向他。因为我们想要封装成指令的那一块html有时候代码量会很大，或者是比较复杂，那么直接写在这个属性下面需要拆分，会很麻烦，其实可以单独写一个文件，然后在这个属性下面写上地址指向这个文件。</p>
+<p>&#160;&#160;&#160;&#160;同时templateUrl用于指定将被加载的服务器文件，我们可以预缓存这些模版，减少get请求数，提高性能</p>
+<h4 id="4-Replace-boolean"><a href="#4-Replace-boolean" class="headerlink" title="4.Replace(boolean)"></a>4.Replace(boolean)</h4><p>&#160;&#160;&#160;&#160;这个属性用来规定生成的HTML内容是否会替换掉定义此指令的HTML元素。我们简单的写一个指令</p>
+<pre><code>var app = angular.module(&apos;testapp&apos;, []);
+app.directive(&apos;hello&apos;,function(){
+    return {
+        restrict : &apos;E&apos;,
+        replace : true,
+        template : &apos;&lt;div&gt;hello angular&lt;/div&gt;&apos;
+    };
+});
+</code></pre><p>&#160;&#160;&#160;&#160;使用</p>
+<pre><code> &lt;body ng-app=&quot;testapp&quot;&gt;
+    &lt;hello&gt;&lt;/hello&gt;
+&lt;/body&gt;
+</code></pre><p>&#160;&#160;&#160;&#160;这个时候，我们的replace设置的是true，</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-c8fb6463c5a52b3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-17 下午3.16.09.png"></p>
+<p>&#160;&#160;&#160;&#160;当我们值设置为false时</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-9b02d03265f4651b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-17 下午3.16.26.png"></p>
+<p>两者的差别在于，指令部分会不会被模板中的内容所替换。</p>
+<h4 id="5-Transclude-boolean"><a href="#5-Transclude-boolean" class="headerlink" title="5.Transclude(boolean)"></a>5.Transclude(boolean)</h4><p>&#160;&#160;&#160;&#160;这个属性用来让我们规定指令是否可以包含任意内容,默认为false，表示不开启，如果设置为true，则开启该属性，当开启后，则可以在模板中通过ng-transclude方式替换指令元素中的内容。</p>
+<p>&#160;&#160;&#160;&#160;举个例子来看</p>
+<pre><code>&lt;body ng-app=&quot;testapp&quot;&gt;
+    &lt;hello&gt;
+        哎呦我去
+    &lt;/hello&gt;
+&lt;/body&gt;
+&lt;script&gt;
+    var app = angular.module(&apos;testapp&apos;, []);
+    app.directive(&apos;hello&apos;,function(){
+        return {
+            restrict : &apos;E&apos;,
+            replace : true,
+            transclude: true,
+            template : &apos;&lt;div ng-transclude&gt;hello angular&lt;/div&gt;&apos;
+        };
+    });
+&lt;/script&gt;
+</code></pre><p>&#160;&#160;&#160;&#160;页面是这么显示的：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-88f1f584266ccb24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-17 下午3.28.38.png"></p>
+<p>&#160;&#160;&#160;&#160;源码里面则变成这样：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-c38c3e17826a51bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-17 下午3.29.41.png"></p>
+<p>&#160;&#160;&#160;&#160;如果值为false，那么页面会变成空白的。在我个人看来，这个属性的设置，就是要把指令里面的内容替换掉，移动原始的内容到新模版中，当设置成为true时，标识符会删除原来的内容,并通过ng-transclude标识符使它重新插入到模版中，也可以这么用</p>
+<pre><code>&lt;body ng-app=&quot;testapp&quot;&gt;
+&lt;hello&gt;
+    哎呦我去
+&lt;/hello&gt;
+&lt;/body&gt;
+&lt;script&gt;
+    var app = angular.module(&apos;testapp&apos;, []);
+    app.directive(&apos;hello&apos;,function(){
+        return {
+            restrict : &apos;E&apos;,
+            replace : true,
+            transclude: true,
+            template : &apos;&lt;div&gt;hello &lt;span ng-transclude&gt;&lt;/span&gt;&lt;/div&gt;&apos;
+        };
+    });
+&lt;/script&gt;
+</code></pre><p>&#160;&#160;&#160;&#160;那么页面会显示 hello 哎呦我去。不过这个属性我们平常写简单的指令的时候也不怎么用得着。</p>
+<h3 id="指令的编译和链接函数"><a href="#指令的编译和链接函数" class="headerlink" title="指令的编译和链接函数"></a>指令的编译和链接函数</h3><p>&#160;&#160;&#160;&#160;上面说了一些基本的属性，基本属性在理解上面相对比较简单，设置值也不复杂，但编译和链接函数涉及到的东西就比较多了。我们在基础属性中也只是把一些模板或者html替换成指令，但是实际上的操作都是在编译或者链接功能里面。这两个功能是angular引用和创建实时视图的后面步骤。</p>
+<p>&#160;&#160;&#160;&#160;angular初始化过程是这样的。</p>
+<table>
+<thead>
+<tr>
+<th>流程</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>脚本加载</td>
+<td>加载angular，查找ng-app标识符找到应用绑定</td>
+</tr>
+<tr>
+<td>编译阶段</td>
+<td>在这一阶段，angular遍历DOM标志模版中所有注册的标志，对于每个标识符，基于标识符规则(template,replace,transclude等等）改造DOM，然后如果编译函数存在就调用它，结果一个编译的template函数，它会调用所有的标识符搜集的link韩素</td>
+</tr>
+<tr>
+<td>链接阶段</td>
+<td>为了让视图动起来，angular为每个标识符运行link函数，link函数通常在DOM或模型上创建监听器，这些监听器让视图和模型始终保持一致</td>
+</tr>
+</tbody>
+</table>
+<p>&#160;&#160;&#160;&#160;因此到了编译阶段，它处理转换了模版，链接阶段，它处理了修改视图中的数据，沿着这些思路，标识符中表一功能和链接功能主要区别就是链接功能转换了模版自身，而连接功能在模型和视图上创建了动态链接，就是在第二阶段，作用域scpoes被附加到了编译过程的link功能上，通过数据绑定，标识符变活了</p>
+<h4 id="1-Scope-boolean-or-object"><a href="#1-Scope-boolean-or-object" class="headerlink" title="1.Scope(boolean or object)"></a>1.Scope(boolean or object)</h4><p>&#160;&#160;&#160;&#160;该属性是用来定义指令的scope的范围，默认情况下是false，也就是说继承了父控制器的scope，可以随意使用父控制器中的scope里的属性，但是有时候会污染到父scope的属性，所以得另外设置。</p>
+<p>&#160;&#160;&#160;&#160;获取作用域scope的三种选择</p>
+<ul>
+<li>标识符DOM元素中已经存在的作用域</li>
+<li>创建一个继承封闭的控制器作用域的新作用域，以便读取结构树作用域的所有值。</li>
+<li>独立作用域，从父类中不继承任何属性，当你需要隔离这个标识符的操作和父类作用域时，创建可从用的组建来使用这个选项</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>三种方式</th>
+<th>设置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>已有作用域</td>
+<td>scope:false(如果没有指定，这就是默认值）</td>
+<td></td>
+</tr>
+<tr>
+<td>新作用域</td>
+<td>scope:true</td>
+<td></td>
+</tr>
+<tr>
+<td>独立作用域</td>
+<td>scope:{属性名次和绑定风格｝</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>&#160;&#160;&#160;&#160;举个例子吧:首先是scope的值不设置的时候，默认是false，和设置成true的时候，是都可以获取到父作用域的属性的。</p>
+<pre><code>&lt;body ng-app=&quot;testapp&quot; ng-controller=&quot;myCtrl&quot;&gt;
+    &lt;hello&gt;&lt;/hello&gt;
+&lt;/body&gt;
+&lt;script&gt;
+    var app = angular.module(&apos;testapp&apos;, []);
+    app.controller(&apos;myCtrl&apos;,[&apos;$scope&apos;, function ($scope) {
+        $scope.abc = &apos;+abc是父作用域的属性&apos;;
+    }]);
+    app.directive(&apos;hello&apos;,function(){
+        return {
+            restrict : &apos;E&apos;,
+            replace : true,
+            template : &apos;&lt;div&gt;hello {{abc}}&lt;/div&gt;&apos;,
+            scope:false,
+            link: function (scope) {
+                console.log(scope.abc)
+            }
+        };
+    });
+&lt;/script&gt;
+</code></pre><p>&#160;&#160;&#160;&#160;显示结果都是</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-edff61fb39a5da04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-17 下午4.32.39.png"></p>
+<p>&#160;&#160;&#160;&#160;但是如果把scope的值设置成&#123; &#125;，表示创建一个隔离的scope，不会继承父scope的属性。那么显示的结果只有hello。但是在有的时候我们也要需要访问父scope里的属性或者方法，我们可以通过标识符属性的键值对父类传递指定的属性给独立作用域</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@</td>
+<td>传递字符串属性，你可以通过使用改写&#123;&#123;&#125;&#125;属性值从作用域中进行数据绑定(单向绑定)</td>
+</tr>
+<tr>
+<td>=</td>
+<td>数据绑定属性在标识符父作用域的属性中</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>传递一个来自父作用域的函数，稍后调用</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>@:如果父作用域的属性内容修改了，子作用域对应的属性内容也会随之修改，而如果子作用域属性内容修改了，是不会影响父作用域对应的属性内容的。</li>
+</ul>
+<p>&#160;&#160;&#160;&#160;举个例子</p>
+<pre><code>&lt;body ng-app=&quot;testapp&quot; ng-controller=&quot;myCtrl&quot;&gt;
+    &lt;input ng-model=&quot;name&quot;&gt;
+    &lt;hello name=&quot;{{name}}&quot;&gt;&lt;/hello&gt;
+&lt;/body&gt;
+&lt;script&gt;
+    var app = angular.module(&apos;testapp&apos;, []);
+    app.controller(&apos;myCtrl&apos;,[&apos;$scope&apos;, function ($scope) {
+
+    }]);
+    app.directive(&apos;hello&apos;,function(){
+        return {
+            restrict : &apos;E&apos;,
+            replace : true,
+            template : &apos;&lt;div&gt;hello {{name}}&lt;/div&gt;&apos;,
+            scope:{
+                name:&apos;@&apos;
+            }        
+        };
+    });
+&lt;/script&gt;
+</code></pre><p>&#160;&#160;&#160;&#160;那么结果显示是</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-2afeffcbe811f4ed.gif?imageMogr2/auto-orient/strip" alt="3月-17-2017 16-44-56.gif"></p>
+<ul>
+<li>=:创建一个父作用域与子作用域可以同时共享的属性，即父作用域修改了该属性，子作用域也随之改变，反之亦然。</li>
+</ul>
+<p>&#160;&#160;&#160;&#160;举个例子</p>
+<pre><code> &lt;body ng-app=&quot;testapp&quot; ng-controller=&quot;myCtrl&quot;&gt;
+    &lt;input type=&quot;text&quot; ng-model=&quot;name&quot; placeholder=&quot;Enter a name&quot;&gt;&lt;br&gt;
+    {{name}}&lt;br&gt;
+    &lt;hello name=&quot;name&quot;&gt;&lt;/hello&gt;
+&lt;/body&gt;
+&lt;script&gt;
+    var app = angular.module(&apos;testapp&apos;, []);
+    app.controller(&apos;myCtrl&apos;,[&apos;$scope&apos;, function ($scope) {}]);
+    app.directive(&apos;hello&apos;,function(){
+        return {
+            restrict : &apos;E&apos;,
+            replace : true,
+            template : &apos;&lt;input type=&quot;text&quot; ng-model=&quot;name&quot;&gt;&apos;,
+            scope:{
+                name:&apos;=&apos;
+            }
+        };
+    });
+&lt;/script&gt;
+</code></pre><p>&#160;&#160;&#160;&#160;那么结果显示是</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-d8ea800c43a14903.gif?imageMogr2/auto-orient/strip" alt="3月-17-2017 16-49-53.gif"></p>
+<ul>
+<li>&amp;:可以在独立的子作用域中直接调用父作用域的方法，在调用时可以向函数传递参数。</li>
+</ul>
+<p>&#160;&#160;&#160;&#160;举个例子</p>
+<pre><code>&lt;body ng-app=&quot;testapp&quot; ng-controller=&quot;myCtrl&quot;&gt;
+    &lt;input type=&quot;text&quot; ng-model=&quot;name&quot; placeholder=&quot;Eneter a color&quot;&gt;
+    {{name}}
+    &lt;hello saysomething999=&quot;say();&quot; name=&quot;hahahahhahah&quot;&gt;&lt;/hello&gt;
+&lt;/body&gt;
+&lt;script&gt;
+    var app = angular.module(&apos;testapp&apos;, []);
+    app.controller(&apos;myCtrl&apos;,[&apos;$scope&apos;, function ($scope) {
+        $scope.say = function () {
+            alert(&apos;hello&apos;);
+        };
+        $scope.name = &apos;leifeng&apos;;
+    }]);
+    app.directive(&apos;hello&apos;,function(){
+        return {
+            restrict : &apos;E&apos;,
+            replace : true,
+            scope:{
+                name:&apos;@&apos;
+            },
+            template : &apos;&lt;button type=&quot;button&quot; ng-bind=&quot;name&quot; ng-init=&quot;saysomething();&quot;&gt;&lt;/button&gt;&apos;
+        };
+    });
+/script&gt;
+</code></pre><p>&#160;&#160;&#160;&#160;那么结果显示是</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-7b884fd7deaf0846.gif?imageMogr2/auto-orient/strip" alt="3月-17-2017 17-03-32.gif"></p>
+<h4 id="2-link-string-or-function-和compile-String-or-Array"><a href="#2-link-string-or-function-和compile-String-or-Array" class="headerlink" title="2.link(string or function)和compile(String or Array)"></a>2.link(string or function)和compile(String or Array)</h4><p>&#160;&#160;&#160;&#160;在angularJs应用启动之前，它们是以HTML文本形式存在文本编辑器当中。应用启动会进行编译和链接，作用域会同HTML进行绑定。这个过程包含了两个阶段！</p>
+<p>&#160;&#160;&#160;&#160;在编译的阶段，angularJs会遍历整个的文档并根据JavaScript中指令定义来处理页面上什么的指令。在遍历的过程中，有可能一层套着一层，一直延深处遍历。一但遍历和编译完毕就会返回一个叫做模板函数的函数。在这个函数没被返回（return）之前我们可以对编译后的DOM树进行修改。通常情况下，如果设置了compile函数，说明我们希望在指令和实时数据被放到DOM中之前进行DOM操作，在这个函数中进行诸如添加和删除节点等DOM操作是安全的。本质上，当我们设置了link选项，实际上是创建了一个postLink() 链接函数，以便compile() 函数可以定义链接函数。编译函数(compile)负责对模板DOM进行转换。链接函数(link)负责将作用域和DOM进行链接。</p>
+<p>&#160;&#160;&#160;&#160;compile和link区别在于</p>
+<ul>
+<li>compile函数的作用是对指令的模板进行转换；</li>
+<li>link作用是在模型和视图之间建立关联，包括在元素上注册事件监听；</li>
+<li>scope在链接阶段才会被绑定到元素上，因此compile阶段操作scope会报错；</li>
+<li>对于同一个指令的多个实例，compile只会执行一次；而link对于指令的每个实例都执行一次；</li>
+<li>一般情况下只需要写link函数就够了；</li>
+<li>如果编写自定义的compile函数，自定的link函数无效，因为compile函数应该返回一个link函数供后续处理</li>
+</ul>
+<p>&#160;&#160;&#160;&#160;简单的总结上面的话，就是一般情况我们不咋用compile，要注意 compile 函数不能访问 scope，并且必须返回一个 link 函数。但是如果没有设置 compile 函数，你可以正常地配置 link 函数，（有了compile，就不能用link，link函数由compile返回）。</p>
+<p>&#160;&#160;&#160;&#160;compile函数可以写成如下的形式：</p>
+<pre><code>app.directive(&apos;test&apos;, function() {
+      return {
+        compile: function(tElem,attrs) {
+          //do optional DOM transformation here
+              return function(scope,elem,attrs) {
+            //linking function here
+              };
+        }
+      };
+});
+</code></pre><p>&#160;&#160;&#160;&#160;指令生成的模板，在没有逻辑支持下，只是显示出来你想要的静态效果而已，没有实际作用，默认情况下，指令并不会创建新的作用域，更多情况是使用父scope。意思就是在指令存在于一个控制器下，就会使用这个控制器的scope，但是在哪使用呢，这就需要link函数了。</p>
+<p>&#160;&#160;&#160;&#160;link函数中，有三个参数：</p>
+<ul>
+<li>scope：指令的scope，默认是父控制器的scope。</li>
+<li>elem：指令元素</li>
+<li>attrs：一个包含了指令所在元素的标准化的参数对象。</li>
+</ul>
+<p>&#160;&#160;&#160;&#160;link函数主要用来为DOM元素添加事件监听、监视模型属性变化、以及更新DOM。举个简单的例子来看吧。</p>
+<pre><code>&lt;body ng-app=&quot;testapp&quot; ng-controller=&quot;myCtrl&quot;&gt;
+    &lt;hello&gt;&lt;/hello&gt;
+&lt;/body&gt;
+&lt;script&gt;
+    var app = angular.module(&apos;testapp&apos;, []);
+    app.controller(&apos;myCtrl&apos;,[&apos;$scope&apos;, function ($scope) {}]);
+    app.directive(&apos;hello&apos;,function(){
+        return {
+            restrict : &apos;E&apos;,
+            replace : true,
+            template : &apos;&lt;div id=&quot;hello&quot; ng-mousemove=&quot;move()&quot; ng-mouseleave=&quot;leave()&quot;&gt;hello world&lt;/div&gt;&apos;,
+            link : function(scope,element,attrs) {
+                scope.move = function () {
+                    document.getElementById(&apos;hello&apos;).style.color = &quot;red&quot;;
+                    console.log(&quot;mousemove&quot;);
+                };
+                scope.leave = function () {
+                    document.getElementById(&apos;hello&apos;).style.color = &quot;black&quot;;
+                    console.log(&apos;mouseleave&apos;)
+                }
+            }
+        }
+    });
+&lt;/script&gt;
+</code></pre><p>&#160;&#160;&#160;&#160;鼠标移入变红色，移除变黑色，页面显示是这样的(动态图上看不到鼠标)：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-a3e975228f6c968e.gif?imageMogr2/auto-orient/strip" alt="3月-20-2017 15-09-58.gif"></p>
+<h4 id="3-controller-string-or-function-和require-String-or-Array"><a href="#3-controller-string-or-function-和require-String-or-Array" class="headerlink" title="3.controller(string or function)和require(String or Array)"></a>3.controller(string or function)和require(String or Array)</h4><p>&#160;&#160;&#160;&#160;scope是指令与外界作用域通讯的桥梁，而require是指令与指令之间通讯的桥梁。这个参数最大的作用在于，当要开发单指令无法完成，需要一些组合型指令的控件或功能，例如日期控件，通过require参数，指令可以获得外部其他指令的控制器，从而达到交换数据、事件分发的目的。require的作用是为了让父子指令或者兄弟指令的controller之间搭建一个桥梁。也就是说父指令里的controller里面的数据能分享给子指令的controller，其中子指令的link第四个参数的值是父指令的controller对象的作用域上下文。</p>
+<p>&#160;&#160;&#160;&#160;require有两个修饰符号:”?”、”^”</p>
+<ul>
+<li>? : 如果require没有找到相应的指令避免报错,还能确保程序的正常执行</li>
+<li>^ : 表示往父级查找</li>
+</ul>
+<p>&#160;&#160;&#160;&#160;controller属性值是一个构造函数，在创建父元素指令时添加，并可以在函数中创建多个属性或方法。</p>
+<p>&#160;&#160;&#160;&#160;直接拿网上的一个小例子来说明下。</p>
+<pre><code>&lt;body  ng-app=&quot;requireapp&quot; ng-controller=&quot;myCtrl1&quot;&gt;
+    &lt;hello&gt;
+        &lt;div&gt;hello&lt;/div&gt;
+        &lt;beautiful good&gt;
+            beautiful
+        &lt;/beautiful&gt;
+    &lt;/hello&gt;
+&lt;/body&gt;
+&lt;script&gt;
+    var app = angular.module(&apos;requireapp&apos;, []);
+    app.controller(&apos;myCtrl1&apos;,[&apos;$scope&apos;, function ($scope) {}]);
+    app.directive(&quot;hello&quot;,function(){
+        return {
+            restrict : &quot;E&quot;,
+            controller : function($scope){
+                $scope.name = &quot;张三&quot;;
+                this.information = {
+                    name : $scope.name,
+                    age : 25,
+                    job : &quot;程序员&quot;
+                }
+            },
+            link : function(scope){}
+        }
+    });
+    app.directive(&quot;beautiful&quot;,function(){
+        return {
+            restrict : &quot;E&quot;,
+            require : &quot;?good&quot;,
+            controller : function(){
+            this.name = &quot;beautiful&quot;;
+            },
+            link : function (scope,element,attrs,good) {
+                console.log(good.name)
+                }
+        }
+    });
+    app.directive(&quot;good&quot;,function(){
+        return {
+            restrict : &quot;A&quot;,
+            require : &quot;?^hello&quot;,
+            controller : function(){
+                this.name = &quot;good&quot;;
+            },
+            link : function (scope,element,attrs,hello) {
+                console.log(hello.information)
+            }
+        }
+    });
+&lt;/script&gt;
+</code></pre><p>&#160;&#160;&#160;&#160;页面显示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-b68c952c68ca3938.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-20 下午2.35.20.png"></p>
+<p>&#160;&#160;&#160;&#160;控制台显示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-b498287e637a0c6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-20 下午2.35.24.png"></p>
+<p>&#160;&#160;&#160;&#160;我们简单的看下，html中首先写的是hello指令，这个指令只写了一个对象，里面有三个数据，name,age,job，值分别是张三，25，和程序员。很简单的指令。然后在hello指令内部，有一个是div，就是页面显示hello的div，可以不看，再看下面的调用的beautiful指令，里面又使用了good指令，good的指令也是很简单的，声明了在他的作用域内，name属性的值是good。同时往父级查找hello指令，没找到也没事。第三个指令是beautiful，内部也是找good指令，link第四个参数的值是父指令的controller对象的作用域上下文。link方法内部打印good的那么值，由上面我们看到的good指令，可以知道这个值就是good。good指令中打印的是hello指令的对象，打印出来的也就是hello指令里的对象。最后使用的时候就得到图上的结果。</p>
+<p>&#160;&#160;&#160;&#160;感觉上面这一堆废话说了也没啥用，总结出来一句话就是good的控制器跟hello的控制器进行通信,beautiful又可以跟同级的good通信。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>&#160;&#160;&#160;&#160;以上呢就是整理出来的全部内容，在我看到，比较重要的地方是在作用域那块，因为我们平常如果只是使用一些简单的指令的时候，传参调用数据这些是比较常用的，之前写一些简单的指令的时候总是在纠结模板中数据到底怎么去写，怎么传入等等。别的像link，compie，controller的使用区别的话，细看看网上的一些文章也是比较好理解的。触发的顺序直接的差别，相互之间的关系我都有提到等等，</p>
+<p>&#160;&#160;&#160;&#160;在看完这些东西之后，可以自己试着写一个简单的指令，可以参照我之前一篇文章里写的时间选择器来自己练习练习，顺路还可以优化下我写的那个粗糙的指令。另外废话一句，大家要是看到有什么问题的可以评论我们一起讨论讨论，因为我也是刚整理出来，对他的了解也并不是很全面，大家可以一起来聊聊。借鉴的一些文章就不贴了，百度下一堆，大家自便。</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言："><span class="toc-number">1.</span> <span class="toc-text">前言：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number"></span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义指令"><span class="toc-number"></span> <span class="toc-text">自定义指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指令的属性"><span class="toc-number">1.</span> <span class="toc-text">指令的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指令基础属性"><span class="toc-number">2.</span> <span class="toc-text">指令基础属性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-restrict-string"><span class="toc-number">2.1.</span> <span class="toc-text">1.restrict(string)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-priority-number"><span class="toc-number">2.2.</span> <span class="toc-text">2.priority(number)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-templates-string-or-function-tempateUrl"><span class="toc-number">2.3.</span> <span class="toc-text">3.templates(string or function)/tempateUrl</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Replace-boolean"><span class="toc-number">2.4.</span> <span class="toc-text">4.Replace(boolean)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Transclude-boolean"><span class="toc-number">2.5.</span> <span class="toc-text">5.Transclude(boolean)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指令的编译和链接函数"><span class="toc-number">3.</span> <span class="toc-text">指令的编译和链接函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Scope-boolean-or-object"><span class="toc-number">3.1.</span> <span class="toc-text">1.Scope(boolean or object)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-link-string-or-function-和compile-String-or-Array"><span class="toc-number">3.2.</span> <span class="toc-text">2.link(string or function)和compile(String or Array)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-controller-string-or-function-和require-String-or-Array"><span class="toc-number">3.3.</span> <span class="toc-text">3.controller(string or function)和require(String or Array)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">4.</span> <span class="toc-text">小结</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&text=web学习笔记11-angularjs指令基础学习"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&title=web学习笔记11-angularjs指令基础学习"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&is_video=false&description=web学习笔记11-angularjs指令基础学习"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记11-angularjs指令基础学习&body=Check out this article: http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&title=web学习笔记11-angularjs指令基础学习"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&title=web学习笔记11-angularjs指令基础学习"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&title=web学习笔记11-angularjs指令基础学习"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&title=web学习笔记11-angularjs指令基础学习"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/03/20/web学习笔记11-angularjs指令基础学习/&name=web学习笔记11-angularjs指令基础学习&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+

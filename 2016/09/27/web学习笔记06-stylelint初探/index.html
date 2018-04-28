@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;最近呢，公司在准备新项目的开发，前期开始准备很多将来用到的东西，前两天刚在研究vue.js,有空补上一篇文章讲讲我在vue.js里面的小感想，今天开始研究新的stylelint，一个用来标准化css和scss代码的工具吧算是。这篇文章也基本上算是一个引导式的，没有研究的很深，在将来的应用过程中，遇到些什么有意思的事情，以后也会补上来，这篇呢就暂且只是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web学习笔记06-stylelint初探">
+<meta property="og:url" content="http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;最近呢，公司在准备新项目的开发，前期开始准备很多将来用到的东西，前两天刚在研究vue.js,有空补上一篇文章讲讲我在vue.js里面的小感想，今天开始研究新的stylelint，一个用来标准化css和scss代码的工具吧算是。这篇文章也基本上算是一个引导式的，没有研究的很深，在将来的应用过程中，遇到些什么有意思的事情，以后也会补上来，这篇呢就暂且只是">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-170bd4fc19297dfe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-580e01953c0784ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-09-27T12:03:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web学习笔记06-stylelint初探">
+<meta name="twitter:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;最近呢，公司在准备新项目的开发，前期开始准备很多将来用到的东西，前两天刚在研究vue.js,有空补上一篇文章讲讲我在vue.js里面的小感想，今天开始研究新的stylelint，一个用来标准化css和scss代码的工具吧算是。这篇文章也基本上算是一个引导式的，没有研究的很深，在将来的应用过程中，遇到些什么有意思的事情，以后也会补上来，这篇呢就暂且只是">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1062695-170bd4fc19297dfe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>web学习笔记06-stylelint初探</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/09/28/web学习笔记07-stylelint构造及规则了解/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/09/22/web学习笔记05-EsLint规则与配置/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&text=web学习笔记06-stylelint初探"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&title=web学习笔记06-stylelint初探"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&is_video=false&description=web学习笔记06-stylelint初探"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记06-stylelint初探&body=Check out this article: http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&title=web学习笔记06-stylelint初探"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&title=web学习笔记06-stylelint初探"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&title=web学习笔记06-stylelint初探"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&title=web学习笔记06-stylelint初探"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&name=web学习笔记06-stylelint初探&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#stylelint-初步了解"><span class="toc-number">1.</span> <span class="toc-text">stylelint 初步了解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stylelint-简介"><span class="toc-number">2.</span> <span class="toc-text">stylelint 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stylelint-作用"><span class="toc-number">3.</span> <span class="toc-text">stylelint 作用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#错误捕获"><span class="toc-number">3.1.</span> <span class="toc-text">错误捕获</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#强制执行最佳实践"><span class="toc-number">3.2.</span> <span class="toc-text">强制执行最佳实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行代码样式的约定"><span class="toc-number">3.3.</span> <span class="toc-text">执行代码样式的约定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#制定以及扩展一切"><span class="toc-number">3.4.</span> <span class="toc-text">制定以及扩展一切</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stylelint-使用"><span class="toc-number">4.</span> <span class="toc-text">stylelint 使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">4.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">4.2.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建配置文件（三种方式）"><span class="toc-number">4.2.1.</span> <span class="toc-text">创建配置文件（三种方式）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#官方配置方法"><span class="toc-number">4.3.</span> <span class="toc-text">官方配置方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行"><span class="toc-number">4.4.</span> <span class="toc-text">运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#具体demo测试"><span class="toc-number">4.5.</span> <span class="toc-text">具体demo测试</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-创建工程和文件"><span class="toc-number">4.5.1.</span> <span class="toc-text">1.创建工程和文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-编写简单的代码"><span class="toc-number">4.5.2.</span> <span class="toc-text">2.编写简单的代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-创建package-json文件"><span class="toc-number">4.5.3.</span> <span class="toc-text">3.创建package.json文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-安装stylelint"><span class="toc-number">4.5.4.</span> <span class="toc-text">4.安装stylelint</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-创建stylelint-config-js文件，编写规则"><span class="toc-number">4.5.5.</span> <span class="toc-text">5.创建stylelint.config.js文件，编写规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-运行测试"><span class="toc-number">4.5.6.</span> <span class="toc-text">6.运行测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-根据结果修改"><span class="toc-number">4.5.7.</span> <span class="toc-text">7.根据结果修改</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stylelint-规则"><span class="toc-number">5.</span> <span class="toc-text">stylelint 规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考："><span class="toc-number">6.</span> <span class="toc-text">参考：</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        web学习笔记06-stylelint初探
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-09-27T11:59:54.000Z" itemprop="datePublished">2016-09-27</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><strong>&#160;&#160;&#160;&#160;最近呢，公司在准备新项目的开发，前期开始准备很多将来用到的东西，前两天刚在研究vue.js,有空补上一篇文章讲讲我在vue.js里面的小感想，今天开始研究新的stylelint，一个用来标准化css和scss代码的工具吧算是。这篇文章也基本上算是一个引导式的，没有研究的很深，在将来的应用过程中，遇到些什么有意思的事情，以后也会补上来，这篇呢就暂且只是对stylelint进行一个简单的介绍，和简单的应用，具体的配合一些别的技术的应用我还是要摸索，我这就跟读书笔记一样，记一下大体的内容，具体的东西还是需要大家去官网看英文文档。stylelint其实还是挺有意思的一个东西。</strong></p>
+<h2 id="stylelint-初步了解"><a href="#stylelint-初步了解" class="headerlink" title="stylelint 初步了解"></a>stylelint 初步了解</h2><p>&#160;&#160;&#160;&#160;团队合作的时候，编写代码总会出现各种各样的问题，尤其是在样式的编写中，大量的css和scss代码书写中，或多或少会出现问题，这个时候在查找问题的来源的时候，总会浪费很多时间。</p>
+<p>&#160;&#160;&#160;&#160;或者有时候呢，会编写出一些带有自己个人风格的样式代码，偶尔夹杂着一些自己写的一些小错误在其中，当时并未发现，之后随着时间的推移，代码库里的代码量的增多，在团队合作中，同事使用你的代码的时候或多或少的出现了问题，又或者是使用了错误的代码风格，导致给后期优化修改时带来了诸多不便。</p>
+<p>&#160;&#160;&#160;&#160;这个时候呢，就需要一个可以检查出自己代码或者格式出现问题的工具了。跟js等代码一样，css也需要检查。当然，css检查代码的工具已经有很多出现了，不过我们这次呢，研究的是可以检查css和scss的stylelint。</p>
+<p>&#160;&#160;&#160;&#160;审查有什么作用呢？审查是一个检查代码是否符合编程规范以及查找代码错误的过程，如果要做个比喻，那么它就是编程语言的拼写检查工具。代码审查可以帮助独立开发者更好的维护代码，但它更大的能力是帮助团队维护代码。</p>
+<h2 id="stylelint-简介"><a href="#stylelint-简介" class="headerlink" title="stylelint 简介"></a>stylelint 简介</h2><p>&#160;&#160;&#160;&#160;<strong>stylelint</strong> 是一个基于 <strong>Javascript</strong> 的代码审查工具，它易于扩展，支持最新的 CSS 语法，也理解类似 CSS 的语法。此外，因为它是基于 JavaScript，所以比起 Ruby 开发的 scss-lint 速度更快。</p>
+<p>&#160;&#160;&#160;&#160;<strong>stylelint</strong> 是一个强大和现代的 <strong>CSS</strong> 审查工具，有助于开发者推行统一的代码规范，避免样式错误。<strong>stylelint</strong> 由 <strong>PostCSS</strong> 提供技术支持，所以它也可以理解 <strong>PostCSS</strong> 解析的语法，比如 <strong>SCSS</strong>。</p>
+<p>&#160;&#160;&#160;&#160;<strong>PostCSS</strong> 是一个使用 <strong>JS</strong> 解析样式的插件集合，它可以用来审查 <strong>CSS</strong> 代码，也可以增强 <strong>CSS</strong> 的语法（比如变量和混合宏），还支持未来的 <strong>CSS</strong> 语法、行内图片等等。</p>
+<p>&#160;&#160;&#160;&#160;<strong>PostCSS</strong> 的哲学是专注于处理一件事，并做到极致，目前它已经有了 200 多个插件，由于它们都是基于 <strong>JavaScript</strong> 编写的，所以运行速度非常快。</p>
+<h2 id="stylelint-作用"><a href="#stylelint-作用" class="headerlink" title="stylelint 作用"></a>stylelint 作用</h2><h3 id="错误捕获"><a href="#错误捕获" class="headerlink" title="错误捕获"></a>错误捕获</h3><p>&#160;&#160;&#160;&#160;有些stylelint规则旨在找出明显的错误，如拼写错误或者由于你的心烦意乱或者睡眼惺忪时制造的疏漏。例如，你可以禁止空白块，无效的十六进制值，重复的选择器，未命名的动画名称和错误的线性渐变的语法。</p>
+<p>&#160;&#160;&#160;&#160;其它的规则都是尽自己最大的努力捕捉更细微的错误。 这里有一条规则: 当你使用可以覆盖其属性同行(如<code>margin-top</code>)的速记属性时(如<code>margin</code>)，就会发出警告，因为这可能是由于你的疏忽造成的。另外，还有一种规则会警告你:当出现混乱局面时，如规则Ａ出现在规则B之前，但是实际上覆盖了规则B，因为规则A的的选择器具有更高的优先级(如，规则A为<code>.foo.bar{···}</code>，规则B为 <code>.foo{···}</code>)。这是一种十分棘手的情况。</p>
+<p>&#160;&#160;&#160;&#160;还有一种规则使用了PostCSS的doiuse插件，用于检查你的浏览器是否支持此样式。另外一种则使用了css-colorguard插件用于提示颜色的相似性，以免造成你的混乱使用。(请注意: 这是基于PostCSS之上的stylelint的主要优势之一：相比于其它PostCSS 插件，用很少的努力，stylelint就可以进行提示。)</p>
+<h3 id="强制执行最佳实践"><a href="#强制执行最佳实践" class="headerlink" title="强制执行最佳实践"></a>强制执行最佳实践</h3><p>&#160;&#160;&#160;&#160;如果你在样式表中使用了系统方法，或者对你的代码设置了一个样式指南，你应该取缔这些模式了。<strong>stylelint</strong>已经提供了这些功能。</p>
+<p>&#160;&#160;&#160;&#160;首先，你需要狠狠地控制你的选择器。使用<strong>stylelint</strong>，你可以禁止超过一定特异性的选择器或者在嵌套深度上设置限制。你可以禁止类别选择器(例如没有 id的选择器），并对其余的选择器使用正则表达式进行命名约定。</p>
+<p>&#160;&#160;&#160;&#160;你可以禁止<strong>!important</strong>的使用，或者你的浏览器并不支持的<strong>brower</strong> <strong>hacks</strong>。如果你使用<strong>Autoprefixer</strong>(或者说你应该使用),你可以禁止在源样式表中使用供应商前缀。</p>
+<p>&#160;&#160;&#160;&#160;如果你想要更加严谨 – 你可以花费一些时间在配置上，以保证绝对的一致性 – 你可以强制执行样式表属性的顺序，并为黑名单，白名单提供属性，值，函数还有单位。</p>
+<h3 id="执行代码样式的约定"><a href="#执行代码样式的约定" class="headerlink" title="执行代码样式的约定"></a>执行代码样式的约定</h3><p>&#160;&#160;&#160;&#160;stylelint具有自动执行代码样式的约定，所以你和你的队友无需主动设置。我们致力于使这些规则更加全面灵活。</p>
+<p>&#160;&#160;&#160;&#160;这些规则主要针对于空格，但是同样针对于其它的细节，如；引号，大小写字母，在小数前写零，使用关键字以及拼读出值等等。</p>
+<p>&#160;&#160;&#160;&#160;梦想你和你的队友可以建立一个格式约定(例如我们始终在声明冒号之后留有一个空格)，并在你的stylelint配置中进行修改，之后你们就不会为此再次讨论。让其执行于机器王国。</p>
+<h3 id="制定以及扩展一切"><a href="#制定以及扩展一切" class="headerlink" title="制定以及扩展一切"></a>制定以及扩展一切</h3><p>&#160;&#160;&#160;&#160;Nicholas Zakas，ESLint(以及 CSS Lint)的创作者，写到ESLint的成功在于它的扩展性。stylelint试图遵循ESLint的领先优势，并且提供给CSS 作者一个linter，同样具有扩展性。</p>
+<p>&#160;&#160;&#160;&#160;你可以书写并且发布自己的规则插件。现在已经具有了一大堆可以使用的;并且我们渴望看到别人的优秀插件。</p>
+<p>&#160;&#160;&#160;&#160;配置是可扩展的，因此可以共享。至于插件，我们从ESLint了解了这一功能的价值性。检查其中包括WordPress和SUITCSS配置的，并且已经公布的。</p>
+<p>&#160;&#160;&#160;&#160;如果你不喜欢 stylelint 的内置提示，你可以手工创建属于你自己的风格，甚至可以为你的组织进行创建。你还可以自定义用于提供警告信息的规则。</p>
+<p>&#160;&#160;&#160;&#160;使用stylelint的API，你可以创建文本编译器的插件，并进行测试使stylelint 融入到你的工作流的每个方面。</p>
+<h2 id="stylelint-使用"><a href="#stylelint-使用" class="headerlink" title="stylelint 使用"></a>stylelint 使用</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><pre><code>npm install -g stylelint
+</code></pre><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h4 id="创建配置文件（三种方式）"><a href="#创建配置文件（三种方式）" class="headerlink" title="创建配置文件（三种方式）"></a>创建配置文件（三种方式）</h4><p>&#160;&#160;&#160;&#160;1.<code>.stylelintrc</code></p>
+<pre><code>{
+    &quot;rules&quot;: {
+        &quot;declaration-block-trailing-semicolon&quot;: null
+    }
+}
+</code></pre><p>&#160;&#160;&#160;&#160;2.<code>stylelint.config.js</code></p>
+<pre><code>module.exports = {
+    &quot;rules&quot;: {
+        &quot;declaration-block-trailing-semicolon&quot;: null
+    }
+}
+</code></pre><p>&#160;&#160;&#160;&#160;3.<code>package.json</code></p>
+<pre><code>{
+    ......
+    &quot;stylelint&quot;: {
+        &quot;rules&quot;: {
+            &quot;color-hex-case&quot;: &quot;lower&quot;
+        }
+    }
+}
+</code></pre><h3 id="官方配置方法"><a href="#官方配置方法" class="headerlink" title="官方配置方法"></a>官方配置方法</h3><p>&#160;&#160;&#160;&#160;1.本地安装：</p>
+<pre><code>npm install stylelint-config-standard
+</code></pre><p>&#160;&#160;&#160;&#160;2.在配置文件<code>.stylelintrc</code>中配置</p>
+<pre><code>{
+    &quot;extends&quot;: &quot;stylelint-config-standard&quot;
+}
+</code></pre><p>&#160;&#160;&#160;&#160;3.添加或修改标准配置中的内容</p>
+<pre><code>{
+    &quot;extends&quot;: &quot;stylelint-config-standard&quot;,
+    &quot;rules&quot;: {
+        &quot;declaration-block-trailing-semicolon&quot;: null
+    }
+}
+</code></pre><h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>&#160;&#160;&#160;&#160;我在scss文件里面写</p>
+<pre><code>$primary-color: #ff3253;
+div{
+    background-color: #0859BD;
+}
+</code></pre><p>&#160;&#160;&#160;&#160;在配置文件中添加</p>
+<pre><code>&quot;color-no-hex&quot;:true
+</code></pre><p>&#160;&#160;&#160;&#160;命令行运行</p>
+<pre><code>stylelint yourfile.css
+//stylelint &quot;src/style/scss/base.scss&quot;
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/1062695-170bd4fc19297dfe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="运行"></p>
+<h3 id="具体demo测试"><a href="#具体demo测试" class="headerlink" title="具体demo测试"></a>具体demo测试</h3><h4 id="1-创建工程和文件"><a href="#1-创建工程和文件" class="headerlink" title="1.创建工程和文件"></a>1.创建工程和文件</h4><p><img src="http://upload-images.jianshu.io/upload_images/1062695-580e01953c0784ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建工程和文件"></p>
+<h4 id="2-编写简单的代码"><a href="#2-编写简单的代码" class="headerlink" title="2.编写简单的代码"></a>2.编写简单的代码</h4><p><strong>index.html</strong></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;index&lt;/title&gt;
+    &lt;link href=&quot;index.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&apos;root&apos;&gt;
+        &lt;p class=&quot;nihao&quot;&gt;nihao&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p><strong>index.css</strong></p>
+<pre><code>#root{
+    background-color: #0859BD;
+}
+.nihao{
+    font-size: 18px;
+    color: #fff000;
+}
+</code></pre><h4 id="3-创建package-json文件"><a href="#3-创建package-json文件" class="headerlink" title="3.创建package.json文件"></a>3.创建package.json文件</h4><pre><code>npm init
+</code></pre><h4 id="4-安装stylelint"><a href="#4-安装stylelint" class="headerlink" title="4.安装stylelint"></a>4.安装stylelint</h4><pre><code>npm install stylelint-config-standard
+</code></pre><h4 id="5-创建stylelint-config-js文件，编写规则"><a href="#5-创建stylelint-config-js文件，编写规则" class="headerlink" title="5.创建stylelint.config.js文件，编写规则"></a>5.创建stylelint.config.js文件，编写规则</h4><pre><code>module.exports = {
+    &quot;rules&quot;: {
+        &quot;color-no-hex&quot;:true//不允许十六进制颜色
+    }
+}
+</code></pre><h4 id="6-运行测试"><a href="#6-运行测试" class="headerlink" title="6.运行测试"></a>6.运行测试</h4><pre><code>stylelint index.css
+</code></pre><h4 id="7-根据结果修改"><a href="#7-根据结果修改" class="headerlink" title="7.根据结果修改"></a>7.根据结果修改</h4><pre><code>index.css
+ 2:23  ✖  Unexpected hex color &quot;#0859BD&quot;   color-no-hex
+ 6:12  ✖  Unexpected hex color &quot;#fff000&quot;   color-no-hex
+</code></pre><p>这就算是一个简单的demo实现了。</p>
+<h2 id="stylelint-规则"><a href="#stylelint-规则" class="headerlink" title="stylelint 规则"></a>stylelint 规则</h2><p><a href="https://github.com/stylelint/stylelint/blob/master/docs/user-guide/rules.md" target="_blank" rel="noopener">规则rules</a><br>规则有一百多条，我就不在这一一列举了，以后有时间的话我会加上的。主要是目前用这个的人没有想象中的那么多，我在这基本上算是给一些像我一样的新手做个指引，少走些弯路，关于stylelint主要的东西，还是要看官网英文文档。别的地方相关的文章暂时还不算多。</p>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><a href="http://www.w3cplus.com/workflow/How-to-lint-your-css-with-stylelint.html" target="_blank" rel="noopener">使用stylelint对CSS/Sass做代码审查</a>  </p>
+<p><a href="http://www.jb51.net/article/83180.htm" target="_blank" rel="noopener">使用 stylelint检查CSS_StyleLint</a></p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#stylelint-初步了解"><span class="toc-number">1.</span> <span class="toc-text">stylelint 初步了解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stylelint-简介"><span class="toc-number">2.</span> <span class="toc-text">stylelint 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stylelint-作用"><span class="toc-number">3.</span> <span class="toc-text">stylelint 作用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#错误捕获"><span class="toc-number">3.1.</span> <span class="toc-text">错误捕获</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#强制执行最佳实践"><span class="toc-number">3.2.</span> <span class="toc-text">强制执行最佳实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行代码样式的约定"><span class="toc-number">3.3.</span> <span class="toc-text">执行代码样式的约定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#制定以及扩展一切"><span class="toc-number">3.4.</span> <span class="toc-text">制定以及扩展一切</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stylelint-使用"><span class="toc-number">4.</span> <span class="toc-text">stylelint 使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">4.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">4.2.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建配置文件（三种方式）"><span class="toc-number">4.2.1.</span> <span class="toc-text">创建配置文件（三种方式）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#官方配置方法"><span class="toc-number">4.3.</span> <span class="toc-text">官方配置方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行"><span class="toc-number">4.4.</span> <span class="toc-text">运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#具体demo测试"><span class="toc-number">4.5.</span> <span class="toc-text">具体demo测试</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-创建工程和文件"><span class="toc-number">4.5.1.</span> <span class="toc-text">1.创建工程和文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-编写简单的代码"><span class="toc-number">4.5.2.</span> <span class="toc-text">2.编写简单的代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-创建package-json文件"><span class="toc-number">4.5.3.</span> <span class="toc-text">3.创建package.json文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-安装stylelint"><span class="toc-number">4.5.4.</span> <span class="toc-text">4.安装stylelint</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-创建stylelint-config-js文件，编写规则"><span class="toc-number">4.5.5.</span> <span class="toc-text">5.创建stylelint.config.js文件，编写规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-运行测试"><span class="toc-number">4.5.6.</span> <span class="toc-text">6.运行测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-根据结果修改"><span class="toc-number">4.5.7.</span> <span class="toc-text">7.根据结果修改</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stylelint-规则"><span class="toc-number">5.</span> <span class="toc-text">stylelint 规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考："><span class="toc-number">6.</span> <span class="toc-text">参考：</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&text=web学习笔记06-stylelint初探"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&title=web学习笔记06-stylelint初探"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&is_video=false&description=web学习笔记06-stylelint初探"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记06-stylelint初探&body=Check out this article: http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&title=web学习笔记06-stylelint初探"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&title=web学习笔记06-stylelint初探"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&title=web学习笔记06-stylelint初探"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&title=web学习笔记06-stylelint初探"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/09/27/web学习笔记06-stylelint初探/&name=web学习笔记06-stylelint初探&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+

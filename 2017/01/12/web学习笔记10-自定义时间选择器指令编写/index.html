@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;好久没有更新了，最近在做一个前端angularJs项目，内容比较复杂，幸好都不算太难。前两天自己写了个简单的时间选择器，但是水平有限，写的代码量稍微有点大，就想着封装成一个指令，暴露出小时和分钟，以便在控制器中获取到，并且发送到后台。不过，之前虽然一直在写angular，指令也接触到不少，但是一直是在使用别人写好的，自己写还是第一次，就想着，正好利用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web学习笔记10-自定义时间选择器指令编写">
+<meta property="og:url" content="http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;好久没有更新了，最近在做一个前端angularJs项目，内容比较复杂，幸好都不算太难。前两天自己写了个简单的时间选择器，但是水平有限，写的代码量稍微有点大，就想着封装成一个指令，暴露出小时和分钟，以便在控制器中获取到，并且发送到后台。不过，之前虽然一直在写angular，指令也接触到不少，但是一直是在使用别人写好的，自己写还是第一次，就想着，正好利用">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-ad53cdaed977c920.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2017-01-12T03:26:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web学习笔记10-自定义时间选择器指令编写">
+<meta name="twitter:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;好久没有更新了，最近在做一个前端angularJs项目，内容比较复杂，幸好都不算太难。前两天自己写了个简单的时间选择器，但是水平有限，写的代码量稍微有点大，就想着封装成一个指令，暴露出小时和分钟，以便在控制器中获取到，并且发送到后台。不过，之前虽然一直在写angular，指令也接触到不少，但是一直是在使用别人写好的，自己写还是第一次，就想着，正好利用">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1062695-ad53cdaed977c920.gif?imageMogr2/auto-orient/strip">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>web学习笔记10-自定义时间选择器指令编写</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/03/20/web学习笔记11-angularjs指令基础学习/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&text=web学习笔记10-自定义时间选择器指令编写"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&title=web学习笔记10-自定义时间选择器指令编写"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&is_video=false&description=web学习笔记10-自定义时间选择器指令编写"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记10-自定义时间选择器指令编写&body=Check out this article: http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&title=web学习笔记10-自定义时间选择器指令编写"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&title=web学习笔记10-自定义时间选择器指令编写"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&title=web学习笔记10-自定义时间选择器指令编写"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&title=web学习笔记10-自定义时间选择器指令编写"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&name=web学习笔记10-自定义时间选择器指令编写&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步：编写html"><span class="toc-number">1.</span> <span class="toc-text">第一步：编写html</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#html"><span class="toc-number">1.0.1.</span> <span class="toc-text">html</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步：编写css"><span class="toc-number">2.</span> <span class="toc-text">第二步：编写css</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#css"><span class="toc-number">2.0.1.</span> <span class="toc-text">css</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三步：编写js"><span class="toc-number">3.</span> <span class="toc-text">第三步：编写js</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#js"><span class="toc-number">3.0.1.</span> <span class="toc-text">js</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第四步：编写指令"><span class="toc-number">4.</span> <span class="toc-text">第四步：编写指令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#directive"><span class="toc-number">4.0.1.</span> <span class="toc-text">directive</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第五步：使用指令"><span class="toc-number">5.</span> <span class="toc-text">第五步：使用指令</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        web学习笔记10-自定义时间选择器指令编写
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-01-12T02:17:49.000Z" itemprop="datePublished">2017-01-12</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>&#160;&#160;&#160;&#160;好久没有更新了，最近在做一个前端angularJs项目，内容比较复杂，幸好都不算太难。前两天自己写了个简单的时间选择器，但是水平有限，写的代码量稍微有点大，就想着封装成一个指令，暴露出小时和分钟，以便在控制器中获取到，并且发送到后台。不过，之前虽然一直在写angular，指令也接触到不少，但是一直是在使用别人写好的，自己写还是第一次，就想着，正好利用下这个机会，自己尝试些一个简单点的指令也挺好的。</p>
+<p>&#160;&#160;&#160;&#160;这里我还是按照往常习惯一样，先贴github地址，毕竟看那么长的东西也是太累了。<a href="https://github.com/Yulingsong/angular-timepicker" target="_blank" rel="noopener">angular-timepicker</a></p>
+<p>&#160;&#160;&#160;&#160;<strong>效果图如图：</strong><br><img src="http://upload-images.jianshu.io/upload_images/1062695-ad53cdaed977c920.gif?imageMogr2/auto-orient/strip" alt="时间选择器效果.gif"></p>
+<p>&#160;&#160;&#160;&#160;点击上下小三角可以变换时间，点击获取时间的按钮可以弹出提示框显示选择的时间，并且在控制台中打印出来。其实这些写起来并不是很难，在写指令的时候可能对大多数前端的小伙伴来说都不算难事，不过说实话，一年前左右刚接触angular的时候，其实已经在慕课网上看过大漠清秋讲的angular课程，当时初接触前端，看了他讲的指令，其实也没看懂。昨晚回去又看了一遍他讲的课，发现理解了一点了，正好昨天在写指令的时候遇到一些小问题，今天早上也是迎刃而解了。</p>
+<p>&#160;&#160;&#160;&#160;下面我就不废话了，直接写代码了，我把这个指令单独写成一个demo了。所以大家要是想使用的话，只需要下载之后复制粘贴就ok了。</p>
+<h3 id="第一步：编写html"><a href="#第一步：编写html" class="headerlink" title="第一步：编写html"></a>第一步：编写html</h3><p>&#160;&#160;&#160;&#160;先编写出html来，把基本的页面编写出来：</p>
+<h5 id="html"><a href="#html" class="headerlink" title="html"></a>html</h5><pre><code>&lt;div class=&quot;co-timepicker-box&quot; style=&quot;margin-left: 15px&quot;&gt;
+    &lt;input type=&quot;text&quot; class=&quot;fl wi-timepicker-timeinput&quot; ng-model=&quot;hour&quot; maxlength=&quot;2&quot;&gt;
+       &lt;div class=&quot;fl wi-timepicker-change-box&quot;&gt;
+        &lt;div class=&quot;wi-timepicker-change-time arrow-up&quot; ng-click=&quot;timeUp(1)&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;wi-timepicker-change-time arrow-down&quot; ng-click=&quot;timeDown(1)&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;fl wi-timepicker-maohao&quot;&gt;
+          :
+    &lt;/div&gt;
+    &lt;input type=&quot;text&quot; class=&quot;fl wi-timepicker-timeinput&quot; ng-model=&quot;minute&quot; maxlength=&quot;2&quot;&gt;
+    &lt;div class=&quot;fl wi-timepicker-change-box&quot;&gt;
+        &lt;div class=&quot;wi-timepicker-change-time arrow-up&quot; ng-click=&quot;timeUp(2)&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;wi-timepicker-change-time arrow-down&quot; ng-click=&quot;timeDown(2)&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><h3 id="第二步：编写css"><a href="#第二步：编写css" class="headerlink" title="第二步：编写css"></a>第二步：编写css</h3><h5 id="css"><a href="#css" class="headerlink" title="css"></a>css</h5><pre><code>/* timepicker start */
+.co-timepicker-box {
+    float: left;
+    width: 110px;
+    height: 32px;
+    border: 1px solid #cccccc;
+}
+
+.fl{
+    float: left;
+}
+.wi-timepicker-timeinput{
+    width: 35px;
+    height: 30px;
+    padding: 0;
+    font-size: 20px;
+    text-align: center;
+    line-height: 30px;
+    border:0;
+    outline: none;
+}
+
+.wi-timepicker-change-box{
+       width: 15px;
+    height: 30px;
+    border:0;
+}
+.wi-timepicker-change-time{
+    width: 15px;
+    height: 15px;
+    border: 0;
+}
+.wi-timepicker-maohao{
+    width: 7px;
+    height: 30px;
+    font-size: 16px;
+    text-align: center;
+    line-height: 30px;
+}
+.arrow-up{
+    background: url(&quot;../img/time-up.png&quot;)no-repeat center center;
+    background-size: 14px 6px;
+}
+.arrow-down{
+    background: url(&quot;../img/time-down.png&quot;)no-repeat center center;
+    background-size: 14px 6px;
+}
+/* timepicker end */
+</code></pre><h3 id="第三步：编写js"><a href="#第三步：编写js" class="headerlink" title="第三步：编写js"></a>第三步：编写js</h3><p>&#160;&#160;&#160;&#160;页面基本完成。之后就是js编写，js中主要需要注意的是，小时和分钟在个位数的时候前面需要加上0，在小时0往下是23，分钟往下是59，这个需要单独的一个方法。然后就是给小时分钟赋初始值。然后就是点击方法。</p>
+<h5 id="js"><a href="#js" class="headerlink" title="js"></a>js</h5><pre><code>//转换格式的方法
+$scope.PrefixInteger = function (num, n) {
+    return (Array(n).join(0) + num).slice(-n);
+};
+//时间选择器的处理
+if(!$scope.hour){
+    $scope.hour = 12;
+}
+if(!$scope.minute){
+    $scope.minute = &apos;00&apos;;
+}
+var reg=/^\d+$/;
+$scope.timeUp = function (type) {
+    if(type == 1){
+        if(reg.test($scope.hour)){
+            if(parseInt($scope.hour) &gt;=0 &amp;&amp; parseInt($scope.hour) &lt;= 23){
+                if($scope.hour == 23){
+                    $scope.hour = -1;
+                }
+                $scope.hour = parseInt($scope.hour) + 1;
+            }else {
+                $scope.hour = 12;
+            }
+        }else {
+            $scope.hour = 12;
+        }
+         $scope.hour = $scope.PrefixInteger($scope.hour,2);
+    }else if(type == 2){
+        if(angular.isNumber($scope.minute) || reg.test($scope.minute)){
+            if(parseInt($scope.minute) &gt;=0 &amp;&amp; parseInt($scope.minute) &lt;=59){
+                if($scope.minute == 59){
+                    $scope.minute = -1;
+                }
+                $scope.minute = parseInt($scope.minute) + 1;
+             }else {
+                 $scope.minute = 0;
+             }
+         }else {
+             $scope.minute = 0;
+         }
+         $scope.minute = $scope.PrefixInteger($scope.minute,2);
+         }
+    };
+    $scope.timeDown = function (type) {
+        if(type == 1){
+            if(angular.isNumber($scope.hour) || reg.test($scope.hour)){
+                if(parseInt($scope.hour) &gt;=0 &amp;&amp; parseInt($scope.hour) &lt;=24){
+                    if($scope.hour == 0){
+                           $scope.hour = 24;
+                    }
+                    $scope.hour = parseInt($scope.hour) - 1;
+            }else {
+                 $scope.hour = 12;
+            }
+        }else {
+            $scope.hour = 12;
+        }
+         $scope.hour = $scope.PrefixInteger($scope.hour,2)
+        }else  if(type == 2){
+              if(angular.isNumber($scope.minute) || reg.test($scope.minute)){
+                if(parseInt($scope.minute) &gt;=0 &amp;&amp; parseInt($scope.minute) &lt;=60){
+                    if($scope.minute == 0){
+                           $scope.minute = 60;
+                    }
+                      $scope.minute = parseInt($scope.minute) - 1;
+                   }else {
+                       $scope.minute = 0;
+                   }
+               }else {
+                   $scope.minute = 0;
+               }
+                $scope.minute = $scope.PrefixInteger($scope.minute,2);
+           }
+        };
+</code></pre><p>&#160;&#160;&#160;&#160;以上就是完成了基本的编写，下面就是要写指令了，需要把上面的东西都添加到指令中。</p>
+<h3 id="第四步：编写指令"><a href="#第四步：编写指令" class="headerlink" title="第四步：编写指令"></a>第四步：编写指令</h3><h5 id="directive"><a href="#directive" class="headerlink" title="directive"></a>directive</h5><pre><code>  var app = angular.module(&apos;myApp&apos;, []);
+  app.directive(&quot;coTimepicker&quot;, function() {
+return {
+    restrict:&apos;AE&apos;,
+    scope:{
+        hour:&apos;=&apos;,
+        minute:&apos;=&apos;
+    },
+    template:&apos;&lt;div class=&quot;co-timepicker-box&quot; style=&quot;margin-left: 15px&quot;&gt;&apos;+
+    &apos;&lt;input type=&quot;text&quot; class=&quot;fl wi-timepicker-timeinput&quot; ng-model=&quot;hour&quot; maxlength=&quot;2&quot;&gt;&apos; +
+    &apos;&lt;div class=&quot;fl wi-timepicker-change-box&quot;&gt;&apos; +
+    &apos;&lt;div class=&quot;wi-timepicker-change-time arrow-up&quot; ng-click=&quot;timeUp(1)&quot;&gt;&lt;/div&gt;&apos; +
+    &apos;&lt;div class=&quot;wi-timepicker-change-time arrow-down&quot; ng-click=&quot;timeDown(1)&quot;&gt;&lt;/div&gt;&apos; +
+    &apos;&lt;/div&gt;&apos; +
+    &apos;&lt;div class=&quot;fl wi-timepicker-maohao&quot;&gt;&apos; +
+    &apos;:&apos; +
+    &apos;&lt;/div&gt;&apos; +
+    &apos;&lt;input type=&quot;text&quot; class=&quot;fl wi-timepicker-timeinput&quot; ng-model=&quot;minute&quot; maxlength=&quot;2&quot;&gt;&apos; +
+    &apos;&lt;div class=&quot;fl wi-timepicker-change-box&quot;&gt;&apos; +
+    &apos;&lt;div class=&quot;wi-timepicker-change-time arrow-up&quot; ng-click=&quot;timeUp(2)&quot;&gt;&lt;/div&gt;&apos; +
+    &apos;&lt;div class=&quot;wi-timepicker-change-time arrow-down&quot; ng-click=&quot;timeDown(2)&quot;&gt;&lt;/div&gt;&apos; +
+    &apos;&lt;/div&gt;&apos;+
+    &apos;&lt;/div&gt;&apos;,
+    link: function ($scope,element,attrs) {
+        $scope.PrefixInteger = function (num, n) {
+            return (Array(n).join(0) + num).slice(-n);
+        };
+        //--------------------------------------
+        if(!$scope.hour){
+            $scope.hour = 12;
+        }
+        if(!$scope.minute){
+            $scope.minute = &apos;00&apos;;
+        }
+        var reg=/^\d+$/;
+        $scope.timeUp = function (type) {
+            if(type == 1){
+                if(reg.test($scope.hour)){
+                    if(parseInt($scope.hour) &gt;=0 &amp;&amp; parseInt($scope.hour) &lt;= 23){
+                        if($scope.hour == 23){
+                            $scope.hour = -1;
+                        }
+                        $scope.hour = parseInt($scope.hour) + 1;
+                    }else {
+                        $scope.hour = 12;
+                    }
+                }else {
+                    $scope.hour = 12;
+                }
+                $scope.hour = $scope.PrefixInteger($scope.hour,2);
+            }else if(type == 2){
+                if(angular.isNumber($scope.minute) || reg.test($scope.minute)){
+                    if(parseInt($scope.minute) &gt;=0 &amp;&amp; parseInt($scope.minute) &lt;=59){
+                        if($scope.minute == 59){
+                            $scope.minute = -1;
+                        }
+                        $scope.minute = parseInt($scope.minute) + 1;
+                    }else {
+                        $scope.minute = 0;
+                    }
+                }else {
+                    $scope.minute = 0;
+                }
+                $scope.minute = $scope.PrefixInteger($scope.minute,2);
+            }
+        };
+        $scope.timeDown = function (type) {
+            if(type == 1){
+                if(angular.isNumber($scope.hour) || reg.test($scope.hour)){
+                    if(parseInt($scope.hour) &gt;=0 &amp;&amp; parseInt($scope.hour) &lt;=24){
+                        if($scope.hour == 0){
+                            $scope.hour = 24;
+                        }
+                        $scope.hour = parseInt($scope.hour) - 1;
+                    }else {
+                        $scope.hour = 12;
+                    }
+                }else {
+                    $scope.hour = 12;
+                }
+                $scope.hour = $scope.PrefixInteger($scope.hour,2)
+            }else  if(type == 2){
+                if(angular.isNumber($scope.minute) || reg.test($scope.minute)){
+                    if(parseInt($scope.minute) &gt;=0 &amp;&amp; parseInt($scope.minute) &lt;=60){
+                        if($scope.minute == 0){
+                            $scope.minute = 60;
+                        }
+                        $scope.minute = parseInt($scope.minute) - 1;
+                    }else {
+                        $scope.minute = 0;
+                    }
+                }else {
+                    $scope.minute = 0;
+                }
+                $scope.minute = $scope.PrefixInteger($scope.minute,2);
+            }
+        };
+    }
+}});
+</code></pre><h3 id="第五步：使用指令"><a href="#第五步：使用指令" class="headerlink" title="第五步：使用指令"></a>第五步：使用指令</h3><p>&#160;&#160;&#160;&#160;指令写完之后，需要使用的，所以在html上写上指令</p>
+<pre><code>&lt;co-timepicker hour=&quot;hour&quot; minute=&quot;minute&quot;&gt;&lt;/co-timepicker&gt;
+</code></pre><p>在控制器中可以获取到小时和分钟。同时也是可以在html上写死。在控制器中可以只用使用<code>$scope.hour</code>和<code>$scope.minute</code>来获取小时和分钟。</p>
+<p>&#160;&#160;&#160;&#160;其实这样就算是已经编写完成，可以直接使用了，昨天我没有搞清楚指令内作用域scope里面的一些用法，导致没法提取出小时和分钟，晚上研究了之后发现其实不算难，这里我也就不讲一些指令的基础了，毕竟我自己也没有搞太明白。很多时候，基础稍微看下之后，应该直接跟着实例去实践，实践之后才能知道一些光看基础不知道的东西。</p>
+<p>&#160;&#160;&#160;&#160;感觉自己写东西还是有点乱，没有说的很清楚。不过大家在github上下载下来一看就能明白了，其实这个指令我个人觉得还有待改进，而且难度也不算高，算是比较简单的额指令了。当初也是没找到合适的第三方才自己写了一个。之后还是会继续学习封装控件做成指令。分享出来给大家看看，指导指导。希望大家看到有问题的直接评论或者私信我给我指正。谢谢</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步：编写html"><span class="toc-number">1.</span> <span class="toc-text">第一步：编写html</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#html"><span class="toc-number">1.0.1.</span> <span class="toc-text">html</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步：编写css"><span class="toc-number">2.</span> <span class="toc-text">第二步：编写css</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#css"><span class="toc-number">2.0.1.</span> <span class="toc-text">css</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三步：编写js"><span class="toc-number">3.</span> <span class="toc-text">第三步：编写js</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#js"><span class="toc-number">3.0.1.</span> <span class="toc-text">js</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第四步：编写指令"><span class="toc-number">4.</span> <span class="toc-text">第四步：编写指令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#directive"><span class="toc-number">4.0.1.</span> <span class="toc-text">directive</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第五步：使用指令"><span class="toc-number">5.</span> <span class="toc-text">第五步：使用指令</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&text=web学习笔记10-自定义时间选择器指令编写"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&title=web学习笔记10-自定义时间选择器指令编写"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&is_video=false&description=web学习笔记10-自定义时间选择器指令编写"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记10-自定义时间选择器指令编写&body=Check out this article: http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&title=web学习笔记10-自定义时间选择器指令编写"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&title=web学习笔记10-自定义时间选择器指令编写"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&title=web学习笔记10-自定义时间选择器指令编写"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&title=web学习笔记10-自定义时间选择器指令编写"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/01/12/web学习笔记10-自定义时间选择器指令编写/&name=web学习笔记10-自定义时间选择器指令编写&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;上一篇文章简单的写了对于touchid的简单了解。因为太懒了，就没有写实例，现在就单独写一篇应用吧，这篇想做的就是一个模仿那个叫啥软件来着，某某理财类类的软件的一个指纹验证解锁。我们做出来的页面应该如下图，在app挂起到后台的时候再点击到前台的时候回出现如下页面：     &amp;#160;&amp;#160;&amp;#160;&amp;#160;这里我先挂上github的链接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS学习笔记03-指纹验证TouchID简单应用2">
+<meta property="og:url" content="http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;上一篇文章简单的写了对于touchid的简单了解。因为太懒了，就没有写实例，现在就单独写一篇应用吧，这篇想做的就是一个模仿那个叫啥软件来着，某某理财类类的软件的一个指纹验证解锁。我们做出来的页面应该如下图，在app挂起到后台的时候再点击到前台的时候回出现如下页面：     &amp;#160;&amp;#160;&amp;#160;&amp;#160;这里我先挂上github的链接">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-c049cc53edf939fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-6495262ab3ab1ef4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-0e5662f0bf2a79f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-5822ed8717b73118.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-09-21T06:38:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS学习笔记03-指纹验证TouchID简单应用2">
+<meta name="twitter:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;上一篇文章简单的写了对于touchid的简单了解。因为太懒了，就没有写实例，现在就单独写一篇应用吧，这篇想做的就是一个模仿那个叫啥软件来着，某某理财类类的软件的一个指纹验证解锁。我们做出来的页面应该如下图，在app挂起到后台的时候再点击到前台的时候回出现如下页面：     &amp;#160;&amp;#160;&amp;#160;&amp;#160;这里我先挂上github的链接">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1062695-c049cc53edf939fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>iOS学习笔记03-指纹验证TouchID简单应用2</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/09/21/配置eslint/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/09/20/web学习笔记04-EsLint入门学习/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&text=iOS学习笔记03-指纹验证TouchID简单应用2"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&title=iOS学习笔记03-指纹验证TouchID简单应用2"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&is_video=false&description=iOS学习笔记03-指纹验证TouchID简单应用2"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS学习笔记03-指纹验证TouchID简单应用2&body=Check out this article: http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&title=iOS学习笔记03-指纹验证TouchID简单应用2"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&title=iOS学习笔记03-指纹验证TouchID简单应用2"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&title=iOS学习笔记03-指纹验证TouchID简单应用2"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&title=iOS学习笔记03-指纹验证TouchID简单应用2"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&name=iOS学习笔记03-指纹验证TouchID简单应用2&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一部分"><span class="toc-number">1.</span> <span class="toc-text">第一部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#第一步"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第二步"><span class="toc-number">1.0.2.</span> <span class="toc-text">第二步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第三步"><span class="toc-number">1.0.3.</span> <span class="toc-text">第三步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第四步"><span class="toc-number">1.0.4.</span> <span class="toc-text">第四步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第五步"><span class="toc-number">1.0.5.</span> <span class="toc-text">第五步</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二部分"><span class="toc-number">2.</span> <span class="toc-text">第二部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#第一步-1"><span class="toc-number">2.0.1.</span> <span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第二步-1"><span class="toc-number">2.0.2.</span> <span class="toc-text">第二步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第三步-1"><span class="toc-number">2.0.3.</span> <span class="toc-text">第三步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第四步-1"><span class="toc-number">2.0.4.</span> <span class="toc-text">第四步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第五步-1"><span class="toc-number">2.0.5.</span> <span class="toc-text">第五步</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三部分"><span class="toc-number">3.</span> <span class="toc-text">第三部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#还有就是，本人作为新手，上面代码有啥问题的话，或者有啥可以优化的地方，希望大家可以指正，可以了留言跟我讨论，或者是私信啥的，都可以，大家一起共同进步共同学习。"><span class="toc-number">3.0.1.</span> <span class="toc-text">还有就是，本人作为新手，上面代码有啥问题的话，或者有啥可以优化的地方，希望大家可以指正，可以了留言跟我讨论，或者是私信啥的，都可以，大家一起共同进步共同学习。</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        iOS学习笔记03-指纹验证TouchID简单应用2
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-09-21T06:24:29.000Z" itemprop="datePublished">2016-09-21</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>&#160;&#160;&#160;&#160;上一篇文章简单的写了对于touchid的简单了解。因为太懒了，就没有写实例，现在就单独写一篇应用吧，这篇想做的就是一个模仿那个叫啥软件来着，某某理财类类的软件的一个指纹验证解锁。我们做出来的页面应该如下图，在app挂起到后台的时候再点击到前台的时候回出现如下页面：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-c049cc53edf939fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="app唤醒的时候出现的画面"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-6495262ab3ab1ef4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="点击取消按钮出现的页面">  </p>
+<p>&#160;&#160;&#160;&#160;这里我先挂上github的链接地址，毕竟本文的篇幅较长，也没什么人有耐心有时间看到最后，顶多看下demo，快速的知道怎么调用啥的就可以了。<a href="https://github.com/Yulingsong/popViewForTouchID" target="_blank" rel="noopener">popViewForTouchID</a></p>
+<p>&#160;&#160;&#160;&#160;因为我之前没遇到个这种情况，所以我做的都是自己瞎搞搞出来的，也不知道平时大家做的时候是怎么做的，就搞出来这样的，这里我打算用两种方法来实现，不过这个东西放进app中貌似是需要适配的。还是有些许问题的。可能要调下。  </p>
+<p>&#160;&#160;&#160;&#160;在app被唤醒的时候，出现页面我用了两种方式，一种是present出来一个单独的页面，一种方式是自定义弹出view。</p>
+<p>&#160;&#160;&#160;&#160;但是本文呢，主要就介绍一下弹出式view的方式，因为present的方式跟这种方式差别就是在于一个是view一个是Controller，主要的思想还是一样的。</p>
+<h2 id="第一部分"><a href="#第一部分" class="headerlink" title="第一部分"></a>第一部分</h2><h4 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h4><p>&#160;&#160;&#160;&#160;引入需要用的文件，以及创建pch文件，因为是小demo，所以一些宏定义直接丢进去就可以了。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-0e5662f0bf2a79f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="指纹验证和信息显示控件"></p>
+<h4 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h4><p>&#160;&#160;&#160;&#160;创建pch文件，引入一些需要用到的文件以及宏定义,这里要是有问题的话可以参照我之前一篇文章写的引入pch文件，当然也可以老老实实的每个文件里都去引入头文件啥的，这个很随意的，毕竟是demo。</p>
+<pre><code>#import &quot;AppDelegate.h&quot;
+#import &quot;WJTouchID.h&quot;
+#import &quot;MBProgressHUD.h&quot;
+#import &quot;MBProgressHUD+Add.h&quot;
+
+// 屏幕bounds
+#define YLSScreenBounds [UIScreen mainScreen].bounds
+//位置
+#define ZLRect(x, y, w, h)  CGRectMake([UIScreen mainScreen].bounds.size.width * x, [UIScreen mainScreen].bounds.size.height * y, [UIScreen mainScreen].bounds.size.width * w,  [UIScreen mainScreen].bounds.size.height * h)
+//字体大小
+#define ZCFont(f) [UIScreen mainScreen].bounds.size.width * f
+</code></pre><h4 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h4><p>&#160;&#160;&#160;&#160;实现基础页面，如下图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-5822ed8717b73118.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="基础页面"></p>
+<ul>
+<li><p>声明变量，遵守指纹验证控件的协议</p>
+<pre><code>@interface ViewController ()&lt;WJTouchIDDelegate&gt;
+/** NoticeLabel */
+@property (nonatomic,strong) UILabel *label;
+/** UISwitch */
+@property (nonatomic,strong) UISwitch *touchIDSwitch;
+@property (nonatomic, strong) WJTouchID *touchID;
+@end
+</code></pre></li>
+</ul>
+<ul>
+<li><p>懒加载</p>
+<pre><code>-(UISwitch *)touchIDSwitch
+{
+        if (!_touchIDSwitch)
+    {
+        self.touchIDSwitch = [[UISwitch alloc]init];
+    }
+    return _touchIDSwitch;
+}
+</code></pre></li>
+<li><p>添加子控件</p>
+<pre><code>-(void)setSubViews
+{
+    self.label = [[UILabel alloc]init];
+    [self.view addSubview:self.label];
+    [self.label setFrame:ZLRect(0, 100/667, 1, 20/667)];
+    [self.label setText:@&quot;指纹解锁&quot;];
+    [self.label setTextAlignment:NSTextAlignmentCenter];
+    [self.label setFont:[UIFont systemFontOfSize:ZCFont(18/375)]];
+
+    self.touchIDSwitch = [[UISwitch alloc]init];
+    [self.touchIDSwitch setFrame:ZLRect(160/375, 200/667, 50/375, 28/667)];
+    [self.view addSubview:self.touchIDSwitch];
+    if ([[[NSUserDefaults standardUserDefaults]objectForKey:@&quot;TouchID&quot;] isEqualToString:@&quot;1&quot;])
+    {
+        self.touchIDSwitch.on = YES;
+    }else
+    {
+        self.touchIDSwitch.on = NO;
+    }
+    [self.touchIDSwitch addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
+
+}
+</code></pre></li>
+</ul>
+<p>&#160;&#160;&#160;&#160;这里要说一下</p>
+<pre><code>[[[NSUserDefaults standardUserDefaults]objectForKey:@&quot;TouchID&quot;] isEqualToString:@&quot;1&quot;]
+</code></pre><p>&#160;&#160;&#160;&#160;这个我是将是否设置了指纹验证存到了本地，因为当你进入设置页面的时候，必须知道你本机是否已经设置了指纹验证，这里存在着设置与未设置的一个页面UI差别，我这边就是用switch的开关来打开关闭指纹验证，也是用开关状态来表示指纹验证是否打开。</p>
+<h4 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h4><p>&#160;&#160;&#160;&#160;在viewdidload方法中调用设置子控件的方法，并且实现开关切换的方法。</p>
+<pre><code>- (void)viewDidLoad {
+        [super viewDidLoad];
+    [self setSubViews];
+}
+</code></pre><p>&#160;&#160;&#160;&#160;切换方法里呢，就是需要调用者会问验证，一般软件设置指纹验证的时候都会要求你先验证一下子，我在这里设置成只要你开或关闭都需要验证一下。</p>
+<pre><code>-(void)changeSwitch:(id)sender
+{
+    NSLog(@&quot;------changeSwitch-------&quot;);
+
+    WJTouchID *touchid = [[WJTouchID alloc]init];
+    [touchid startWJTouchIDWithMessage:WJNotice(@&quot;自定义信息&quot;, @&quot;The Custom Message&quot;) fallbackTitle:WJNotice(@&quot;&quot;, @&quot;Fallback Title&quot;) delegate:self];
+    self.touchID = touchid;
+}
+</code></pre><h4 id="第五步"><a href="#第五步" class="headerlink" title="第五步"></a>第五步</h4><p>&#160;&#160;&#160;&#160;在上述调用指纹验证成功后，必须得实现它的回调函数，在成功或者失败的方法中写上你需要执行的代码。</p>
+<pre><code>//TouchID验证成功
+- (void) WJTouchIDAuthorizeSuccess {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+    if (self.touchIDSwitch.on == YES)
+    {
+        [MBProgressHUD showText:@&quot;成功开启指纹解锁&quot; view:self.view];
+        [[NSUserDefaults standardUserDefaults] setObject:@&quot;1&quot; forKey:@&quot;TouchID&quot;];
+    }else{
+        [MBProgressHUD showText:@&quot;指纹解锁关闭成功&quot; view:self.view];
+        [[NSUserDefaults standardUserDefaults] setObject:@&quot;0&quot; forKey:@&quot;TouchID&quot;];
+    }
+}
+
+//TouchID验证失败
+- (void) WJTouchIDAuthorizeFailure {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+    if (self.touchIDSwitch.on == YES){
+           self.touchIDSwitch.on = NO;
+        [MBProgressHUD showText:@&quot;指纹解锁开启失败&quot; view:self.view];
+        [[NSUserDefaults standardUserDefaults] setObject:@&quot;0&quot; forKey:@&quot;TouchID&quot;];
+    }else
+    {
+        self.touchIDSwitch.on = YES;
+        [MBProgressHUD showText:@&quot;指纹解锁关闭失败&quot; view:self.view];
+        [[NSUserDefaults standardUserDefaults] setObject:@&quot;1&quot; forKey:@&quot;TouchID&quot;];
+    }
+}
+
+//取消TouchID验证 (用户点击了取消)
+- (void) WJTouchIDAuthorizeErrorUserCancel {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+    if (self.touchIDSwitch.on == YES){
+        self.touchIDSwitch.on = NO;
+        [[NSUserDefaults standardUserDefaults] setObject:@&quot;0&quot; forKey:@&quot;TouchID&quot;];
+    }else
+    {
+        self.touchIDSwitch.on = YES;
+        [[NSUserDefaults standardUserDefaults] setObject:@&quot;1&quot; forKey:@&quot;TouchID&quot;];
+    }
+}
+
+//在验证的TouchID的过程中被系统取消 例如突然来电话、按了Home键、锁屏
+- (void) WJTouchIDAuthorizeErrorSystemCancel {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+    if (self.touchIDSwitch.on == YES){
+        self.touchIDSwitch.on = NO;
+        [[NSUserDefaults standardUserDefaults] setObject:@&quot;0&quot; forKey:@&quot;TouchID&quot;];
+    }else
+    {
+        self.touchIDSwitch.on = YES;
+        [[NSUserDefaults standardUserDefaults] setObject:@&quot;1&quot; forKey:@&quot;TouchID&quot;];
+    }
+}
+
+//多次连续使用Touch ID失败，Touch ID被锁，需要用户输入密码解锁
+- (void) WJTouchIDAuthorizeLAErrorTouchIDLockout {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+    [MBProgressHUD showText:@&quot;验证失败&quot; view:self.view];
+}
+
+//当前软件被挂起取消了授权(如突然来了电话,应用进入前台)
+- (void) WJTouchIDAuthorizeLAErrorAppCancel {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+    if (self.touchIDSwitch.on == YES){
+        self.touchIDSwitch.on = NO;
+        [[NSUserDefaults standardUserDefaults] setObject:@&quot;0&quot; forKey:@&quot;TouchID&quot;];
+    }else
+    {
+        self.touchIDSwitch.on = YES;
+        [[NSUserDefaults standardUserDefaults] setObject:@&quot;1&quot; forKey:@&quot;TouchID&quot;];
+    }
+}
+
+//当前软件被挂起取消了授权 (授权过程中,LAContext对象被释)
+- (void) WJTouchIDAuthorizeLAErrorInvalidContext {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+    if (self.touchIDSwitch.on == YES){
+        self.touchIDSwitch.on = NO;
+        [[NSUserDefaults standardUserDefaults] setObject:@&quot;0&quot; forKey:@&quot;TouchID&quot;];
+    }else
+    {
+        self.touchIDSwitch.on = YES;
+        [[NSUserDefaults standardUserDefaults] setObject:@&quot;1&quot; forKey:@&quot;TouchID&quot;];
+    }
+}
+</code></pre><p>&#160;&#160;&#160;&#160;以上呢，我是没有判断是否支持touchid来写，是直接按照可以支持的来写的，大家在实际操作工程中还是需要加一下判断条件，因为现在还是有不支持touchid的机型的。然后就是要说一下下面这个。</p>
+<pre><code>[[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+</code></pre><p>&#160;&#160;&#160;&#160;这个值我也不知道我是用来干嘛的，好像就是告诉我你设置了指纹验证了，然后在app唤醒的时候要根据一个值来判断是否需要调用指纹验证服务，我后来想了想，好像只要</p>
+<pre><code>[[[NSUserDefaults standardUserDefaults]objectForKey:@&quot;TouchID&quot;] isEqualToString:@&quot;1&quot;]
+</code></pre><p>&#160;&#160;&#160;&#160;这个就可以了，但是仔细想想还是再加上一个好分辨一点，毕竟就把一个当做判断switch是否打开，一个判断唤醒的时候要不要调用的吧。在不同的回调函数里面需要写的东西还是有差别的。这样上面写完之后，就等于实现一个简单的基础页面，当然这个还不是什么大问题，因为这个很简单，下面就是要实现弹出view了。篇幅好像有点长了，我自己看的也有点烦了都。。。。。</p>
+<h2 id="第二部分"><a href="#第二部分" class="headerlink" title="第二部分"></a>第二部分</h2><h4 id="第一步-1"><a href="#第一步-1" class="headerlink" title="第一步"></a>第一步</h4><p>&#160;&#160;&#160;&#160;创建自定义的view。在.h文件中写入方法</p>
+<pre><code>@interface YLSTouchidView : UIView
+
+/**
+ *  快速创建
+ */
++(instancetype)touchIDView;
+
+/**
+ *  弹出
+ */
+-(void)show;
+-(void)showInView:(UIView *)view;
+
+@end
+</code></pre><h4 id="第二步-1"><a href="#第二步-1" class="headerlink" title="第二步"></a>第二步</h4><p>&#160;&#160;&#160;&#160;在.m文件中声明控件，设置页面大小，以及遵守协议，在页面出来的同时就要调用验证服务。</p>
+<pre><code>@interface YLSTouchidView()&lt;WJTouchIDDelegate&gt;
+
+/** 指纹解锁的button */
+@property (nonatomic,strong) UIButton *touchIdBtn;
+/** 头像 */
+@property (nonatomic,strong) UIImageView *iconView;
+/** 用户名 */
+@property (nonatomic,strong) UILabel *nameLabel;
+/** 提示信息 */
+@property (nonatomic,strong) UILabel *noticeLabel;
+/** 手机号 */
+@property (nonatomic,strong) NSString *phoneNumber;
+/** 退出按钮 */
+@property (nonatomic,strong) UIButton *quitBtn;
+
+@property (nonatomic, strong) WJTouchID *touchID;
+
+@end
+
+
+
+
+-(instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:YLSScreenBounds];
+
+    if (self)
+    {
+        self.backgroundColor = [UIColor orangeColor];
+
+    }
+    //调用指纹解锁
+    WJTouchID *touchid = [[WJTouchID alloc]init];
+    [touchid startWJTouchIDWithMessage:WJNotice(@&quot;自定义信息&quot;, @&quot;The Custom Message&quot;) fallbackTitle:WJNotice(@&quot;&quot;, @&quot;Fallback Title&quot;) delegate:self];
+    self.touchID = touchid;
+    return self;
+}
+</code></pre><h4 id="第三步-1"><a href="#第三步-1" class="headerlink" title="第三步"></a>第三步</h4><p>&#160;&#160;&#160;&#160;设置控件的位置大小等等属性。</p>
+<pre><code>- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    self.iconView = [[UIImageView alloc]init];
+    [self.iconView setFrame:ZLRect(128/320, 54/568, 65/320, 65/568)];
+    [self.iconView setImage:[UIImage imageNamed:@&quot;icon_myinformation&quot;]];
+    [self addSubview:self.iconView];
+
+    self.nameLabel = [[UILabel alloc]init];
+    [self.nameLabel setFrame:ZLRect(0, 125/568, 1, 28/568)];
+    [self.nameLabel setText:@&quot;151****1234&quot;];
+    [self.nameLabel setFont:[UIFont systemFontOfSize:ZCFont(15/375)]];
+    [self.nameLabel setTextColor:[UIColor whiteColor]];
+    [self.nameLabel setTextAlignment:NSTextAlignmentCenter];
+    [self addSubview:self.nameLabel];
+
+    self.touchIdBtn = [[UIButton alloc]init];
+    [self.touchIdBtn setFrame:ZLRect(120/320, 250/568, 80/320, 80/568)];
+    [self.touchIdBtn setImage:[UIImage imageNamed:@&quot;touchImg&quot;] forState:UIControlStateNormal];
+    [self.touchIdBtn addTarget:self action:@selector(clickToCheckTouchID) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.touchIdBtn];
+
+    self.noticeLabel = [[UILabel alloc]init];
+    [self.noticeLabel setFrame:ZLRect(0, 339/568, 1, 22/568)];
+    [self.noticeLabel setText:@&quot;点击进行指纹解锁&quot;];
+    [self.noticeLabel setTextColor:[UIColor whiteColor]];
+    [self.noticeLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.noticeLabel setFont:[UIFont systemFontOfSize:ZCFont(16/375)]];
+    [self addSubview:self.noticeLabel];
+
+    self.quitBtn = [[UIButton alloc]init];
+    [self.quitBtn setFrame:ZLRect(0, 520/568, 1, 30/568)];
+    [self.quitBtn setTitle:@&quot;退出&quot; forState:UIControlStateNormal];
+    [self.quitBtn addTarget:self action:@selector(quitContent) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.quitBtn];
+
+}
+</code></pre><h4 id="第四步-1"><a href="#第四步-1" class="headerlink" title="第四步"></a>第四步</h4><p>&#160;&#160;&#160;&#160;实现控件的点击方法，以及在.h文件中声明的弹出方法</p>
+<pre><code>//快速创建
++ (instancetype)touchIDView
+{
+    return [[self alloc]init];
+}
+
+/** 弹出 */
+- (void)show
+{
+    [self showInView:[UIApplication sharedApplication].keyWindow];
+}    
+
+- (void)showInView:(UIView *)view
+{
+    // 浮现
+    [view addSubview:self];
+}
+
+
+-(void)clickToCheckTouchID
+{
+    NSLog(@&quot;点击了指纹解锁&quot;);
+    [self.touchID startWJTouchIDWithMessage:WJNotice(@&quot;自定义信息&quot;, @&quot;The Custom Message&quot;) fallbackTitle:WJNotice(@&quot;&quot;, @&quot;Fallback Title&quot;) delegate:self];
+}
+
+-(void)quitContent
+{
+       NSLog(@&quot;点击了quit&quot;);
+    [UIView animateWithDuration:3 animations:^{
+        self.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
+}
+</code></pre><p>&#160;&#160;&#160;&#160;上面再退出的时候我还加了一个小小的特效，就是颜色渐渐变成无色，这样有时候可以遮盖你app里面的一些小问题。偷个懒。</p>
+<h4 id="第五步-1"><a href="#第五步-1" class="headerlink" title="第五步"></a>第五步</h4><p>&#160;&#160;&#160;&#160;这里也是跟第一部分一样，实现验证的回调函数。这边的回调函数呢，跟之前的差不多，但是里面的内容就不一样了。而且我这里把不支持touchid的方法加进来，按理说这边是不需要加的，但是我前面没加进来，这里就硬塞进来吧。。。大家就凑合着看，自己用的时候可以直接删掉，不删掉也没事，就是增加点代码量而已。。。</p>
+<pre><code>/**
+ *  TouchID验证成功
+ */
+- (void) WJTouchIDAuthorizeSuccess {
+    [MBProgressHUD showText:@&quot;解锁成功&quot; view:self];
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    [self removeFromSuperview];
+}
+
+/**
+ *  TouchID验证失败
+ */
+- (void) WJTouchIDAuthorizeFailure {
+    [MBProgressHUD showText:@&quot;解锁失败&quot; view:self];
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+}
+/**
+ *  取消TouchID验证 (用户点击了取消)
+ */
+- (void) WJTouchIDAuthorizeErrorUserCancel {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+}
+
+/**
+ *  在验证的TouchID的过程中被系统取消 例如突然来电话、按了Home键、锁屏...
+ */
+- (void) WJTouchIDAuthorizeErrorSystemCancel {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+}
+
+/**
+ *  无法启用TouchID,设备没有设置密码
+ */
+- (void) WJTouchIDAuthorizeErrorPasscodeNotSet {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+}
+
+/**
+ *  设备没有录入TouchID,无法启用TouchID
+ */
+- (void) WJTouchIDAuthorizeErrorTouchIDNotEnrolled {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+}
+
+/**
+ *  该设备的TouchID无效
+ */
+- (void) WJTouchIDAuthorizeErrorTouchIDNotAvailable {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+}
+
+/**
+ *  多次连续使用Touch ID失败，Touch ID被锁，需要用户输入密码解锁
+ */
+- (void) WJTouchIDAuthorizeLAErrorTouchIDLockout {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+}
+
+/**
+ *  当前软件被挂起取消了授权(如突然来了电话,应用进入前台)
+ */
+- (void) WJTouchIDAuthorizeLAErrorAppCancel {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+}
+
+/**
+ *  当前软件被挂起取消了授权 (授权过程中,LAContext对象被释)
+ */
+- (void) WJTouchIDAuthorizeLAErrorInvalidContext {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+}
+/**
+ *  当前设备不支持指纹识别
+ */
+-(void)WJTouchIDIsNotSupport {
+    [[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+}
+</code></pre><h2 id="第三部分"><a href="#第三部分" class="headerlink" title="第三部分"></a>第三部分</h2><p>&#160;&#160;&#160;&#160;这里呢，是最重要的地方，也是最简单的地方，只要在appdelegate.m文件中加上几句话就可以实现了。<br>在下面这个方法里面写，下面这个方法是呢app被唤醒进入活跃状态的方法</p>
+<pre><code>- (void)applicationDidBecomeActive:(UIApplication *)application
+</code></pre><p>&#160;&#160;&#160;&#160;这边的知识点其实还挺多的，就是一个生命周期的问题，一个app运行完成，即将进入活跃状态，已经进入活跃状态，即将进入后台，已经进入后台状态，这几种状态，在之前我还想着声明一个变量让app在后台运行的时候，也跟着运行，类似于一个计时器，但是我看了网上的一些想要让app后台挂起的时候还能运行一些东西，设置过程就好几种，而且很多都说上架的时候审核是不给过得，想着有时间的话可以好好研究下那些方法，这里我就没有弄，所以才有了上面的</p>
+<pre><code>[[NSUserDefaults standardUserDefaults]setObject:@&quot;YES&quot; forKey:@&quot;touchIDISon&quot;];
+</code></pre><p>&#160;&#160;&#160;&#160;这个值，本来也是设置成计时器的，但是这样好像更方便点，就这么设置了，因为为了全局都可以取到这个值。<br>&#160;&#160;&#160;&#160;在唤醒方法中写下代码</p>
+<pre><code>- (void)applicationDidBecomeActive:(UIApplication *)application {
+    NSString *touchIDExist = [[NSUserDefaults standardUserDefaults]objectForKey:@&quot;TouchID&quot;];
+    NSString *touchISOn = [[NSUserDefaults standardUserDefaults]objectForKey:@&quot;touchIDISon&quot;];
+    if ([touchIDExist isEqualToString:@&quot;1&quot;] &amp;&amp; [touchISOn isEqualToString:@&quot;NO&quot;])
+    {
+        YLSTouchidView *yls = [[YLSTouchidView alloc]init];
+        [yls show];
+    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(20 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[NSUserDefaults standardUserDefaults]setObject:@&quot;NO&quot; forKey:@&quot;touchIDISon&quot;];
+       });
+}
+</code></pre><p>&#160;&#160;&#160;&#160;下面那个呢就是为了防止重复调用，因为好像当页面出现指纹验证的弹出框的时候，app似乎就是被挂起到后台了，然后唤醒的时候又要被调用，所以这里出现了一个重复调用的问题，然后我就找个不是办法的办法来解决这个问题。就是用上面这段代码来处理，具体道理我也不知道咋说，就这么迷迷糊糊的实现了功能。这样子就是完成了一个指纹验证以及app唤醒的时候指纹解锁的一个小demo。present出来一个单独的页面的方式其实跟这个差不多，但是这篇文章的篇幅好像有点太长了，估计也没什么人看到最后，所以我就不写了，啥时候想补的话再补上来吧。</p>
+<h4 id="还有就是，本人作为新手，上面代码有啥问题的话，或者有啥可以优化的地方，希望大家可以指正，可以了留言跟我讨论，或者是私信啥的，都可以，大家一起共同进步共同学习。"><a href="#还有就是，本人作为新手，上面代码有啥问题的话，或者有啥可以优化的地方，希望大家可以指正，可以了留言跟我讨论，或者是私信啥的，都可以，大家一起共同进步共同学习。" class="headerlink" title="还有就是，本人作为新手，上面代码有啥问题的话，或者有啥可以优化的地方，希望大家可以指正，可以了留言跟我讨论，或者是私信啥的，都可以，大家一起共同进步共同学习。"></a><strong>还有就是，本人作为新手，上面代码有啥问题的话，或者有啥可以优化的地方，希望大家可以指正，可以了留言跟我讨论，或者是私信啥的，都可以，大家一起共同进步共同学习。</strong></h4>
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一部分"><span class="toc-number">1.</span> <span class="toc-text">第一部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#第一步"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第二步"><span class="toc-number">1.0.2.</span> <span class="toc-text">第二步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第三步"><span class="toc-number">1.0.3.</span> <span class="toc-text">第三步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第四步"><span class="toc-number">1.0.4.</span> <span class="toc-text">第四步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第五步"><span class="toc-number">1.0.5.</span> <span class="toc-text">第五步</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二部分"><span class="toc-number">2.</span> <span class="toc-text">第二部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#第一步-1"><span class="toc-number">2.0.1.</span> <span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第二步-1"><span class="toc-number">2.0.2.</span> <span class="toc-text">第二步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第三步-1"><span class="toc-number">2.0.3.</span> <span class="toc-text">第三步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第四步-1"><span class="toc-number">2.0.4.</span> <span class="toc-text">第四步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第五步-1"><span class="toc-number">2.0.5.</span> <span class="toc-text">第五步</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三部分"><span class="toc-number">3.</span> <span class="toc-text">第三部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#还有就是，本人作为新手，上面代码有啥问题的话，或者有啥可以优化的地方，希望大家可以指正，可以了留言跟我讨论，或者是私信啥的，都可以，大家一起共同进步共同学习。"><span class="toc-number">3.0.1.</span> <span class="toc-text">还有就是，本人作为新手，上面代码有啥问题的话，或者有啥可以优化的地方，希望大家可以指正，可以了留言跟我讨论，或者是私信啥的，都可以，大家一起共同进步共同学习。</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&text=iOS学习笔记03-指纹验证TouchID简单应用2"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&title=iOS学习笔记03-指纹验证TouchID简单应用2"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&is_video=false&description=iOS学习笔记03-指纹验证TouchID简单应用2"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS学习笔记03-指纹验证TouchID简单应用2&body=Check out this article: http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&title=iOS学习笔记03-指纹验证TouchID简单应用2"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&title=iOS学习笔记03-指纹验证TouchID简单应用2"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&title=iOS学习笔记03-指纹验证TouchID简单应用2"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&title=iOS学习笔记03-指纹验证TouchID简单应用2"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/09/21/iOS学习笔记03-指纹验证TouchID简单应用2/&name=iOS学习笔记03-指纹验证TouchID简单应用2&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+

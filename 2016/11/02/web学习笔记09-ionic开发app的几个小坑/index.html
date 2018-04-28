@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="1.ios设置https访问权限1.1 问题11.1.1问题描述：&amp;#160;&amp;#160;&amp;#160;&amp;#160;ionic开发的app中打包iOS，运行之后窗口报错，网络错误。 Application Transport Security has blocked a cleartext HTTP (http://) resource load since it is insecure. Temp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web学习笔记09-ionic开发app的几个小坑">
+<meta property="og:url" content="http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.ios设置https访问权限1.1 问题11.1.1问题描述：&amp;#160;&amp;#160;&amp;#160;&amp;#160;ionic开发的app中打包iOS，运行之后窗口报错，网络错误。 Application Transport Security has blocked a cleartext HTTP (http://) resource load since it is insecure. Temp">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2016-11-02T09:32:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web学习笔记09-ionic开发app的几个小坑">
+<meta name="twitter:description" content="1.ios设置https访问权限1.1 问题11.1.1问题描述：&amp;#160;&amp;#160;&amp;#160;&amp;#160;ionic开发的app中打包iOS，运行之后窗口报错，网络错误。 Application Transport Security has blocked a cleartext HTTP (http://) resource load since it is insecure. Temp">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>web学习笔记09-ionic开发app的几个小坑</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/11/21/码农的厨子之路/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/10/19/web学习笔记08-Ionic的前后端简单交互与打包/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&text=web学习笔记09-ionic开发app的几个小坑"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&title=web学习笔记09-ionic开发app的几个小坑"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&is_video=false&description=web学习笔记09-ionic开发app的几个小坑"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记09-ionic开发app的几个小坑&body=Check out this article: http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&title=web学习笔记09-ionic开发app的几个小坑"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&title=web学习笔记09-ionic开发app的几个小坑"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&title=web学习笔记09-ionic开发app的几个小坑"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&title=web学习笔记09-ionic开发app的几个小坑"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&name=web学习笔记09-ionic开发app的几个小坑&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-ios设置https访问权限"><span class="toc-number">1.</span> <span class="toc-text">1.ios设置https访问权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-问题1"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 问题1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1问题描述："><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1.1问题描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-原因"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.1.2 原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-3解决办法"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.1.3解决办法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-问题2"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 问题2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1问题描述："><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1问题描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-问题原因"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 问题原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-解决办法"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3 解决办法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-标题把状态栏遮挡"><span class="toc-number">2.</span> <span class="toc-text">2. 标题把状态栏遮挡</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-问题描述："><span class="toc-number">2.0.1.</span> <span class="toc-text">2.1 问题描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-问题原因"><span class="toc-number">2.0.2.</span> <span class="toc-text">2.2 问题原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-解决办法"><span class="toc-number">2.0.3.</span> <span class="toc-text">2.3 解决办法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-按钮无法点击"><span class="toc-number">3.</span> <span class="toc-text">3. 按钮无法点击</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-问题描述："><span class="toc-number">3.0.1.</span> <span class="toc-text">3.1 问题描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-问题原因"><span class="toc-number">3.0.2.</span> <span class="toc-text">3.2 问题原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-解决办法"><span class="toc-number">3.0.3.</span> <span class="toc-text">3.3 解决办法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-呼出键盘无法关闭。"><span class="toc-number">4.</span> <span class="toc-text">4. 呼出键盘无法关闭。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-问题描述："><span class="toc-number">4.0.1.</span> <span class="toc-text">4.1 问题描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-问题原因"><span class="toc-number">4.0.2.</span> <span class="toc-text">4.2 问题原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-解决办法"><span class="toc-number">4.0.3.</span> <span class="toc-text">4.3 解决办法</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        web学习笔记09-ionic开发app的几个小坑
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-11-02T09:32:11.000Z" itemprop="datePublished">2016-11-02</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="1-ios设置https访问权限"><a href="#1-ios设置https访问权限" class="headerlink" title="1.ios设置https访问权限"></a>1.ios设置https访问权限</h2><h3 id="1-1-问题1"><a href="#1-1-问题1" class="headerlink" title="1.1 问题1"></a>1.1 问题1</h3><h4 id="1-1-1问题描述："><a href="#1-1-1问题描述：" class="headerlink" title="1.1.1问题描述："></a>1.1.1问题描述：</h4><p>&#160;&#160;&#160;&#160;ionic开发的app中打包iOS，运行之后窗口报错，网络错误。</p>
+<pre><code>Application Transport Security has blocked a cleartext HTTP (http://) resource load since it is insecure. Temporary exceptions can be configured via your app&apos;s Info.plist file. 
+</code></pre><h4 id="1-1-2-原因"><a href="#1-1-2-原因" class="headerlink" title="1.1.2 原因"></a>1.1.2 原因</h4><p>&#160;&#160;&#160;&#160;出错的原因在于iOS9之后在iOS中引入了新特性：<strong>App Transport Security (ATS)</strong>， 新特性要求App内访问的网络必须使用HTTPS协议。但是现在公司的项目使用的是HTTP协议，使用私有加密方式保证数据安全。现在也不能马上改成HTTPS协议传输。</p>
+<h4 id="1-1-3解决办法"><a href="#1-1-3解决办法" class="headerlink" title="1.1.3解决办法"></a>1.1.3解决办法</h4><p>&#160;&#160;&#160;&#160;在iOS工程中的myApp-Info.plist文件中加入两个字段，第一个是字典Dictionary格式的字段<strong>NSAppTransportSecurity</strong>。<br>在<strong>NSAppTransportSecurity</strong>下添加布尔Boolean类型的<strong>NSAllowsArbitraryLoads</strong>，值设置为YES。</p>
+<pre><code>    &lt;key&gt;NSAppTransportSecurity&lt;/key&gt;
+&lt;dict&gt;
+    &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;
+    &lt;value&gt;YES&lt;/value&gt;
+&lt;dict&gt;
+</code></pre><h3 id="1-2-问题2"><a href="#1-2-问题2" class="headerlink" title="1.2 问题2"></a>1.2 问题2</h3><h4 id="1-2-1问题描述："><a href="#1-2-1问题描述：" class="headerlink" title="1.2.1问题描述："></a>1.2.1问题描述：</h4><p>&#160;&#160;&#160;&#160;上述网络问题解决之后，还出现了一个问题</p>
+<pre><code>ERROR Internal navigation rejected - &lt;allow-navigation&gt; not set for url=&apos;http://192.168.14.127:8080/TLF_PAY_SDK/app/gatewayTrans&apos;
+</code></pre><h4 id="1-2-2-问题原因"><a href="#1-2-2-问题原因" class="headerlink" title="1.2.2 问题原因"></a>1.2.2 问题原因</h4><p>&#160;&#160;&#160;&#160;这是因为没有设置白名单，iOS9+ 拒绝发送请求。</p>
+<h4 id="1-2-3-解决办法"><a href="#1-2-3-解决办法" class="headerlink" title="1.2.3 解决办法"></a>1.2.3 解决办法</h4><p>&#160;&#160;&#160;&#160;只需要在myApp -&gt; config.xml中配置</p>
+<pre><code>&lt;allow-navigation href=&quot;*&quot; /&gt; //即允许跳转到任意http协议的页面
+</code></pre><h2 id="2-标题把状态栏遮挡"><a href="#2-标题把状态栏遮挡" class="headerlink" title="2. 标题把状态栏遮挡"></a>2. 标题把状态栏遮挡</h2><h4 id="2-1-问题描述："><a href="#2-1-问题描述：" class="headerlink" title="2.1 问题描述："></a>2.1 问题描述：</h4><p>&#160;&#160;&#160;&#160;在iOS真机运行的时候，点击提交，页面跳转进入响应的页面，此时顶层状态栏的背景色为透明，与页面部分想重叠。</p>
+<h4 id="2-2-问题原因"><a href="#2-2-问题原因" class="headerlink" title="2.2 问题原因"></a>2.2 问题原因</h4><p>&#160;&#160;&#160;&#160;缺少相应的配置项</p>
+<h4 id="2-3-解决办法"><a href="#2-3-解决办法" class="headerlink" title="2.3 解决办法"></a>2.3 解决办法</h4><p>&#160;&#160;&#160;&#160;方法一：在每个页面顶层加入一个高为20px的div，样式设置top:0;left:0;position:fixed;这样在iOS上就可以留出20px的高度来放状态栏，而且在页面滚动的时候不会导致状态栏与页面重叠。但是存在一个问题，就是在安卓的部分机器上，页面会多出一块，导致无法完美解决。</p>
+<p>&#160;&#160;&#160;&#160;方法二：在myApp-&gt;config.xml中添加配置项</p>
+<pre><code>&lt;preference name=&quot;StatusBarOverlaysWebView&quot; value=&quot;false&quot;/&gt;
+</code></pre><p>这个方法能够完美解决此问题。</p>
+<h2 id="3-按钮无法点击"><a href="#3-按钮无法点击" class="headerlink" title="3. 按钮无法点击"></a>3. 按钮无法点击</h2><h4 id="3-1-问题描述："><a href="#3-1-问题描述：" class="headerlink" title="3.1 问题描述："></a>3.1 问题描述：</h4><p>&#160;&#160;&#160;&#160;在主页面的提交按钮，点击之后没有反应。</p>
+<h4 id="3-2-问题原因"><a href="#3-2-问题原因" class="headerlink" title="3.2 问题原因"></a>3.2 问题原因</h4><p>&#160;&#160;&#160;&#160;原因有两个：一个是按钮做的时候太小，不容易点击，第二个原因是在点击提交按钮触发的方法中，进行了一些基本的文本框内容的判断，最后没有返回值，所以出现了问题。</p>
+<h4 id="3-3-解决办法"><a href="#3-3-解决办法" class="headerlink" title="3.3 解决办法"></a>3.3 解决办法</h4><p>&#160;&#160;&#160;&#160;一：将按钮的长宽加到原先的两倍；</p>
+<p>&#160;&#160;&#160;&#160;二：在判断方法的最后加上<strong><code>return true</code></strong>；</p>
+<h2 id="4-呼出键盘无法关闭。"><a href="#4-呼出键盘无法关闭。" class="headerlink" title="4. 呼出键盘无法关闭。"></a>4. 呼出键盘无法关闭。</h2><h4 id="4-1-问题描述："><a href="#4-1-问题描述：" class="headerlink" title="4.1 问题描述："></a>4.1 问题描述：</h4><p>&#160;&#160;&#160;&#160;在点击提交按钮之后进入付款页面，页面无法滑动，点击文本框，键盘弹出来，但是没有完成按钮，键盘无法关闭。</p>
+<h4 id="4-2-问题原因"><a href="#4-2-问题原因" class="headerlink" title="4.2 问题原因"></a>4.2 问题原因</h4><p>&#160;&#160;&#160;&#160;原因主要是因为配置中将ionic的键盘设置给设置死了，所以会出现问题。</p>
+<h4 id="4-3-解决办法"><a href="#4-3-解决办法" class="headerlink" title="4.3 解决办法"></a>4.3 解决办法</h4><p>&#160;&#160;&#160;&#160;一：<strong>页面不能滚动</strong>，在myApp-&gt;www-&gt;js-&gt;app.js 中修改配置项</p>
+<pre><code>cordova.plugins.Keyboard.disableScroll(false);
+</code></pre><p>&#160;&#160;&#160;&#160;二：<strong>键盘不能收起</strong>，在myApp-&gt;www-&gt;js-&gt;app.js 中修改配置项</p>
+<pre><code>cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
+</code></pre>
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-ios设置https访问权限"><span class="toc-number">1.</span> <span class="toc-text">1.ios设置https访问权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-问题1"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 问题1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1问题描述："><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1.1问题描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-原因"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.1.2 原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-3解决办法"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.1.3解决办法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-问题2"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 问题2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1问题描述："><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1问题描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-问题原因"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 问题原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-解决办法"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3 解决办法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-标题把状态栏遮挡"><span class="toc-number">2.</span> <span class="toc-text">2. 标题把状态栏遮挡</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-问题描述："><span class="toc-number">2.0.1.</span> <span class="toc-text">2.1 问题描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-问题原因"><span class="toc-number">2.0.2.</span> <span class="toc-text">2.2 问题原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-解决办法"><span class="toc-number">2.0.3.</span> <span class="toc-text">2.3 解决办法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-按钮无法点击"><span class="toc-number">3.</span> <span class="toc-text">3. 按钮无法点击</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-问题描述："><span class="toc-number">3.0.1.</span> <span class="toc-text">3.1 问题描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-问题原因"><span class="toc-number">3.0.2.</span> <span class="toc-text">3.2 问题原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-解决办法"><span class="toc-number">3.0.3.</span> <span class="toc-text">3.3 解决办法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-呼出键盘无法关闭。"><span class="toc-number">4.</span> <span class="toc-text">4. 呼出键盘无法关闭。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-问题描述："><span class="toc-number">4.0.1.</span> <span class="toc-text">4.1 问题描述：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-问题原因"><span class="toc-number">4.0.2.</span> <span class="toc-text">4.2 问题原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-解决办法"><span class="toc-number">4.0.3.</span> <span class="toc-text">4.3 解决办法</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&text=web学习笔记09-ionic开发app的几个小坑"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&title=web学习笔记09-ionic开发app的几个小坑"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&is_video=false&description=web学习笔记09-ionic开发app的几个小坑"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记09-ionic开发app的几个小坑&body=Check out this article: http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&title=web学习笔记09-ionic开发app的几个小坑"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&title=web学习笔记09-ionic开发app的几个小坑"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&title=web学习笔记09-ionic开发app的几个小坑"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&title=web学习笔记09-ionic开发app的几个小坑"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/11/02/web学习笔记09-ionic开发app的几个小坑/&name=web学习笔记09-ionic开发app的几个小坑&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+

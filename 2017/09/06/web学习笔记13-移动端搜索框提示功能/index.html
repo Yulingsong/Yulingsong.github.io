@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="web学习笔记13-移动端搜索框提示功能&amp;#160;&amp;#160;&amp;#160;&amp;#160;最近项目一直在迭代更新，没有什么新的东西做，所以拿出来一个搜索的小模块分享下，功能就是输入关键字能出来相关字的联想吧，删除一些字的时候顺带可以保存上一段的联想，从外观上来看，效果还罢了，这里分享给大家，可以供大家看看。&amp;#160;&amp;#160;&amp;#160;&amp;#160;效果图如下，github链接在此search_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web学习笔记13-移动端搜索框提示功能">
+<meta property="og:url" content="http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="web学习笔记13-移动端搜索框提示功能&amp;#160;&amp;#160;&amp;#160;&amp;#160;最近项目一直在迭代更新，没有什么新的东西做，所以拿出来一个搜索的小模块分享下，功能就是输入关键字能出来相关字的联想吧，删除一些字的时候顺带可以保存上一段的联想，从外观上来看，效果还罢了，这里分享给大家，可以供大家看看。&amp;#160;&amp;#160;&amp;#160;&amp;#160;效果图如下，github链接在此search_">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-d144b2b3e636ece0.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-b6025aa17b8f6947.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-09-06T06:52:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web学习笔记13-移动端搜索框提示功能">
+<meta name="twitter:description" content="web学习笔记13-移动端搜索框提示功能&amp;#160;&amp;#160;&amp;#160;&amp;#160;最近项目一直在迭代更新，没有什么新的东西做，所以拿出来一个搜索的小模块分享下，功能就是输入关键字能出来相关字的联想吧，删除一些字的时候顺带可以保存上一段的联想，从外观上来看，效果还罢了，这里分享给大家，可以供大家看看。&amp;#160;&amp;#160;&amp;#160;&amp;#160;效果图如下，github链接在此search_">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1062695-d144b2b3e636ece0.gif?imageMogr2/auto-orient/strip">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>web学习笔记13-移动端搜索框提示功能</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/04/23/web学习笔记14-移动端页面上拉无限加载/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/07/17/web学习笔记12-移动端简易电梯效果/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&text=web学习笔记13-移动端搜索框提示功能"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&title=web学习笔记13-移动端搜索框提示功能"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&is_video=false&description=web学习笔记13-移动端搜索框提示功能"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记13-移动端搜索框提示功能&body=Check out this article: http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&title=web学习笔记13-移动端搜索框提示功能"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&title=web学习笔记13-移动端搜索框提示功能"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&title=web学习笔记13-移动端搜索框提示功能"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&title=web学习笔记13-移动端搜索框提示功能"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&name=web学习笔记13-移动端搜索框提示功能&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#web学习笔记13-移动端搜索框提示功能"><span class="toc-number">1.</span> <span class="toc-text">web学习笔记13-移动端搜索框提示功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#第一步：创建文件"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一步：创建文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第二步：引入文件，设置meta，编写html以及样式"><span class="toc-number">1.0.2.</span> <span class="toc-text">第二步：引入文件，设置meta，编写html以及样式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第三步：编写js逻辑"><span class="toc-number">1.0.3.</span> <span class="toc-text">第三步：编写js逻辑</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        web学习笔记13-移动端搜索框提示功能
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-09-06T06:51:10.000Z" itemprop="datePublished">2017-09-06</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="web学习笔记13-移动端搜索框提示功能"><a href="#web学习笔记13-移动端搜索框提示功能" class="headerlink" title="web学习笔记13-移动端搜索框提示功能"></a>web学习笔记13-移动端搜索框提示功能</h2><p>&#160;&#160;&#160;&#160;最近项目一直在迭代更新，没有什么新的东西做，所以拿出来一个搜索的小模块分享下，功能就是输入关键字能出来相关字的联想吧，删除一些字的时候顺带可以保存上一段的联想，从外观上来看，效果还罢了，这里分享给大家，可以供大家看看。<br>&#160;&#160;&#160;&#160;效果图如下，github链接在此<a href="https://github.com/Yulingsong/search_history" target="_blank" rel="noopener">search_demo</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-d144b2b3e636ece0.gif?imageMogr2/auto-orient/strip" alt="9月-05-2017 16-32-02.gif"></p>
+<p>按照老规矩，下面就直接写编写过程了</p>
+<h4 id="第一步：创建文件"><a href="#第一步：创建文件" class="headerlink" title="第一步：创建文件"></a>第一步：创建文件</h4><p>&#160;&#160;&#160;&#160;创建相应的html，js，css文件，引入jquery。<br><img src="http://upload-images.jianshu.io/upload_images/1062695-b6025aa17b8f6947.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<h4 id="第二步：引入文件，设置meta，编写html以及样式"><a href="#第二步：引入文件，设置meta，编写html以及样式" class="headerlink" title="第二步：引入文件，设置meta，编写html以及样式"></a>第二步：引入文件，设置meta，编写html以及样式</h4><p>html:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;!--通用媒体查询--&gt;
+&lt;meta charset=&quot;UTF-8&quot; /&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1, maximum-scale=1&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;search.css&quot;&gt;
+&lt;title&gt;搜索&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;search_nav&quot;&gt;
+    &lt;input type=&quot;search&quot; class=&quot;search_input searchProduct&quot; placeholder=&quot;查找您需要的商品&quot;&gt;
+    &lt;div class=&quot;search_cancel&quot;&gt;取消&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;search_find&quot;&gt;
+    &lt;div class=&quot;search_history&quot;&gt;
+        历史搜索
+    &lt;/div&gt;
+    &lt;div class=&quot;search_find_line&quot;&gt;
+       &lt;!--搜索结果和搜索历史--&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;search.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>css:</p>
+<pre><code>*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: #f5f5f9;
+}
+.search_nav{
+    width: 100%;
+    height: 45px;
+    position: fixed;
+    top:0;
+    left: 0;
+    background-color: #20232b;
+}
+.search_input{
+    float: left;
+    width: 75%;
+    height: 35px;
+    margin-left: 30px;
+    margin-top: 5px;
+    font-size: 15px;
+    text-indent: 30px;
+    border: 1px solid black;
+    border-radius: 40px;
+    outline: none;
+}
+input::-webkit-search-cancel-button {display: none;}
+.search_cancel{
+    float: right;
+    width: 15%;
+    height: 100%;
+    color:white;
+    text-align: center;
+    line-height: 45px;
+}
+.search_find{
+    background:#fff;
+    line-height:42px;
+    margin-top: 45px;
+}
+.search_history{
+    padding-left:10px;
+    font-weight:700;
+    font-size:16px
+}
+.search_find_title{
+    display:block;
+    position:relative;
+    padding-left:15px;
+    padding-right:10px;
+    font-size:14px;
+    color:#8a8a8a;
+    width:100%;
+    box-sizing:border-box
+}
+.search_find_title:after{
+    content:&apos;&apos;;
+    position:absolute;
+    top:0;
+    left:15px;
+    box-sizing:border-box;
+    width:92%;
+    height:1px;
+    color:#ddd;
+    border-bottom:1px solid #ddd;
+    -webkit-transform-origin:0 0;
+    transform-origin:0 0;
+    -webkit-transform:scaleY(.4);
+    transform:scaleY(.4)
+}
+</code></pre><p>&#160;&#160;&#160;&#160;当然了，这里面的样式格局什么的在自己实际项目中需要根据自己的项目来调整，不需要跟我这写的一样，重要的是逻辑部分。</p>
+<h4 id="第三步：编写js逻辑"><a href="#第三步：编写js逻辑" class="headerlink" title="第三步：编写js逻辑"></a>第三步：编写js逻辑</h4><p>&#160;&#160;&#160;&#160;一般情况下，我们在进入搜索页面的时候，大多数会出现历史搜索，也就是搜索记录，我们首先需要的就是进行历史搜索的渲染，我这里历史搜索都是用localStorage进行存储，大家根据需要可以进行对应的存储或者获取。</p>
+<pre><code>var history_search = [];//存储历史搜索数据
+
+//获取历史搜索数据,若没有则为空
+if(localStorage.getItem(&quot;history_search&quot;)){
+    history_search = JSON.parse(localStorage.getItem(&quot;history_search&quot;));//获取历史搜索数据
+}else{
+    history_search = [];
+}
+</code></pre><p>&#160;&#160;&#160;&#160;接下来在获取了历史记录的前提下，我们要把历史记录渲染到页面上</p>
+<pre><code>//渲染历史记录
+function setpage(){
+    var product_list = &apos;&apos;;
+    //动态添加元素至页面上
+    if(history_search.length != 0){
+        $(&quot;.search_history&quot;).show();
+        if(history_search.length &gt;= 10){
+            for(var i = 0; i &lt; 10 ;i++){
+                product_list = &apos;&lt;a class=&quot;search_find_title&quot;&gt;&apos;+history_search[i]+&apos;&lt;/a&gt;&apos;;
+                $(&quot;.search_find_line&quot;).append(product_list);
+            }
+        }else{
+            for(var i = 0; i &lt; history_search.length;i++){
+                product_list = &apos;&lt;a class=&quot;search_find_title&quot;&gt;&apos;+history_search[i]+&apos;&lt;/a&gt;&apos;;
+                $(&quot;.search_find_line&quot;).append(product_list);
+            }
+        }
+    }else{
+        $(&quot;.search_history&quot;).hide();
+    }
+}
+setpage();
+</code></pre><p>&#160;&#160;&#160;&#160;这里我们需要注意的是，一般的历史记录不会是太多的，一般会显示前十条最近搜索的，我这边在渲染的时候做了截取，其实在存的时候就应该去做判断，在超出10条或者规定条数的时候我们只保存十条或者规定条数，然后在渲染的时候就不需要再去截取了。</p>
+<p>&#160;&#160;&#160;&#160;接下来需要做的处理就是在输入关键字的时候，一些请求和缓存搜索出来的提示数据</p>
+<pre><code>var obj_arr = [];//请求结果
+var timeout = 0;
+var keyName = &apos;&apos;;//搜索关键字
+var ajaxCache = {};//定义缓存对象(保存请求出来的数据)
+</code></pre><p>&#160;&#160;&#160;&#160;这里我先把另外两个方法先提出来先写了，一个是渲染页面的方法，一个是判断字符串是否为空的方法，这两个方法在接下来的逻辑中需要调用。</p>
+<pre><code>//渲染页面方法
+function setListPage(obj,no){
+    console.log(obj);
+    console.log(no);
+    ajaxCache = {};
+    obj_arr = obj;
+    $(&quot;.search_find_line&quot;).empty();
+    if(no == 1){
+        $(&quot;.search_history&quot;).hide();
+    }else{
+        $(&quot;.search_history&quot;).show();
+    }
+
+    var search_res = &apos;&apos;;
+    for(var i = 0; i &lt; obj.length;i++){
+        search_res = &apos;&lt;a class=&quot;search_find_title&quot;&gt;&apos;+obj[i]+&apos;&lt;/a&gt;&apos;;
+        $(&quot;.search_find_line&quot;).append(search_res);
+    }
+}
+
+//判断字符串是不是为空
+function isNull( str ){
+    if ( str == &quot;&quot; ) return true;
+    var regu = &quot;^[ ]+$&quot;;
+    var re = new RegExp(regu);
+    return re.test(str);
+}
+</code></pre><p>&#160;&#160;&#160;&#160;这里就是最重要的一部分了。</p>
+<pre><code>//当按钮被松开时，触发事件
+$(&apos;.searchProduct&apos;).keyup(function(evt){
+//获取到关键字
+    keyName = $(this).val();
+//判断关键字是否为空
+    if(isNull(keyName) == false || keyName != &apos;&apos;){
+        //若输入字符串不为空,则显示网络请求搜索。
+        clearTimeout(timeout);
+        timeout = setTimeout(function(){
+            if(!!ajaxCache[keyName]){
+                //显示自动提示框，给框里填关联词条的内容
+                setListPage(ajaxCache[keyName],1);
+                ajaxCache = {};
+            }else{
+                var sendData = {
+                    &quot;keyName&quot;:keyName
+                };
+
+                $.ajax({
+                    type: &quot;POST&quot;,
+                    url: url,//我们自个的接口没法公开，大家可以用自己的。
+                    data:JSON.stringify(sendData),
+                    dataType: &apos;json&apos;,
+                    success: function (data) {
+                        console.log(data);
+                        if(data){
+                            if(data.data){
+                                //显示自动提示框，给框里填关联词条的内容
+                                ajaxCache[keyName]=[];
+                                ajaxCache[keyName]=data.data;//给缓存对象赋值
+                                setListPage(data.data,1);
+                            }
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            }
+        },200);
+    }else{
+        //若输入字符串为空,则显示历史搜索。
+        ajaxCache = {};
+        if(history_search.length == 0){
+            //若数组为空,历史搜索不显示
+            $(&quot;.search_history&quot;).hide();
+        }else{
+            $(&quot;.search_history&quot;).show();
+            setListPage(history_search,2)
+        }
+    }
+//手机端按下右下角的搜索按钮的时候触发事件
+   if (evt.keyCode == 13) {
+        localStorage.setItem(&apos;search_keyName&apos;,keyName);
+        var count = 0;
+        //判断历史搜索中是否已经存在当前搜索的关键字
+        for(var j = 0; j &lt; history_search.length;j++){
+            if(keyName == history_search[j]){
+                count += 1;
+            }else{
+                count += 0;
+            }
+        }
+        //如果没有,则添加进历史搜索
+        if(count == 0){
+            history_search.unshift(keyName);
+        }
+        //这边缺少的处理是历史搜索排序的问题。
+        localStorage.setItem(&quot;history_search&quot;,JSON.stringify(history_search));
+        window.location.href=&quot;&quot;;//跳转到搜索结果页之类的页面
+    }
+</code></pre><p>&#160;&#160;&#160;&#160;这就基本完成了，这里没有加一个搜索结果页，在出现提示搜索的时候，应该在<code>&lt;a class=&quot;search_find_title&quot;&gt;&lt;/a&gt;</code>上添加点击事件，以跳转到搜索结果页之类的，这边可以根据自己的需求来处理。</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#web学习笔记13-移动端搜索框提示功能"><span class="toc-number">1.</span> <span class="toc-text">web学习笔记13-移动端搜索框提示功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#第一步：创建文件"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一步：创建文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第二步：引入文件，设置meta，编写html以及样式"><span class="toc-number">1.0.2.</span> <span class="toc-text">第二步：引入文件，设置meta，编写html以及样式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第三步：编写js逻辑"><span class="toc-number">1.0.3.</span> <span class="toc-text">第三步：编写js逻辑</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&text=web学习笔记13-移动端搜索框提示功能"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&title=web学习笔记13-移动端搜索框提示功能"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&is_video=false&description=web学习笔记13-移动端搜索框提示功能"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记13-移动端搜索框提示功能&body=Check out this article: http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&title=web学习笔记13-移动端搜索框提示功能"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&title=web学习笔记13-移动端搜索框提示功能"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&title=web学习笔记13-移动端搜索框提示功能"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&title=web学习笔记13-移动端搜索框提示功能"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/09/06/web学习笔记13-移动端搜索框提示功能/&name=web学习笔记13-移动端搜索框提示功能&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+

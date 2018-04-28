@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="这篇是基于之前整理的一篇关于ESLint入门之后，在深入了解了相关内容的基础上又整理出来的一篇，百分之四十与之前差不多，只是多了部分常用的规则。 1.安装1.1本地安装(运用到此项目)$ npm install eslint --save-dev 1.2全局安装（运用到所有项目）$ npm install -g eslint 2.配置2.1使用 .eslintrc 文件$ eslint --ini">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web学习笔记09-ESLint规则整理与实际应用">
+<meta property="og:url" content="http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="这篇是基于之前整理的一篇关于ESLint入门之后，在深入了解了相关内容的基础上又整理出来的一篇，百分之四十与之前差不多，只是多了部分常用的规则。 1.安装1.1本地安装(运用到此项目)$ npm install eslint --save-dev 1.2全局安装（运用到所有项目）$ npm install -g eslint 2.配置2.1使用 .eslintrc 文件$ eslint --ini">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-85fe7179277c34a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/620">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-97044746bf1b309a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/620">
+<meta property="og:updated_time" content="2016-12-01T07:54:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web学习笔记09-ESLint规则整理与实际应用">
+<meta name="twitter:description" content="这篇是基于之前整理的一篇关于ESLint入门之后，在深入了解了相关内容的基础上又整理出来的一篇，百分之四十与之前差不多，只是多了部分常用的规则。 1.安装1.1本地安装(运用到此项目)$ npm install eslint --save-dev 1.2全局安装（运用到所有项目）$ npm install -g eslint 2.配置2.1使用 .eslintrc 文件$ eslint --ini">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1062695-85fe7179277c34a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/620">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>web学习笔记09-ESLint规则整理与实际应用</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/01/12/web学习笔记10-自定义时间选择器指令编写/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/11/21/码农的厨子之路/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&text=web学习笔记09-ESLint规则整理与实际应用"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&title=web学习笔记09-ESLint规则整理与实际应用"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&is_video=false&description=web学习笔记09-ESLint规则整理与实际应用"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记09-ESLint规则整理与实际应用&body=Check out this article: http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&title=web学习笔记09-ESLint规则整理与实际应用"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&title=web学习笔记09-ESLint规则整理与实际应用"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&title=web学习笔记09-ESLint规则整理与实际应用"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&title=web学习笔记09-ESLint规则整理与实际应用"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&name=web学习笔记09-ESLint规则整理与实际应用&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-安装"><span class="toc-number">1.</span> <span class="toc-text">1.安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1本地安装-运用到此项目"><span class="toc-number">1.1.</span> <span class="toc-text">1.1本地安装(运用到此项目)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2全局安装（运用到所有项目）"><span class="toc-number">1.2.</span> <span class="toc-text">1.2全局安装（运用到所有项目）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-配置"><span class="toc-number">2.</span> <span class="toc-text">2.配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1使用-eslintrc-文件"><span class="toc-number">2.1.</span> <span class="toc-text">2.1使用 .eslintrc 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2在-package-json-中添加-eslintConfig配置块"><span class="toc-number">2.2.</span> <span class="toc-text">2.2在 package.json 中添加 eslintConfig配置块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3直接在代码文件中定义"><span class="toc-number">2.3.</span> <span class="toc-text">2.3直接在代码文件中定义</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-禁用-ESLint："><span class="toc-number">2.3.1.</span> <span class="toc-text">2.3.1 禁用 ESLint：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-2-禁用一条规则："><span class="toc-number">2.3.2.</span> <span class="toc-text">2.3.2 禁用一条规则：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-3-调整规则："><span class="toc-number">2.3.3.</span> <span class="toc-text">2.3.3 调整规则：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-错误级别"><span class="toc-number">3.</span> <span class="toc-text">3.错误级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-常用规则"><span class="toc-number">4.</span> <span class="toc-text">4.常用规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-实际项目中使用（Gulp中使用）"><span class="toc-number">5.</span> <span class="toc-text">5.实际项目中使用（Gulp中使用）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-安装插件"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 安装插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-应用"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-忽视"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 忽视</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        web学习笔记09-ESLint规则整理与实际应用
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-12-01T07:54:00.000Z" itemprop="datePublished">2016-12-01</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><strong>这篇是基于之前整理的一篇关于ESLint入门之后，在深入了解了相关内容的基础上又整理出来的一篇，百分之四十与之前差不多，只是多了部分常用的规则。</strong></p>
+<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h3><h4 id="1-1本地安装-运用到此项目"><a href="#1-1本地安装-运用到此项目" class="headerlink" title="1.1本地安装(运用到此项目)"></a>1.1本地安装(运用到此项目)</h4><pre><code>$ npm install eslint --save-dev
+</code></pre><h4 id="1-2全局安装（运用到所有项目）"><a href="#1-2全局安装（运用到所有项目）" class="headerlink" title="1.2全局安装（运用到所有项目）"></a>1.2全局安装（运用到所有项目）</h4><pre><code>$ npm install -g eslint
+</code></pre><h3 id="2-配置"><a href="#2-配置" class="headerlink" title="2.配置"></a>2.配置</h3><h4 id="2-1使用-eslintrc-文件"><a href="#2-1使用-eslintrc-文件" class="headerlink" title="2.1使用 .eslintrc 文件"></a>2.1使用 .eslintrc 文件</h4><pre><code>$ eslint --init
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/1062695-85fe7179277c34a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/620" alt="屏幕快照 2016-12-01 上午9.47.53.png"></p>
+<h4 id="2-2在-package-json-中添加-eslintConfig配置块"><a href="#2-2在-package-json-中添加-eslintConfig配置块" class="headerlink" title="2.2在 package.json 中添加 eslintConfig配置块"></a>2.2在 package.json 中添加 eslintConfig配置块</h4><p><img src="http://upload-images.jianshu.io/upload_images/1062695-97044746bf1b309a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/620" alt="图片.png"></p>
+<h4 id="2-3直接在代码文件中定义"><a href="#2-3直接在代码文件中定义" class="headerlink" title="2.3直接在代码文件中定义"></a>2.3直接在代码文件中定义</h4><h5 id="2-3-1-禁用-ESLint："><a href="#2-3-1-禁用-ESLint：" class="headerlink" title="2.3.1 禁用 ESLint："></a>2.3.1 禁用 ESLint：</h5><pre><code>/* eslint-disable */
+var a = 100;
+console.log(a);  
+/* eslint-enable */
+</code></pre><h5 id="2-3-2-禁用一条规则："><a href="#2-3-2-禁用一条规则：" class="headerlink" title="2.3.2 禁用一条规则："></a>2.3.2 禁用一条规则：</h5><pre><code>/*eslint-disable no-console */
+var a = 100;
+console.log(a);
+/*eslint-enable no-console */
+</code></pre><h5 id="2-3-3-调整规则："><a href="#2-3-3-调整规则：" class="headerlink" title="2.3.3 调整规则："></a>2.3.3 调整规则：</h5><pre><code>/* eslint no-console:0 */
+var a = 100;
+console.log(a);
+</code></pre><h3 id="3-错误级别"><a href="#3-错误级别" class="headerlink" title="3.错误级别"></a>3.错误级别</h3><ul>
+<li>“off” or 0 - 关闭(禁用)规则</li>
+<li>“warn” or 1 - 将规则视为一个警告（并不会导致检查不通过）</li>
+<li>“error” or 2 - 将规则视为一个错误 (退出码为1，检查不通过)</li>
+<li>有些规则还带有可选的参数。</li>
+</ul>
+<h3 id="4-常用规则"><a href="#4-常用规则" class="headerlink" title="4.常用规则"></a>4.常用规则</h3><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><font color="lightblue" size="4">Possible Errors</font></td>
+<td><font color="lightblue" size="4">可能的错误或逻辑错误</font></td>
+</tr>
+<tr>
+<td>no-cond-assign</td>
+<td>禁止条件表达式中出现模棱两可的赋值操作符</td>
+</tr>
+<tr>
+<td>no-console</td>
+<td>禁用console</td>
+</tr>
+<tr>
+<td>no-constant-condition</td>
+<td>禁止在条件中使用常量表达式</td>
+</tr>
+<tr>
+<td>no-debugger</td>
+<td>禁用 debugger</td>
+</tr>
+<tr>
+<td>no-dupe-args</td>
+<td>禁止 function 定义中出现重名参数</td>
+</tr>
+<tr>
+<td>no-dupe-keys</td>
+<td>禁止对象字面量中出现重复的 key</td>
+</tr>
+<tr>
+<td>no-duplicate-case</td>
+<td>禁止出现重复的 case 标签</td>
+</tr>
+<tr>
+<td>no-empty</td>
+<td>禁止出现空语句块</td>
+</tr>
+<tr>
+<td>no-ex-assign</td>
+<td>禁止对 catch 子句的参数重新赋值</td>
+</tr>
+<tr>
+<td>no-extra-boolean-cast</td>
+<td>禁止不必要的布尔转换</td>
+</tr>
+<tr>
+<td>no-extra-parens</td>
+<td>禁止不必要的括号</td>
+</tr>
+<tr>
+<td>no-extra-semi</td>
+<td>禁止不必要的分号</td>
+</tr>
+<tr>
+<td>no-func-assign</td>
+<td>禁止对 function 声明重新赋值</td>
+</tr>
+<tr>
+<td>no-inner-declarations</td>
+<td>禁止在嵌套的块中出现变量声明或 function 声明</td>
+</tr>
+<tr>
+<td>no-irregular-whitespace</td>
+<td>禁止在字符串和注释之外不规则的空白</td>
+</tr>
+<tr>
+<td>no-obj-calls</td>
+<td>禁止把全局对象作为函数调用</td>
+</tr>
+<tr>
+<td>no-sparse-arrays</td>
+<td>禁用稀疏数组</td>
+</tr>
+<tr>
+<td>no-prototype-builtins</td>
+<td>禁止直接使用Object.prototypes 的内置属性</td>
+</tr>
+<tr>
+<td>no-unexpected-multiline</td>
+<td>禁止出现令人困惑的多行表达式</td>
+</tr>
+<tr>
+<td>no-unreachable</td>
+<td>禁止在return、throw、continue 和 break语句之后出现不可达代码</td>
+</tr>
+<tr>
+<td>use-isnan</td>
+<td>要求使用 isNaN() 检查 NaN</td>
+</tr>
+<tr>
+<td>valid-typeof</td>
+<td>强制 typeof 表达式与有效的字符串进行比较</td>
+</tr>
+<tr>
+<td>—–</td>
+<td>—–</td>
+</tr>
+<tr>
+<td><font color="lightblue" size="4">Best Practices</font></td>
+<td><font color="lightblue" size="4">最佳实践</font></td>
+</tr>
+<tr>
+<td>array-callback-return</td>
+<td>强制数组方法的回调函数中有 return 语句</td>
+</tr>
+<tr>
+<td>block-scoped-var</td>
+<td>强制把变量的使用限制在其定义的作用域范围内</td>
+</tr>
+<tr>
+<td>complexity</td>
+<td>指定程序中允许的最大环路复杂度</td>
+</tr>
+<tr>
+<td>consistent-return</td>
+<td>要求 return 语句要么总是指定返回的值，要么不指定</td>
+</tr>
+<tr>
+<td>curly</td>
+<td>强制所有控制语句使用一致的括号风格</td>
+</tr>
+<tr>
+<td>default-case</td>
+<td>要求 switch 语句中有 default 分支</td>
+</tr>
+<tr>
+<td>dot-location</td>
+<td>强制在点号之前和之后一致的换行</td>
+</tr>
+<tr>
+<td>dot-notation</td>
+<td>强制在任何允许的时候使用点号</td>
+</tr>
+<tr>
+<td>eqeqeq</td>
+<td>要求使用 === 和 !==</td>
+</tr>
+<tr>
+<td>guard-for-in</td>
+<td>要求 for-in 循环中有一个 if 语句</td>
+</tr>
+<tr>
+<td>no-alert</td>
+<td>禁用 alert、confirm 和 prompt</td>
+</tr>
+<tr>
+<td>no-case-declarations</td>
+<td>不允许在 case 子句中使用词法声明</td>
+</tr>
+<tr>
+<td>no-else-return</td>
+<td>禁止 if 语句中有 return 之后有 else</td>
+</tr>
+<tr>
+<td>no-empty-function</td>
+<td>禁止出现空函数</td>
+<td></td>
+</tr>
+<tr>
+<td>no-eq-null</td>
+<td>禁止在没有类型检查操作符的情况下与 null 进行比较</td>
+</tr>
+<tr>
+<td>no-eval</td>
+<td>禁用 eval()</td>
+</tr>
+<tr>
+<td>no-extra-bind</td>
+<td>禁止不必要的 .bind() 调用</td>
+</tr>
+<tr>
+<td>no-fallthrough</td>
+<td>禁止 case 语句落空</td>
+</tr>
+<tr>
+<td>no-floating-decimal</td>
+<td>禁止数字字面量中使用前导和末尾小数点</td>
+</tr>
+<tr>
+<td>no-implicit-coercion</td>
+<td>禁止使用短符号进行类型转换</td>
+</tr>
+<tr>
+<td>no-implicit-globals</td>
+<td>禁止在全局范围内使用 var 和命名的 function 声明</td>
+</tr>
+<tr>
+<td>no-invalid-this:</td>
+<td>禁止 this 关键字出现在类和类对象之外</td>
+</tr>
+<tr>
+<td>no-lone-blocks</td>
+<td>禁用不必要的嵌套块</td>
+</tr>
+<tr>
+<td>no-loop-func</td>
+<td>禁止在循环中出现 function 声明和表达式</td>
+</tr>
+<tr>
+<td>no-magic-numbers</td>
+<td>禁用魔术数字</td>
+</tr>
+<tr>
+<td>no-multi-spaces</td>
+<td>禁止使用多个空格</td>
+</tr>
+<tr>
+<td>no-multi-str</td>
+<td>禁止使用多行字符串</td>
+</tr>
+<tr>
+<td>no-new</td>
+<td>禁止在非赋值或条件语句中使用 new 操作符</td>
+</tr>
+<tr>
+<td>no-new-func</td>
+<td>禁止对 Function 对象使用 new 操作符</td>
+</tr>
+<tr>
+<td>no-new-wrappers</td>
+<td>禁止对 String，Number 和 Boolean 使用 new 操作符</td>
+</tr>
+<tr>
+<td>no-param-reassign</td>
+<td>不允许对 function 的参数进行重新赋值</td>
+</tr>
+<tr>
+<td>no-redeclare</td>
+<td>禁止使用 var 多次声明同一变量</td>
+</tr>
+<tr>
+<td>no-return-assign</td>
+<td>禁止在 return 语句中使用赋值语句</td>
+</tr>
+<tr>
+<td>no-script-url</td>
+<td>禁止使用 javascript: url</td>
+</tr>
+<tr>
+<td>no-self-assign</td>
+<td>禁止自我赋值</td>
+</tr>
+<tr>
+<td>no-self-compare</td>
+<td>禁止自身比较</td>
+</tr>
+<tr>
+<td>no-sequences</td>
+<td>禁用逗号操作符</td>
+</tr>
+<tr>
+<td>no-unmodified-loop-condition</td>
+<td>禁用一成不变的循环条件</td>
+</tr>
+<tr>
+<td>no-unused-expressions</td>
+<td>禁止出现未使用过的表达式</td>
+</tr>
+<tr>
+<td>no-useless-call</td>
+<td>禁止不必要的 .call() 和 .apply()</td>
+</tr>
+<tr>
+<td>no-useless-concat</td>
+<td>禁止不必要的字符串字面量或模板字面量的连接</td>
+</tr>
+<tr>
+<td>vars-on-top</td>
+<td>要求所有的 var 声明出现在它们所在的作用域顶部</td>
+</tr>
+<tr>
+<td>—–</td>
+<td>—–</td>
+</tr>
+<tr>
+<td><font color="lightblue" size="4">Strict Mode</font></td>
+<td><font color="lightblue" size="4">使用严格模式和严格模式指</font></td>
+</tr>
+<tr>
+<td>strict</td>
+<td>要求或禁止使用严格模式指令</td>
+</tr>
+<tr>
+<td>—–</td>
+<td>—–</td>
+</tr>
+<tr>
+<td><font color="lightblue" size="4">Variables</font></td>
+<td><font color="lightblue" size="4">变量声明</font></td>
+</tr>
+<tr>
+<td>init-declarations</td>
+<td>要求或禁止 var 声明中的初始化</td>
+</tr>
+<tr>
+<td>no-catch-shadow</td>
+<td>不允许 catch 子句的参数与外层作用域中的变量同名</td>
+</tr>
+<tr>
+<td>no-restricted-globals</td>
+<td>禁用特定的全局变量</td>
+</tr>
+<tr>
+<td>no-shadow</td>
+<td>禁止 var 声明 与外层作用域的变量同名</td>
+</tr>
+<tr>
+<td>no-undef</td>
+<td>禁用未声明的变量，除非它们在 /global / 注释中被提到</td>
+</tr>
+<tr>
+<td>no-undef-init</td>
+<td>禁止将变量初始化为 undefined</td>
+</tr>
+<tr>
+<td>no-unused-vars</td>
+<td>禁止出现未使用过的变量</td>
+</tr>
+<tr>
+<td>no-use-before-define</td>
+<td>不允许在变量定义之前使用它们</td>
+</tr>
+<tr>
+<td>—–</td>
+<td>—–</td>
+</tr>
+<tr>
+<td><font color="lightblue" size="4">Nodejs and CommonJS</font></td>
+<td><font color="lightblue" size="4">Node.js,CommonJS</font></td>
+</tr>
+<tr>
+<td>global-require</td>
+<td>要求 require() 出现在顶层模块作用域中</td>
+</tr>
+<tr>
+<td>handle-callback-err</td>
+<td>要求回调函数中有容错处理</td>
+</tr>
+<tr>
+<td>no-mixed-requires</td>
+<td>禁止混合常规 var 声明和 require 调用</td>
+</tr>
+<tr>
+<td>no-new-require</td>
+<td>禁止调用 require 时使用 new 操作符</td>
+</tr>
+<tr>
+<td>no-path-concat</td>
+<td>禁止对 dirname 和 filename进行字符串连接</td>
+</tr>
+<tr>
+<td>no-restricted-modules</td>
+<td>禁用指定的通过 require 加载的模块</td>
+</tr>
+<tr>
+<td>—–</td>
+<td>—–</td>
+</tr>
+<tr>
+<td><font color="lightblue" size="4">Stylistic Issues</font></td>
+<td><font color="lightblue" size="4">风格指南</font></td>
+</tr>
+<tr>
+<td>array-bracket-spacing</td>
+<td>强制数组方括号中使用一致的空格</td>
+</tr>
+<tr>
+<td>block-spacing</td>
+<td>强制在单行代码块中使用一致的空格</td>
+</tr>
+<tr>
+<td>brace-style</td>
+<td>强制在代码块中使用一致的大括号风格</td>
+</tr>
+<tr>
+<td>camelcase</td>
+<td>强制使用骆驼拼写法命名约定</td>
+</tr>
+<tr>
+<td>comma-spacing</td>
+<td>强制在逗号前后使用一致的空格</td>
+</tr>
+<tr>
+<td>comma-style</td>
+<td>强制使用一致的逗号风格</td>
+</tr>
+<tr>
+<td>computed-property-spacing</td>
+<td>强制在计算的属性的方括号中使用一致的空格</td>
+</tr>
+<tr>
+<td>eol-last</td>
+<td>强制文件末尾至少保留一行空行</td>
+</tr>
+<tr>
+<td>func-names</td>
+<td>强制使用命名的 function 表达式</td>
+</tr>
+<tr>
+<td>func-style</td>
+<td>强制一致地使用函数声明或函数表达式</td>
+</tr>
+<tr>
+<td>indent</td>
+<td>强制使用一致的缩进</td>
+</tr>
+<tr>
+<td>jsx-quotes</td>
+<td>强制在 JSX 属性中一致地使用双引号或单引号</td>
+</tr>
+<tr>
+<td>key-spacing</td>
+<td>强制在对象字面量的属性中键和值之间使用一致的间距</td>
+</tr>
+<tr>
+<td>keyword-spacing</td>
+<td>强制在关键字前后使用一致的空格</td>
+</tr>
+<tr>
+<td>linebreak-style</td>
+<td>强制使用一致的换行风格</td>
+</tr>
+<tr>
+<td>lines-around-comment</td>
+<td>要求在注释周围有空行</td>
+</tr>
+<tr>
+<td>max-depth</td>
+<td>强制可嵌套的块的最大深度</td>
+</tr>
+<tr>
+<td>max-len</td>
+<td>强制一行的最大长度</td>
+</tr>
+<tr>
+<td>max-lines</td>
+<td>强制最大行数</td>
+</tr>
+<tr>
+<td>max-nested-callbacks</td>
+<td>强制回调函数最大嵌套深度</td>
+</tr>
+<tr>
+<td>max-params</td>
+<td>强制 function 定义中最多允许的参数数量</td>
+</tr>
+<tr>
+<td>max-statements</td>
+<td>强制 function 块最多允许的的语句数量</td>
+</tr>
+<tr>
+<td>max-statements-per-line</td>
+<td>强制每一行中所允许的最大语句数量</td>
+</tr>
+<tr>
+<td>new-cap</td>
+<td>要求构造函数首字母大写</td>
+</tr>
+<tr>
+<td>new-parens</td>
+<td>要求调用无参构造函数时有圆括号</td>
+</tr>
+<tr>
+<td>newline-after-var</td>
+<td>要求或禁止 var 声明语句后有一行空行</td>
+</tr>
+<tr>
+<td>newline-before-return</td>
+<td>要求 return 语句之前有一空行</td>
+</tr>
+<tr>
+<td>newline-per-chained-call</td>
+<td>要求方法链中每个调用都有一个换行符</td>
+</tr>
+<tr>
+<td>no-array-constructor</td>
+<td>禁止使用 Array 构造函数</td>
+</tr>
+<tr>
+<td>no-continue</td>
+<td>禁用 continue 语句</td>
+</tr>
+<tr>
+<td>no-inline-comments</td>
+<td>禁止在代码行后使用内联注释</td>
+</tr>
+<tr>
+<td>no-lonely-if</td>
+<td>禁止 if 作为唯一的语句出现在 else 语句中</td>
+</tr>
+<tr>
+<td>no-mixed-spaces-and-tabs</td>
+<td>不允许空格和 tab 混合缩进</td>
+</tr>
+<tr>
+<td>no-multiple-empty-lines</td>
+<td>不允许多个空行</td>
+</tr>
+<tr>
+<td>no-negated-condition</td>
+<td>不允许否定的表达式</td>
+</tr>
+<tr>
+<td>no-plusplus</td>
+<td>禁止使用一元操作符 ++ 和 –</td>
+</tr>
+<tr>
+<td>no-spaced-func</td>
+<td>禁止 function 标识符和括号之间出现空格</td>
+</tr>
+<tr>
+<td>no-ternary</td>
+<td>不允许使用三元操作符</td>
+</tr>
+<tr>
+<td>no-trailing-spaces</td>
+<td>禁用行尾空格</td>
+</tr>
+<tr>
+<td>no-whitespace-before-property</td>
+<td>禁止属性前有空白</td>
+</tr>
+<tr>
+<td>object-curly-newline</td>
+<td>强制花括号内换行符的一致性</td>
+</tr>
+<tr>
+<td>object-curly-spacing</td>
+<td>强制在花括号中使用一致的空格</td>
+</tr>
+<tr>
+<td>object-property-newline</td>
+<td>强制将对象的属性放在不同的行上</td>
+</tr>
+<tr>
+<td>one-var</td>
+<td>强制函数中的变量要么一起声明要么分开声明</td>
+</tr>
+<tr>
+<td>one-var-declaration-per-line</td>
+<td>要求或禁止在 var 声明周围换行</td>
+</tr>
+<tr>
+<td>operator-assignment</td>
+<td>要求或禁止在可能的情况下要求使用简化的赋值操作符</td>
+</tr>
+<tr>
+<td>operator-linebreak</td>
+<td>强制操作符使用一致的换行符</td>
+</tr>
+<tr>
+<td>quote-props</td>
+<td>要求对象字面量属性名称用引号括起来</td>
+</tr>
+<tr>
+<td>quotes</td>
+<td>强制使用一致的反勾号、双引号或单引号</td>
+</tr>
+<tr>
+<td>require-jsdoc</td>
+<td>要求使用 JSDoc 注释</td>
+</tr>
+<tr>
+<td>semi</td>
+<td>要求或禁止使用分号而不是 ASI</td>
+</tr>
+<tr>
+<td>semi-spacing</td>
+<td>强制分号之前和之后使用一致的空格</td>
+</tr>
+<tr>
+<td>sort-vars</td>
+<td>要求同一个声明块中的变量按顺序排列</td>
+</tr>
+<tr>
+<td>space-before-blocks</td>
+<td>强制在块之前使用一致的空格</td>
+</tr>
+<tr>
+<td>space-before-function-paren</td>
+<td>强制在 function的左括号之前使用一致的空格</td>
+</tr>
+<tr>
+<td>space-in-parens</td>
+<td>强制在圆括号内使用一致的空格</td>
+</tr>
+<tr>
+<td>space-infix-ops</td>
+<td>要求操作符周围有空格</td>
+</tr>
+<tr>
+<td>space-unary-ops</td>
+<td>强制在一元操作符前后使用一致的空格</td>
+</tr>
+<tr>
+<td>spaced-comment</td>
+<td>强制在注释中 // 或 /* 使用一致的空格</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-实际项目中使用（Gulp中使用）"><a href="#5-实际项目中使用（Gulp中使用）" class="headerlink" title="5.实际项目中使用（Gulp中使用）"></a>5.实际项目中使用（Gulp中使用）</h3><h4 id="5-1-安装插件"><a href="#5-1-安装插件" class="headerlink" title="5.1 安装插件"></a>5.1 安装插件</h4><pre><code>$ npm install gulp-eslint
+</code></pre><h4 id="5-2-应用"><a href="#5-2-应用" class="headerlink" title="5.2 应用"></a>5.2 应用</h4><pre><code>var gulp = require(&apos;gulp&apos;);
+var eslint = require(&apos;gulp-eslint&apos;);
+gulp.task(&apos;lint&apos;,function(){
+    return gulp.src([&apos;app/**/*.js&apos;]) //指定的校验路径
+        .pipe(eslint({configFle:&quot;./.eslintrc&quot;})) //使用你的eslint校验文件
+        .pipe(eslint.format())
+});
+</code></pre><p>输入命令行</p>
+<pre><code>$ gulp lint
+</code></pre><p>就可以直接运行了相应的配置文件来校验文件了。</p>
+<h4 id="5-3-忽视"><a href="#5-3-忽视" class="headerlink" title="5.3 忽视"></a>5.3 忽视</h4><p>&#160;&#160;&#160;&#160;你可以通过在项目根目录创建一个 .eslintignore 文件告诉 ESLint 去忽略特定的文件和目录。.eslintignore 文件是一个纯文本文件，其中的每一行都是一个 glob 模式表明哪些路径应该忽略检测。例如，以下将忽略所有的 JavaScript 文件：</p>
+<pre><code>**/*.js
+</code></pre><p>&#160;&#160;&#160;&#160;当 ESLint 运行时，在确定哪些文件要检测之前，它会在当前工作目录中查找一个 .eslintignore 文件。如果发现了这个文件，当遍历目录时，将会应用这些偏好设置。一次只有一个 .eslintignore 文件会被使用，所以，不是当前工作目录下的 .eslintignore 文件将不会被用到。</p>
+<p>&#160;&#160;&#160;&#160;Globs 匹配使用 node-ignore，所以大量可用的特性有：</p>
+<ul>
+<li>以 # 开头的行被当作注释，不影响忽略模式。</li>
+<li>路径是相对于 .eslintignore 的位置或当前工作目录。这也会影响通过 –ignore-pattern传递的路径。</li>
+<li>忽略模式同 .gitignore 规范</li>
+<li>以 ! 开头的行是否定模式，它将会重新包含一个之前被忽略的模式。</li>
+</ul>
+<p>&#160;&#160;&#160;&#160;除了 .eslintignore 文件中的模式，ESLint总是忽略 /node_modules/<em> 和 /bower_components/</em> 中的文件。</p>
+<p>&#160;&#160;&#160;&#160;例如：把下面 .eslintignore 文件放到当前工作目录里，将忽略 node_modules，bower_components 和所有以 .ts.js 或者 .coffee.js 为扩展名的文件以及 build/ 目录下除了 build/index.js 的所有文件。</p>
+<pre><code># /node_modules/* and /bower_components/* ignored by default
+
+# Ignore built files except build/index.js
+build/*
+!build/index.js
+</code></pre><p>&#160;&#160;&#160;&#160;如果相比于当前工作目录下 .eslintignore 文件，你更想使用一个不同的文件，你可以在命令行使用 –ignore-path 选项指定它。例如，你可以使用 .jshintignore 文件，因为它有相同的格式：</p>
+<pre><code>eslint --ignore-path .jshintignore file.js
+</code></pre><p>&#160;&#160;&#160;&#160;你也可以使用你的 .gitignore 文件：</p>
+<pre><code>eslint --ignore-path .gitignore file.js
+</code></pre><p>&#160;&#160;&#160;&#160;任何文件只要满足标准忽略文件格式都可以用。记住，指定 –ignore-path 意味着任何现有的 .eslintignore 文件将不被使用。请注意，.eslintignore 中的匹配规则比 .gitignore 中的更严格。</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-安装"><span class="toc-number">1.</span> <span class="toc-text">1.安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1本地安装-运用到此项目"><span class="toc-number">1.1.</span> <span class="toc-text">1.1本地安装(运用到此项目)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2全局安装（运用到所有项目）"><span class="toc-number">1.2.</span> <span class="toc-text">1.2全局安装（运用到所有项目）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-配置"><span class="toc-number">2.</span> <span class="toc-text">2.配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1使用-eslintrc-文件"><span class="toc-number">2.1.</span> <span class="toc-text">2.1使用 .eslintrc 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2在-package-json-中添加-eslintConfig配置块"><span class="toc-number">2.2.</span> <span class="toc-text">2.2在 package.json 中添加 eslintConfig配置块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3直接在代码文件中定义"><span class="toc-number">2.3.</span> <span class="toc-text">2.3直接在代码文件中定义</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-禁用-ESLint："><span class="toc-number">2.3.1.</span> <span class="toc-text">2.3.1 禁用 ESLint：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-2-禁用一条规则："><span class="toc-number">2.3.2.</span> <span class="toc-text">2.3.2 禁用一条规则：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-3-调整规则："><span class="toc-number">2.3.3.</span> <span class="toc-text">2.3.3 调整规则：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-错误级别"><span class="toc-number">3.</span> <span class="toc-text">3.错误级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-常用规则"><span class="toc-number">4.</span> <span class="toc-text">4.常用规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-实际项目中使用（Gulp中使用）"><span class="toc-number">5.</span> <span class="toc-text">5.实际项目中使用（Gulp中使用）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-安装插件"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 安装插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-应用"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-忽视"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 忽视</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&text=web学习笔记09-ESLint规则整理与实际应用"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&title=web学习笔记09-ESLint规则整理与实际应用"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&is_video=false&description=web学习笔记09-ESLint规则整理与实际应用"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web学习笔记09-ESLint规则整理与实际应用&body=Check out this article: http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&title=web学习笔记09-ESLint规则整理与实际应用"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&title=web学习笔记09-ESLint规则整理与实际应用"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&title=web学习笔记09-ESLint规则整理与实际应用"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&title=web学习笔记09-ESLint规则整理与实际应用"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/12/01/web学习笔记09-ESLint规则整理与实际应用/&name=web学习笔记09-ESLint规则整理与实际应用&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+

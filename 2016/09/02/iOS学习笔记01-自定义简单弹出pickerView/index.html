@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;UIPickerView平常用的地方好像也不是很多，顶多就是一些需要选择的地方，这次项目需要这一个功能，我就单独写了一个简单的demo，效果图如下：  新增主页面弹出view，在主页面添加的代码有个小问题就是第四个直接添加在主页弹出来的view好像被导航栏给覆盖了，我还没去研究，就着急的先吧功能写了。大家谅解下最初版本    &amp;#160;&amp;#160">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS学习笔记01-自定义简单弹出pickerView">
+<meta property="og:url" content="http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;UIPickerView平常用的地方好像也不是很多，顶多就是一些需要选择的地方，这次项目需要这一个功能，我就单独写了一个简单的demo，效果图如下：  新增主页面弹出view，在主页面添加的代码有个小问题就是第四个直接添加在主页弹出来的view好像被导航栏给覆盖了，我还没去研究，就着急的先吧功能写了。大家谅解下最初版本    &amp;#160;&amp;#160">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-5051762d50ff7123.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-e5ea7bca16082ce7.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2016-09-21T06:15:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS学习笔记01-自定义简单弹出pickerView">
+<meta name="twitter:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;UIPickerView平常用的地方好像也不是很多，顶多就是一些需要选择的地方，这次项目需要这一个功能，我就单独写了一个简单的demo，效果图如下：  新增主页面弹出view，在主页面添加的代码有个小问题就是第四个直接添加在主页弹出来的view好像被导航栏给覆盖了，我还没去研究，就着急的先吧功能写了。大家谅解下最初版本    &amp;#160;&amp;#160">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1062695-5051762d50ff7123.gif?imageMogr2/auto-orient/strip">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>iOS学习笔记01-自定义简单弹出pickerView</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/09/05/web学习笔记01-Jasmine-Unit-Test/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/08/19/iOS常用宏定义/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&text=iOS学习笔记01-自定义简单弹出pickerView"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&title=iOS学习笔记01-自定义简单弹出pickerView"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&is_video=false&description=iOS学习笔记01-自定义简单弹出pickerView"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS学习笔记01-自定义简单弹出pickerView&body=Check out this article: http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&title=iOS学习笔记01-自定义简单弹出pickerView"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&title=iOS学习笔记01-自定义简单弹出pickerView"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&title=iOS学习笔记01-自定义简单弹出pickerView"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&title=iOS学习笔记01-自定义简单弹出pickerView"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&name=iOS学习笔记01-自定义简单弹出pickerView&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">新增主页面弹出view，在主页面添加的代码</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">有个小问题就是第四个直接添加在主页弹出来的view好像被导航栏给覆盖了，我还没去研究，就着急的先吧功能写了。大家谅解下</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">最初版本</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number"></span> <span class="toc-text">第一步：主页面的设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number"></span> <span class="toc-text">第二步：实现自定义view</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number"></span> <span class="toc-text">第三步：主页实现点击出现的方法，并且接收回传的值。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number"></span> <span class="toc-text">Others</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">新增</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">这边就是我所有的思路和大部分的代码，虽然感觉没啥用处，但是新手学习的话还是有些意思的。以上的demo呢，还有很多没有完善的地方，要是大家有意见或者建议，留言评论下，讨论下应该怎么改怎么优化啥的，我很欢迎的，希望大家可以一起学习啥的。也希望我自己能经常写出一些对大家有帮助的代码。</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        iOS学习笔记01-自定义简单弹出pickerView
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Hexo</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-09-02T09:20:14.000Z" itemprop="datePublished">2016-09-02</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p> &#160;&#160;&#160;&#160;UIPickerView平常用的地方好像也不是很多，顶多就是一些需要选择的地方，这次项目需要这一个功能，我就单独写了一个简单的demo，效果图如下：</p>
+ <h5>新增主页面弹出view，在主页面添加的代码</h5><br><h6>有个小问题就是第四个直接添加在主页弹出来的view好像被导航栏给覆盖了，我还没去研究，就着急的先吧功能写了。大家谅解下</h6><br><img src="http://upload-images.jianshu.io/upload_images/1062695-5051762d50ff7123.gif?imageMogr2/auto-orient/strip" alt="9月-03-2016 17-49-51.gif"><br><h5>最初版本</h5>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-e5ea7bca16082ce7.gif?imageMogr2/auto-orient/strip" alt="picker.gif"></p>
+<p> &#160;&#160;&#160;&#160;<strong>话说我终于弄了gif了，再也不要去截图每张图都发一遍了！！</strong><br> &#160;&#160;&#160;&#160;这个demo呢，等于是可以拿来直接用的第三方了吧，只需要传数据就可以了，弹出的三个框显示的数据也不一样，我的封装能力不行，所以都是单独写了，在这里呢，我先把链接发上，大家要是没有耐心的其实可以直接看demo，下载了，看下代码基本上就会了。<a href="https://github.com/Yulingsong/YLSPicker" target="_blank" rel="noopener">YLSPicker</a>。</p>
+<p> &#160;&#160;&#160;&#160;实现的基本思路呢，其实也挺简单的。我这里就说下我实现的过程，然后贴上代码片段，大家可以看一下。</p>
+<h4>第一步：主页面的设置</h4><br>  &#160;&#160;&#160;&#160;这里其实也没啥好说的，页面上三个不能输入的三个文本框，然后点击会弹出东西来。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//宏定义</span><br><span class="line">#define YLSRect(x, y, w, h)  CGRectMake([UIScreen mainScreen].bounds.size.width * x, [UIScreen mainScreen].bounds.size.height * y, [UIScreen mainScreen].bounds.size.width * w,  [UIScreen mainScreen].bounds.size.height * h)</span><br></pre></td></tr></table></figure><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@interface ViewController ()&lt;UITextFieldDelegate&gt;</span><br><span class="line">//声明</span><br><span class="line">/** text1 */</span><br><span class="line">@property (nonatomic,strong) UITextField *text1;</span><br><span class="line">/** text2 */</span><br><span class="line">@property (nonatomic,strong) UITextField *text2;</span><br><span class="line">/** text3 */</span><br><span class="line">@property (nonatomic,strong) UITextField *text3;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">   - (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    self.title = @&quot;Picker&quot;;</span><br><span class="line">    </span><br><span class="line">    //placeholder数组</span><br><span class="line">    NSArray *placeholderArr = @[@&quot;Picker OneVlaue&quot;,@&quot;Picker TwoVlaue&quot;,@&quot;Picker ThreeVlaue&quot;];</span><br><span class="line">    //循环添加文本框</span><br><span class="line">    for (int i = 0; i &lt; 3; i ++)</span><br><span class="line">    &#123;</span><br><span class="line">        UITextField *text = [[UITextField alloc]initWithFrame:YLSRect(100/375, (140 + i * 60)/667, 175/375, 30/667)];</span><br><span class="line">        text.borderStyle = UITextBorderStyleRoundedRect;</span><br><span class="line">        text.backgroundColor = [UIColor lightGrayColor];</span><br><span class="line">        text.tag = i + 1000;</span><br><span class="line">        text.placeholder = placeholderArr[i];</span><br><span class="line">        text.delegate = self;</span><br><span class="line">        [self.view addSubview:text];</span><br><span class="line">        if(text.tag == 1000)</span><br><span class="line">        &#123;</span><br><span class="line">            self.text1 = text;</span><br><span class="line">        &#125;else if(text.tag == 1001)</span><br><span class="line">        &#123;</span><br><span class="line">            self.text2 = text;</span><br><span class="line">        &#125;else</span><br><span class="line">        &#123;</span><br><span class="line">            self.text3 = text;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><br> &#160;&#160;&#160;&#160;很多像我这样的新手，对textfiled的代理都不是很清楚，像我这个点击文本框不进行编辑，然后还能弹出自定义view的事件应该在哪里实现呢，答案就是在<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//点击文本框时触发的事件</span><br><span class="line">- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField;</span><br></pre></td></tr></table></figure><br><br>就这样，主页面算是勾画好了。接下来就是自定义view的部分了。<br><br><h4>第二步：实现自定义view</h4>
+
+<p> &#160;&#160;&#160;&#160;1.创建类YLSOPickerView<br> &#160;&#160;&#160;&#160;2.在.h文件中声明变量，一个是需要传入的数组，一个是弹出框的标题。还要声明两个方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@interface YLSOPickerView : UIView</span><br><span class="line">/** array */</span><br><span class="line">@property (nonatomic,strong) NSArray *array;</span><br><span class="line">/** title */</span><br><span class="line">@property (nonatomic,strong) NSString *title;</span><br><span class="line">//快速创建</span><br><span class="line">+(instancetype)pickerView;</span><br><span class="line">//弹出</span><br><span class="line">-(void)show;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p> &#160;&#160;&#160;&#160;3.接下来的就是最主要的工作，就是.m文件的编写</p>
+<ul>
+<li>宏定义</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#define YLSRect(x, y, w, h)  CGRectMake([UIScreen mainScreen].bounds.size.width * x, [UIScreen mainScreen].bounds.size.height * y, [UIScreen mainScreen].bounds.size.width * w,  [UIScreen mainScreen].bounds.size.height * h)</span><br><span class="line">#define YLSFont(f) [UIFont systemFontOfSize:[UIScreen mainScreen].bounds.size.width * f]</span><br><span class="line">#define YLSColorAlpha(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]</span><br><span class="line">#define YLSMainBackColor [UIColor colorWithRed:240/255.0 green:239/255.0 blue:245/255.0 alpha:1]</span><br><span class="line">#define BlueColor [UIColor colorWithRed:0/255.0 green:122/255.0 blue:255/255.0 alpha:1]</span><br><span class="line">#define ClearColor [UIColor clearColor]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>声明需要用到的控件，遵守响应的协议  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@interface YLSOPickerView()&lt;UIPickerViewDelegate,UIPickerViewDataSource&gt;</span><br><span class="line">/** view */</span><br><span class="line">@property (nonatomic,strong) UIView *topView;</span><br><span class="line">/** button */</span><br><span class="line">@property (nonatomic,strong) UIButton *doneBtn;</span><br><span class="line">/** pickerView */</span><br><span class="line">@property (nonatomic,strong) UIPickerView *pickerView;</span><br><span class="line">/** 选择传回的值 */</span><br><span class="line">@property (nonatomic,strong) NSString *result;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<ul>
+<li>实现init方法和创建方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//快速创建</span><br><span class="line">+ (instancetype)pickerView</span><br><span class="line">&#123;</span><br><span class="line">    return [[self alloc]init];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(instancetype)initWithFrame:(CGRect)frame</span><br><span class="line">&#123;</span><br><span class="line">    self = [super initWithFrame:YLSRect(0, 0, 1, 917/667)];</span><br><span class="line">    if (self)</span><br><span class="line">    &#123;</span><br><span class="line">        self.backgroundColor = YLSColorAlpha(0, 0, 0, 0.4);    </span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> &#160;&#160;&#160;&#160;<strong>这里呢我要说一下的是，为了达到在点击文本框从下弹出的一个动态效果，所以起初的时候我将整个view的长度设置成了一个屏幕的长度加上选择器的长度，在弹出方法中我将整个view上移着添加进屏幕。这样会有好看点效果</strong></p>
+<ul>
+<li>添加页面控件，设置样式位置等</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">-(void)layoutSubviews</span><br><span class="line">&#123;</span><br><span class="line">    [super layoutSubviews];</span><br><span class="line">    </span><br><span class="line">    self.topView = [[UIView alloc]initWithFrame:YLSRect(0, 667/667, 1, 250/667)];</span><br><span class="line">    self.topView.backgroundColor = [UIColor whiteColor];</span><br><span class="line">    [self addSubview:self.topView];</span><br><span class="line">    </span><br><span class="line">    //为view上面的两个角做成圆角。不喜欢的可以注掉</span><br><span class="line">    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.topView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(5, 5)];</span><br><span class="line">    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];</span><br><span class="line">    maskLayer.frame = self.topView.bounds;</span><br><span class="line">    maskLayer.path = maskPath.CGPath;</span><br><span class="line">    self.topView.layer.mask = maskLayer;</span><br><span class="line">    </span><br><span class="line">    self.doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">    [self.doneBtn setTitle:@&quot;Done&quot; forState:UIControlStateNormal];</span><br><span class="line">    [self.doneBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];</span><br><span class="line">    [self.doneBtn setFrame:YLSRect(320/375, 5/667, 50/375, 40/667)];</span><br><span class="line">    [self.doneBtn addTarget:self action:@selector(quit) forControlEvents:UIControlEventTouchUpInside];</span><br><span class="line">    [self.topView addSubview:self.doneBtn];</span><br><span class="line">    </span><br><span class="line">    UILabel *titlelb = [[UILabel alloc]initWithFrame:YLSRect(100/375, 0, 175/375, 50/667)];</span><br><span class="line">    titlelb.backgroundColor = ClearColor;</span><br><span class="line">    titlelb.textAlignment = NSTextAlignmentCenter;</span><br><span class="line">    titlelb.text = self.title;</span><br><span class="line">    titlelb.font = YLSFont(20/375);</span><br><span class="line">    [self.topView addSubview:titlelb];</span><br><span class="line">    </span><br><span class="line">    self.pickerView = [[UIPickerView alloc]init];</span><br><span class="line">    [self.pickerView setFrame:YLSRect(0, 50/667, 1, 200/667)];</span><br><span class="line">    [self.pickerView setBackgroundColor:YLSMainBackColor];</span><br><span class="line">    [self.pickerView setDelegate:self];</span><br><span class="line">    [self.pickerView setDataSource:self];</span><br><span class="line">    [self.pickerView selectRow:0 inComponent:0 animated:YES];</span><br><span class="line">    [self.topView addSubview:self.pickerView];</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> &#160;&#160;&#160;&#160;<strong>同样，在这里我把topview的左上和右上两个角设置成了圆角也就是为了好看点，其实没啥区别，用的时候可以根据自己的需求来注释掉啥的。</strong></p>
+<ul>
+<li>实现pickerView的协议方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;UIPickerViewDelegate,UIPickerViewDataSource&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// 返回选择器有几列.</span><br><span class="line">- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView</span><br><span class="line">&#123;</span><br><span class="line">    return 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 返回每组有几行</span><br><span class="line">- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component</span><br><span class="line">&#123;</span><br><span class="line">    return [self.array count];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - 代理</span><br><span class="line">// 返回第component列第row行的内容（标题）</span><br><span class="line">- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component</span><br><span class="line">&#123;</span><br><span class="line">    return self.array[row];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 选中第component第row的时候调用</span><br><span class="line">- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component</span><br><span class="line">&#123;</span><br><span class="line">    self.result = self.array[row];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>先现实show方法，然后实现点击按钮Done的推出方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//弹出</span><br><span class="line">- (void)show</span><br><span class="line">&#123;</span><br><span class="line">    [self showInView:[UIApplication sharedApplication].keyWindow];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//添加弹出移除的动画效果</span><br><span class="line">- (void)showInView:(UIView *)view</span><br><span class="line">&#123;</span><br><span class="line">    // 浮现</span><br><span class="line">    [UIView animateWithDuration:0.5 animations:^&#123;</span><br><span class="line">        CGPoint point = self.center;</span><br><span class="line">        point.y -= 250;</span><br><span class="line">        self.center = point;</span><br><span class="line">    &#125; completion:^(BOOL finished) &#123;   </span><br><span class="line">    &#125;];</span><br><span class="line">    [view addSubview:self];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">-(void)quit</span><br><span class="line">&#123;</span><br><span class="line">    [UIView animateWithDuration:0.5 animations:^&#123;</span><br><span class="line">        self.alpha = 0;</span><br><span class="line">        CGPoint point = self.center;</span><br><span class="line">        point.y += 250;</span><br><span class="line">        self.center = point;</span><br><span class="line">    &#125; completion:^(BOOL finished) &#123;</span><br><span class="line">        if (!self.result) &#123;</span><br><span class="line">            self.result = self.array[0];</span><br><span class="line">        &#125;</span><br><span class="line">        NSLog(@&quot;%@&quot;,self.result);</span><br><span class="line">        [[NSNotificationCenter defaultCenter]postNotificationName:@&quot;value&quot; object:self.result];</span><br><span class="line">        [self removeFromSuperview];</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> &#160;&#160;&#160;&#160;<strong>在这里呢，需要注意的是，假设你没有点击，没有滑动的话，self.result是空值，所以需要你判断下，若为空，传入数组第一个数据，不为空的话就直接传递了，另外我用的是通知传值，因为block传值我还没有去学习了解，所以这里就用上我会的一个通知传值，但是我有个小问题，希望看到的人回答下我，通知一般在什么时候移除比较好呢？？</strong></p>
+<p></p><h4>第三步：主页实现点击出现的方法，并且接收回传的值。</h4><p></p>
+<ul>
+<li>主页面引入头文件<strong>#import “YLSOPickerView.h”</strong></li>
+<li>实现点击弹出的事件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark - UITextFieldDelegate</span><br><span class="line">//点击文本框时触发的事件，唤起跳出视图</span><br><span class="line">- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField</span><br><span class="line">&#123;</span><br><span class="line">    if(textField.tag == 1000)</span><br><span class="line">    &#123;</span><br><span class="line">        YLSOPickerView *picker = [[YLSOPickerView alloc]init];</span><br><span class="line">        picker.array = @[@&quot;iPhone4&quot;,@&quot;iPhone4S&quot;,@&quot;iPhone5&quot;,@&quot;iPhone5S&quot;,@&quot;iPhone5C&quot;,@&quot;iPhone6&quot;,@&quot;iPhone6Plus&quot;,@&quot;iPhone6S&quot;,@&quot;iPhone6SPlus&quot;];</span><br><span class="line">        picker.title = @&quot;pick number&quot;;</span><br><span class="line">        [picker show];</span><br><span class="line">    &#125;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在<strong>- (void)viewDidLoad</strong>方法中接收通知，实现通知方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getValue:) name:@&quot;value&quot; object:nil];</span><br><span class="line"></span><br><span class="line">-(void)getValue:(NSNotification *)notification</span><br><span class="line">&#123;</span><br><span class="line">    self.text1.text = notification.object;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>这样一来，一个简单的挑选单个数据的自定义选择器就算是大功告成了，使用起来有些许不方法，大家如果使用的话可以自己修改修改，此外要是有什么好的改进方法，大家也可以教教我，一起学习学习</strong></p>
+<p></p><h4>Others</h4><br> &#160;&#160;&#160;&#160;在另外两个文本框点击出现的选择器本质上还是与上面写的一样，只是第二个数有联动效果的，第一组数据滑动的时候，第二组数据也跟着换，那我在写的时候传入的数据是字典形式的，然后另外设置两个数组将字典里的数据接收了，当然，开始就传数组形式的数据也可以，只需要在协议方法里面修改响应的代码就可以了。其他没什么变化。<br>传值的时候<br> &#160;&#160;&#160;&#160;第三个文本框也同样与前两个本质上行没有啥区别，只是在上面多了一个随机按钮，随机按钮点击事件实现也挺简单的<p></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">self.ranBtn = [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">[self.ranBtn setTitle:@&quot;Random&quot; forState:UIControlStateNormal];</span><br><span class="line">[self.ranBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];</span><br><span class="line">[self.ranBtn setFrame:YLSRect(5/375, 5/667, 100/375, 40/667)];</span><br><span class="line">[self.ranBtn addTarget:self action:@selector(random:) forControlEvents:UIControlEventTouchUpInside];</span><br><span class="line">[self.topView addSubview:self.ranBtn];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">-(void)random:(UIPickerView *)picker</span><br><span class="line">&#123;</span><br><span class="line">    for (int i = 0; i &lt; 3; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        // 取出第i列的行数</span><br><span class="line">        NSInteger count = [self.array[i] count];</span><br><span class="line">        int random = arc4random_uniform((u_int32_t)count);</span><br><span class="line">        //不会触发代理的选中方法</span><br><span class="line">        [self.pickerView selectRow:random inComponent:i animated:YES];</span><br><span class="line">        //label数据刷新</span><br><span class="line">        [self pickerView:picker didSelectRow:random inComponent:i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>这就ok了</strong></p>
+<p></p><h5>新增</h5><br>在热心网友的提醒下，告知直接在页面添加也可以，我就添加上去了，然后还有评论说可以直接textfield的inputview设置成pickerview，这个可以的，之前我也写过的，但是刚才粗糙的加了个主页面的view，还没有去写inputview上的pickerview，等有时间再添加上去。另外也添加了dealloc方法，移除通知了。<br> &#160;&#160;&#160;&#160;<h6>这边就是我所有的思路和大部分的代码，虽然感觉没啥用处，但是新手学习的话还是有些意思的。以上的demo呢，还有很多没有完善的地方，要是大家有意见或者建议，留言评论下，讨论下应该怎么改怎么优化啥的，我很欢迎的，希望大家可以一起学习啥的。也希望我自己能经常写出一些对大家有帮助的代码。</h6><p></p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">新增主页面弹出view，在主页面添加的代码</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">有个小问题就是第四个直接添加在主页弹出来的view好像被导航栏给覆盖了，我还没去研究，就着急的先吧功能写了。大家谅解下</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">最初版本</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number"></span> <span class="toc-text">第一步：主页面的设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number"></span> <span class="toc-text">第二步：实现自定义view</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number"></span> <span class="toc-text">第三步：主页实现点击出现的方法，并且接收回传的值。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number"></span> <span class="toc-text">Others</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">新增</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">这边就是我所有的思路和大部分的代码，虽然感觉没啥用处，但是新手学习的话还是有些意思的。以上的demo呢，还有很多没有完善的地方，要是大家有意见或者建议，留言评论下，讨论下应该怎么改怎么优化啥的，我很欢迎的，希望大家可以一起学习啥的。也希望我自己能经常写出一些对大家有帮助的代码。</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&text=iOS学习笔记01-自定义简单弹出pickerView"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&title=iOS学习笔记01-自定义简单弹出pickerView"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&is_video=false&description=iOS学习笔记01-自定义简单弹出pickerView"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS学习笔记01-自定义简单弹出pickerView&body=Check out this article: http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&title=iOS学习笔记01-自定义简单弹出pickerView"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&title=iOS学习笔记01-自定义简单弹出pickerView"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&title=iOS学习笔记01-自定义简单弹出pickerView"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&title=iOS学习笔记01-自定义简单弹出pickerView"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2016/09/02/iOS学习笔记01-自定义简单弹出pickerView/&name=iOS学习笔记01-自定义简单弹出pickerView&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 John Doe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="https://github.com/Yulingsong">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+
