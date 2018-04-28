@@ -3,6 +3,15 @@
   
     
     <entry>
+      <title>test new hexo theme</title>
+      <link href="/2018/04/28/test-new-hexo-theme/"/>
+      <url>/2018/04/28/test-new-hexo-theme/</url>
+      <content type="html"><![CDATA[]]></content>
+      
+      
+    </entry>
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2018/04/28/hello-world/"/>
       <url>/2018/04/28/hello-world/</url>
