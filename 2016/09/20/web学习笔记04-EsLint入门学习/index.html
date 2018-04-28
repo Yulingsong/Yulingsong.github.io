@@ -7,6 +7,7 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;这两天因为公司要求，就对ESLint进行了初步的了解，网上的内容基本上都差不多，但是内容有些乱，我这呢，就跟着大部分的文章，以及官方文档整理出了一篇入门学习的文字，技术点不算特别全，但是对于新手的我来说是够的，文章的篇幅很长，内容可能有些累赘，但是按着步骤一步一步来，基本上看完也就可以对ESLint有个初步的了解了，此外一些相关文档网上还是有很多的，">
+<meta name="keywords" content="eslint">
 <meta property="og:type" content="article">
 <meta property="og:title" content="web学习笔记04-EsLint入门学习">
 <meta property="og:url" content="http://yoursite.com/2016/09/20/web学习笔记04-EsLint入门学习/index.html">
@@ -22,7 +23,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-f9dc5ca53e9a1498.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-499a2c6182d6692d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1062695-a61613cb99752918.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2016-09-21T06:11:48.000Z">
+<meta property="og:updated_time" content="2018-04-28T08:44:26.825Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="web学习笔记04-EsLint入门学习">
 <meta name="twitter:description" content="&amp;#160;&amp;#160;&amp;#160;&amp;#160;这两天因为公司要求，就对ESLint进行了初步的了解，网上的内容基本上都差不多，但是内容有些乱，我这呢，就跟着大部分的文章，以及官方文档整理出了一篇入门学习的文字，技术点不算特别全，但是对于新手的我来说是够的，文章的篇幅很长，内容可能有些累赘，但是按着步骤一步一步来，基本上看完也就可以对ESLint有个初步的了解了，此外一些相关文档网上还是有很多的，">
@@ -136,6 +137,11 @@
 
 
       
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/eslint/">eslint</a>
+    </div>
+
 
     </div>
   </header>
@@ -188,70 +194,66 @@
 </code></pre><p>之后,您可以在任何文件或目录运行ESLint:</p>
 <pre><code>eslint yourfile.js
 </code></pre><h5 id="PS：eslint-–init是用于每一个项目设置和配置eslint-并将执行本地安装的ESLint及其插件的目录。如果你喜欢使用全局安装的ESLint，在你配置中使用的任何插件都必须是全局安装的。"><a href="#PS：eslint-–init是用于每一个项目设置和配置eslint-并将执行本地安装的ESLint及其插件的目录。如果你喜欢使用全局安装的ESLint，在你配置中使用的任何插件都必须是全局安装的。" class="headerlink" title="PS：eslint –init是用于每一个项目设置和配置eslint,并将执行本地安装的ESLint及其插件的目录。如果你喜欢使用全局安装的ESLint，在你配置中使用的任何插件都必须是全局安装的。"></a>PS：eslint –init是用于每一个项目设置和配置eslint,并将执行本地安装的ESLint及其插件的目录。如果你喜欢使用全局安装的ESLint，在你配置中使用的任何插件都必须是全局安装的。</h5><h4 id="3-使用"><a href="#3-使用" class="headerlink" title="3.使用"></a>3.使用</h4><ul>
-<li><p>新建一个项目：<br>  <img src="http://upload-images.jianshu.io/upload_images/1062695-c187438b213fec23.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建项目"></p>
+<li><p>新建一个项目：<br><img src="http://upload-images.jianshu.io/upload_images/1062695-c187438b213fec23.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建项目"></p>
 </li>
 <li><p>创建package.json文件</p>
-<pre><code>npm init
-</code></pre><p>  <img src="http://upload-images.jianshu.io/upload_images/1062695-2400e7ee232eff77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="npm init"></p>
+<p> npm init</p>
+<p> <img src="http://upload-images.jianshu.io/upload_images/1062695-2400e7ee232eff77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="npm init"></p>
 </li>
-</ul>
-<ul>
 <li><p>安装ESLint</p>
-<pre><code>npm install -g eslint
-</code></pre><p>  <img src="http://upload-images.jianshu.io/upload_images/1062695-6fa26dffea88fa40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="npm install -g eslint"></p>
+<p> npm install -g eslint<br> ​<br> <img src="http://upload-images.jianshu.io/upload_images/1062695-6fa26dffea88fa40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="npm install -g eslint"></p>
 </li>
 <li><p>创建和编写简单的js文件<br>&#160;&#160;&#160;&#160;创建index.js文件，里面写一个函数，就直接用别人写的一个简单的函数用用吧。</p>
 <pre><code>function merge () {
-  var ret = {};
-  for (var i in arguments) {
-    var m = arguments[i];
-    for (var j in m) ret[j] = m[j];
-  }
-  return ret;
+    var ret = {};
+    for (var i in arguments) {
+      var m = arguments[i];
+      for (var j in m) ret[j] = m[j];
+    }
+    return ret;
 }
 
 console.log(merge({a: 123}, {b: 456}));
 </code></pre></li>
 <li><p>执行<code>node index.js</code>，输出结果为{ a: 123, b: 456 }</p>
-<pre><code> appledeMacBook-Pro:testEslint apple$ node index.js
-{ a: 123, b: 456 }
+<p>  appledeMacBook-Pro:testEslint apple$ node index.js</p>
+<pre><code>{ a: 123, b: 456 }
 </code></pre></li>
 </ul>
 <ul>
 <li><p>使用eslint检查</p>
-<pre><code>eslint index.js
-</code></pre><p>  <img src="http://upload-images.jianshu.io/upload_images/1062695-35360d2dd0822ea2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="eslint index.js"></p>
+<p>  eslint index.js</p>
+<p>  <img src="http://upload-images.jianshu.io/upload_images/1062695-35360d2dd0822ea2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="eslint index.js"></p>
 </li>
 </ul>
 <p>&#160;&#160;&#160;&#160;执行结果是失败，因为没有找到相应的配置文件，个人认为这个eslint最重要的就是配置问题。</p>
 <ul>
 <li><p>新建配置文件</p>
-<pre><code>eslint --init
-</code></pre><p>  &#160;&#160;&#160;&#160;不过这个生成的额文件里面已经有一些配置了，把里面的内容大部分删除。留下个extends，剩下的自己填就可以了</p>
+<p> eslint –init<br> ​<br> &#160;&#160;&#160;&#160;不过这个生成的额文件里面已经有一些配置了，把里面的内容大部分删除。留下个extends，剩下的自己填就可以了<br> ​    </p>
 <pre><code>module.exports = {
-    &quot;extends&quot;: &quot;eslint:recommended&quot;
+     &quot;extends&quot;: &quot;eslint:recommended&quot;
 };
-</code></pre><p>  &#160;&#160;&#160;&#160;eslint:recommended配置，它包含了一系列核心规则，能报告一些常见的问题。</p>
+</code></pre><p> &#160;&#160;&#160;&#160;eslint:recommended配置，它包含了一系列核心规则，能报告一些常见的问题。</p>
 </li>
 <li><p>重新执行eslint index.js</p>
-<p>  <img src="http://upload-images.jianshu.io/upload_images/1062695-826297c1dbc87c93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="eslint index.js"><br>  &#160;&#160;&#160;&#160;<strong>Unexpected console statement no-console - 不能使用console</strong><br>  &#160;&#160;&#160;&#160;<strong>‘console’ is not defined     no-undef - console变量未定义，不能使用未定义的变量</strong><br>  &#160;&#160;&#160;&#160;一条一条解决，不能使用console的提示，那我们就禁用no-console就好了，在配置文件中添加rules</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1062695-826297c1dbc87c93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="eslint index.js"><br>  &#160;&#160;&#160;&#160;<strong>Unexpected console statement no-console - 不能使用console</strong><br>  &#160;&#160;&#160;&#160;<strong>‘console’ is not defined     no-undef - console变量未定义，不能使用未定义的变量</strong><br>&#160;&#160;&#160;&#160;一条一条解决，不能使用console的提示，那我们就禁用no-console就好了，在配置文件中添加rules<br>​    </p>
 <pre><code>module.exports = {
-      extends: &apos;eslint:recommended&apos;,
-      rules: {
-        &apos;no-console&apos;: &apos;off&apos;,
+        extends: &apos;eslint:recommended&apos;,
+        rules: {
+          &apos;no-console&apos;: &apos;off&apos;,
       },
 };
-</code></pre><p>  &#160;&#160;&#160;&#160;配置规则写在rules对象里面，key表示规则名称，value表示规则的配置。<br>  &#160;&#160;&#160;&#160;然后就是解决<strong>no-undef</strong>:出错的原因是因为JavaScript有很多种运行环境，比如常见的有浏览器和Node.js，另外还有很多软件系统使用JavaScript作为其脚本引擎，比如PostgreSQL就支持使用JavaScript来编写存储引擎，而这些运行环境可能并不存在console这个对象。另外在浏览器环境下会有window对象，而Node.js下没有；在Node.js下会有process对象，而浏览器环境下没有。<br>  所以在配置文件中我们还需要指定程序的目标环境：</p>
+</code></pre><p>&#160;&#160;&#160;&#160;配置规则写在rules对象里面，key表示规则名称，value表示规则的配置。<br>&#160;&#160;&#160;&#160;然后就是解决<strong>no-undef</strong>:出错的原因是因为JavaScript有很多种运行环境，比如常见的有浏览器和Node.js，另外还有很多软件系统使用JavaScript作为其脚本引擎，比如PostgreSQL就支持使用JavaScript来编写存储引擎，而这些运行环境可能并不存在console这个对象。另外在浏览器环境下会有window对象，而Node.js下没有；在Node.js下会有process对象，而浏览器环境下没有。<br>所以在配置文件中我们还需要指定程序的目标环境：</p>
 <pre><code>module.exports = {
-      extends: &apos;eslint:recommended&apos;,
-      env: {
-        node: true,
+        extends: &apos;eslint:recommended&apos;,
+        env: {
+          node: true,
       },
-      rules: {
-        &apos;no-console&apos;: &apos;off&apos;,
-      }
+        rules: {
+          &apos;no-console&apos;: &apos;off&apos;,
+        }
 };
-</code></pre><p>  &#160;&#160;&#160;&#160;再重新执行检查时，就没有任何提示输出了，说明index.js已经完全通过了检查。</p>
+</code></pre><p>&#160;&#160;&#160;&#160;再重新执行检查时，就没有任何提示输出了，说明index.js已经完全通过了检查。</p>
 </li>
 </ul>
 <h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>&#160;&#160;&#160;&#160;ESLint设计出来就是可以配置的，挺自由的，你可以关闭任何一条规则，只运行基本语法验证。有两种主要的方式来配置：</p>
@@ -306,9 +308,8 @@ console.log(merge({a: 123}, {b: 456}));
 <p>&#160;&#160;&#160;&#160;下面是官网的一些资料：<br>&#160;&#160;&#160;&#160;<a href="http://eslint.cn/docs/user-guide/configuring#using-a-shareable-configuration-package" target="_blank" rel="noopener">使用共享的模块</a><br>&#160;&#160;&#160;&#160;<a href="http://eslint.cn/docs/user-guide/configuring#using-the-configuration-from-a-plugin" target="_blank" rel="noopener">使用插件</a><br>&#160;&#160;&#160;&#160;<a href="http://eslint.cn/docs/user-guide/configuring#using-a-configuration-file" target="_blank" rel="noopener">使用配置文件</a>  </p>
 <p>&#160;&#160;&#160;&#160;在这提一下，<a href="http://eslint.cn/docs/rules/" target="_blank" rel="noopener">Rules</a>页面的很多规则后面都有一个橙色的小扳手标识，这个标识在执行</p>
 <pre><code>eslint index.js --fix
-</code></pre><p>的时候，–fix参数可以自动修复该问题。<br>&#160;&#160;&#160;&#160;比如我们在规则中添加一条no-extra-semi: 禁止不必要的分号。</p>
-<pre><code>&apos;no-extra-semi&apos;:&apos;error&apos;
-</code></pre><p>&#160;&#160;&#160;&#160;然后，我们在index.js最后多添加一个分号</p>
+</code></pre><p>的时候，–fix参数可以自动修复该问题。<br>&#160;&#160;&#160;&#160;比如我们在规则中添加一条no-extra-semi: 禁止不必要的分号。<br>​<br>    ‘no-extra-semi’:’error’</p>
+<p>&#160;&#160;&#160;&#160;然后，我们在index.js最后多添加一个分号</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1062695-f9dc5ca53e9a1498.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="不必要的分号"></p>
 <p>&#160;&#160;&#160;&#160;执行eslint index.js，得到结果如下：<br><img src="http://upload-images.jianshu.io/upload_images/1062695-499a2c6182d6692d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="不必要的分号"></p>
 <p>&#160;&#160;&#160;&#160;我们再执行</p>
@@ -352,60 +353,60 @@ console.log(merge({a: 123}, {b: 456}));
 };
 </code></pre><ul>
 <li><p>parserOptions  </p>
-<p>  &#160;&#160;&#160;&#160;EsLint通过parserOptions，允许指定校验的ecma的版本，及ecma的一些特性</p>
+<p>&#160;&#160;&#160;&#160;EsLint通过parserOptions，允许指定校验的ecma的版本，及ecma的一些特性</p>
 <pre><code>{
-    &quot;parserOptions&quot;: {
-        &quot;ecmaVersion&quot;: 6, //指定ECMAScript支持的版本，6为ES6
-        &quot;sourceType&quot;: &quot;module&quot;, //指定来源的类型，有两种”script”或”module”
-        &quot;ecmaFeatures&quot;: {
-            &quot;jsx&quot;: true//启动JSX
-        },
-    }
-}
+      &quot;parserOptions&quot;: {
+          &quot;ecmaVersion&quot;: 6, //指定ECMAScript支持的版本，6为ES6
+          &quot;sourceType&quot;: &quot;module&quot;, //指定来源的类型，有两种”script”或”module”
+          &quot;ecmaFeatures&quot;: {
+              &quot;jsx&quot;: true//启动JSX
+          },
+      }
+  }
 </code></pre></li>
 <li><p>Parser  </p>
-<p>  &#160;&#160;&#160;&#160;EsLint默认使用esprima做脚本解析，当然你也切换他，比如切换成        babel-eslint解析</p>
+<p>&#160;&#160;&#160;&#160;EsLint默认使用esprima做脚本解析，当然你也切换他，比如切换成        babel-eslint解析</p>
 <pre><code>{
-    &quot;parser&quot;: &quot;esprima&quot; //默认，可以设置成babel-eslint，支持jsx
+      &quot;parser&quot;: &quot;esprima&quot; //默认，可以设置成babel-eslint，支持jsx
 }
 </code></pre></li>
 <li><p>Environments  </p>
-<p>  &#160;&#160;&#160;&#160;Environment可以预设好的其他环境的全局变量，如brower、node环境变量、es6环境变量、mocha环境变量等</p>
+<p>&#160;&#160;&#160;&#160;Environment可以预设好的其他环境的全局变量，如brower、node环境变量、es6环境变量、mocha环境变量等</p>
 <pre><code>{
-    &quot;env&quot;: {
-        &quot;browser&quot;: true,
-        &quot;node&quot;: true
-    }
+      &quot;env&quot;: {
+          &quot;browser&quot;: true,
+          &quot;node&quot;: true
+      }
 }
-</code></pre><p>  &#160;&#160;&#160;&#160;如果你想使用插件中的环境变量，你可以使用plugins指定，如下</p>
+</code></pre><p>&#160;&#160;&#160;&#160;如果你想使用插件中的环境变量，你可以使用plugins指定，如下</p>
 <pre><code>{
-    &quot;plugins&quot;: [&quot;example&quot;],
-    &quot;env&quot;: {
-        &quot;example/custom&quot;: true
-    }
+      &quot;plugins&quot;: [&quot;example&quot;],
+      &quot;env&quot;: {
+          &quot;example/custom&quot;: true
+      }
 }
 </code></pre></li>
 <li><p>Globals</p>
-<p>  &#160;&#160;&#160;&#160;指定你所要使用的全局变量，true代表允许重写、false代表不允许重写</p>
+<p>&#160;&#160;&#160;&#160;指定你所要使用的全局变量，true代表允许重写、false代表不允许重写</p>
 <pre><code>{
-    &quot;globals&quot;: {
-           &quot;var1&quot;: true,
-        &quot;var2&quot;: false
-    }
+      &quot;globals&quot;: {
+             &quot;var1&quot;: true,
+          &quot;var2&quot;: false
+      }
 }
 </code></pre></li>
 </ul>
 <ul>
 <li><p>Plugins</p>
-<p>  &#160;&#160;&#160;&#160;EsLint允许使用第三方插件</p>
+<p>&#160;&#160;&#160;&#160;EsLint允许使用第三方插件</p>
 <pre><code>{
-    &quot;plugins&quot;: [
-        &quot;react&quot;    
-     ]
+      &quot;plugins&quot;: [
+          &quot;react&quot;    
+       ]
 }
 </code></pre></li>
 <li><p>Rules</p>
-<p>  &#160;&#160;&#160;&#160;这个就是上面说的规则。</p>
+<p>&#160;&#160;&#160;&#160;这个就是上面说的规则。</p>
 </li>
 </ul>
 <h2 id="自定义规则"><a href="#自定义规则" class="headerlink" title="自定义规则"></a>自定义规则</h2><p>&#160;&#160;&#160;&#160;ESLint自带的规则一般都不会很全面，在实际的项目中，我们要根据自己的需求来创建自己的规则。这也算的上是ESLint最有特色的地方了。</p>
