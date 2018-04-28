@@ -4,22 +4,6 @@
 
     
     
-  <url>
-    <loc>http://yoursite.com/2018/04/28/test/</loc>
-    <lastmod>2018-04-28T07:11:25.113Z</lastmod>
-    <data>
-        <display>
-        <title>test</title>
-        <pubTime>2018-04-28T07:10:54.000Z</pubTime>
-        
-        <tag>test!</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
     
   <url>
     <loc>http://yoursite.com/2018/04/28/hello-world/</loc>
@@ -418,21 +402,6 @@
         <display>
         <title>web学习笔记01-Jasmine-Unit-Test</title>
         <pubTime>2016-09-05T13:57:58.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2016/08/15/hello-world%202/</loc>
-    <lastmod>2016-08-15T02:50:15.000Z</lastmod>
-    <data>
-        <display>
-        <title>Hello World</title>
-        <pubTime>2016-08-15T02:50:15.000Z</pubTime>
         
          
            
